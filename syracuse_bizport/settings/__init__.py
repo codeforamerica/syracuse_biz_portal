@@ -4,7 +4,7 @@ ENVIRONMENT = os.environ.get('ENVIRONMENT')
 
 try:
   if 'live' in ENVIRONMENT:
-    from .live import *
+    from .production import *
   elif 'staging' in ENVIRONMENT: 
   	from .staging import * 
   else:
