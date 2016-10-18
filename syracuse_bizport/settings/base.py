@@ -19,6 +19,9 @@ INSTALLED_APPS = [
     'home',
     'search',
 
+    'matcher',
+    'wealthmap',
+ 
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
     'wagtail.wagtailembeds',
@@ -141,5 +144,9 @@ MEDIA_URL = '/media/'
 
 WAGTAIL_SITE_NAME = "syracuse_bizport"
 
-# Base URL to use when referring to full URLs within the Wagtail admin backend
-# e.g. in notification emails. Don't include '/admin' or a trailing slash
+# Set this to the Opportunity model specific to your use case
+# E.g. SanDiegoOpportunity
+WEALTHMAP_SEARCHABLE_OPPORTUNITY = dict(
+    app_label='matcher',
+    model_name='Opportunity'
+)
