@@ -52,7 +52,7 @@ This will allow you to work on both repositories and without having to push and 
 The best way to help us is to look through existing issues or create new issues. Once its triaged then to fork this code and make a branch.
 
 
-Once you've made your proposed changes, if the tests pass(if we have tests) and the pep8 linter passes( see .pep8 file) you're ready to file a PR.
+Once you've made your proposed changes, if the tests pass(if we have tests) and the pep8 linter passes( see `.pep8` file) you're ready to file a PR.
 
 
 Doing this will mean your changes are highly likely to make it into the main repository.
