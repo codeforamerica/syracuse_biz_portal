@@ -1,13 +1,15 @@
 from django.db import models
 from django.utils.translation import ugettext as _
-from wealthmap import models as wm_models
+from wealthmap.models import Opportunity
 
 
-class Opportunity(wm_models.Opportunity):
+class Opportunity(Opportunity):
     description = models.TextField()
     value_prop = models.CharField(max_length=255,
                                   null=False,
-                                  blank=False)
+                                  blank=False,
+                                  verbose_name=_('outcome'),
+                                  help_text=_('e.g. loan, 30hrs of mentoring'))
     application_link = models.TextField()
 
     class Meta:
