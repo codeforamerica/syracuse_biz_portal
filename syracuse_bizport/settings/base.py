@@ -21,6 +21,7 @@ INSTALLED_APPS = [
 
     'matcher',
     'wealthmap',
+    'biz_content',
  
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
