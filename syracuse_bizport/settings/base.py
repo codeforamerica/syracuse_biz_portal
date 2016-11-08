@@ -2,6 +2,7 @@ import os
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Application definition
 
