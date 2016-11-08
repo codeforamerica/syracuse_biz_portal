@@ -1,9 +1,7 @@
 import os
 import dj_database_url
-from syracuse_bizport.settings.base import *
+from san_diego_resources.settings.base import *
 
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
@@ -15,6 +13,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, '../staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, '../staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
