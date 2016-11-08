@@ -17,8 +17,11 @@ INSTALLED_APPS = [
     'home',
     'search',
 
-    'matcher',
+    'rest_framework',
+    'adminsortable2',
     'wealthmap',
+    'matcher',
+
     'biz_content',
 
     'wagtail.wagtailforms',
@@ -58,7 +61,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(PROJECT_DIR, 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
