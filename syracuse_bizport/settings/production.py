@@ -1,4 +1,4 @@
 import os
 from .heroku import *
 
-DEBUG = False
+DEBUG = True

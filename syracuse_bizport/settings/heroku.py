@@ -12,3 +12,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
+
+
+STATIC_ROOT = os.environ['STATIC_ROOT']
+MEDIA_ROOT = os.environ['MEDIA_ROOT']
