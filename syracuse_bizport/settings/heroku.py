@@ -1,6 +1,6 @@
 import os
 import dj_database_url
-from san_diego_resources.settings.base import *
+from .base import *
 
 
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
