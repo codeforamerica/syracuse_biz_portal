@@ -1,6 +1,6 @@
 import os
 import dj_database_url
-from .base import *
+from syracuse_bizport.settings.base import *
 
 
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
