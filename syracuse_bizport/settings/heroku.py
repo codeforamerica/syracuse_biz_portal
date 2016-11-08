@@ -2,6 +2,8 @@ import os
 import dj_database_url
 from syracuse_bizport.settings.base import *
 
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
