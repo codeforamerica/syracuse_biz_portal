@@ -2,15 +2,86 @@ from __future__ import unicode_literals
 
 from django.db import models
 from wagtail.wagtailsnippets.models import register_snippet
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel, InlinePanel, PageChooserPanel
+from modelcluster.fields import ParentalKey  # Installed with Wagtail, ModelCluster provides many custom field-types that Wagtail relies on
+from modelcluster.models import ClusterableModel
+from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.fields import StreamField, RichTextField
+from wagtail.wagtailcore import blocks
+from wagtail.wagtailsearch import index
+
+
+
 
 # Create your models here.
 
+class StepPage(Page):
+    date = models.DateTimeField("Post date")
+    intro = models.CharField(max_length=250)
 
-class Category(models.Model):
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('date'),
+        FieldPanel('intro'),
+        InlinePanel('content_paragraph', label="Paragraph Section")
+    ]
+
+class ContentParagraph(models.Model):
+    page = ParentalKey('biz_content.StepPage', related_name='content_paragraph', null=True)
+    header = models.CharField(
+        max_length=1000,null=True
+    )
+    subheader = models.CharField(
+        max_length=1000,null=True
+    )
+    body = RichTextField(blank=True)
+
+    resources = StreamField([
+        ('phone_number', blocks.IntegerBlock(max_length=255,
+                                  null=True,
+                                  classname="phone_number",
+                                  label="Phone Number",
+                                  help_text="Add a Phone Number"
+                                  )),
+        ('email', blocks.EmailBlock(null=True,
+                                  classname="email",
+                                  label="Email",
+                                  help_text="Add an email"
+                                  )),
+        ('link', blocks.CharBlock(max_length=1000,
+                                  null=True,
+                                  classname="text",
+                                  label="Resource Link",
+                                  help_text="Add resource link"
+                                  )),
+    ], null=True)
+
+    panels = [
+        FieldPanel('header'),
+        FieldPanel('body'),
+        StreamFieldPanel('resources')
+    ]
+
+
+
+############################################################################
+"""
+CATEGORIES & CHECKLISTS
+"""
+class Category(ClusterableModel):
     """
     Represents a category for business development.
     """
+    page = models.ForeignKey( # what page do we want to display this poll on?
+        'wagtailcore.Page',
+        related_name='categories',
+        null=True,
+        blank=True
+    )
+
     name = models.CharField(
         max_length=255,null=True
     )
@@ -23,13 +94,17 @@ class Category(models.Model):
 
     panels = [
         FieldPanel('name'),
-        FieldPanel('slug')
+        FieldPanel('slug'),
+        InlinePanel('checklist', label="Checklist")
     ]
 
 class Checklist(models.Model):
     """
     Represents a checklist for a given Category.
     """
+    page = ParentalKey('biz_content.Category', related_name='checklist', null=True)
+
+
     name = models.CharField(
         max_length=255,null=True
     )
@@ -39,26 +114,53 @@ class Checklist(models.Model):
     slug = models.CharField(
         max_length=255,null=True
     )
-    category = models.ForeignKey(Category,
-        related_name='checklist', null=True)
+
+    category = models.ForeignKey(Category, related_name="checklists", null=True)
+
+    items = StreamField([
+        ('text', blocks.CharBlock(max_length=255,
+                                  null=True,
+                                  classname="text",
+                                  label="Checklist Text",
+                                  help_text="Add a Checklist Item"
+                                  )),
+        ], null=True)
 
     def __unicode__(self):
         return self.name
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('description'),
+        FieldPanel('slug'),
+        StreamFieldPanel('items')
+    ]
+
+    def save(self):
+        pass
+        # add function here to create step page with slug that matches a checklist
+        # if checklist is deleted, make sure the page deletes too!
+
+
 
 class ChecklistItem(models.Model):
     """
     Represents an item in a checklist.
     """
+    # checklist = ParentalKey('Checklist', related_name='checklist_items', null=True)
+
     text = models.CharField(
         max_length=255,null=True
     )
     completed = models.BooleanField(default=False)
     order_num = models.IntegerField(default=0)
     checklist = models.ForeignKey(Checklist,
-        related_name='options', null=True)
+        related_name='checklist_items', null=True)
 
     def __unicode__(self):
         return self.text
 
 
 register_snippet(Category)
+register_snippet(Category)
+
