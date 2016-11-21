@@ -21,7 +21,6 @@ class StepPage(Page):
 
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
-        index.SearchField('body'),
     )
 
     content_panels = Page.content_panels + [
@@ -33,6 +32,9 @@ class StepPage(Page):
 class ContentParagraph(models.Model):
     page = ParentalKey('biz_content.StepPage', related_name='content_paragraph', null=True)
     header = models.CharField(
+        max_length=1000,null=True
+    )
+    subheader = models.CharField(
         max_length=1000,null=True
     )
     body = RichTextField(blank=True)
