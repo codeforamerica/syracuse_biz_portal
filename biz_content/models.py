@@ -5,14 +5,70 @@ from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel, InlinePanel, PageChooserPanel
 from modelcluster.fields import ParentalKey  # Installed with Wagtail, ModelCluster provides many custom field-types that Wagtail relies on
 from modelcluster.models import ClusterableModel
-from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailsearch import index
+
 
 
 
 # Create your models here.
 
+class StepPage(Page):
+    date = models.DateTimeField("Post date")
+    intro = models.CharField(max_length=250)
 
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+        index.SearchField('body'),
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('date'),
+        FieldPanel('intro'),
+        InlinePanel('content_paragraph', label="Paragraph Section")
+    ]
+
+class ContentParagraph(models.Model):
+    page = ParentalKey('biz_content.StepPage', related_name='content_paragraph', null=True)
+    header = models.CharField(
+        max_length=1000,null=True
+    )
+    body = RichTextField(blank=True)
+
+    resources = StreamField([
+        ('phone_number', blocks.IntegerBlock(max_length=255,
+                                  null=True,
+                                  classname="phone_number",
+                                  label="Phone Number",
+                                  help_text="Add a Phone Number"
+                                  )),
+        ('email', blocks.EmailBlock(null=True,
+                                  classname="email",
+                                  label="Email",
+                                  help_text="Add an email"
+                                  )),
+        ('link', blocks.CharBlock(max_length=1000,
+                                  null=True,
+                                  classname="text",
+                                  label="Resource Link",
+                                  help_text="Add resource link"
+                                  )),
+    ], null=True)
+
+    panels = [
+        FieldPanel('header'),
+        FieldPanel('body'),
+        StreamFieldPanel('resources')
+    ]
+
+
+
+############################################################################
+"""
+CATEGORIES & CHECKLISTS
+"""
 class Category(ClusterableModel):
     """
     Represents a category for business development.
@@ -56,11 +112,17 @@ class Checklist(models.Model):
     slug = models.CharField(
         max_length=255,null=True
     )
+
     category = models.ForeignKey(Category, related_name="checklists", null=True)
 
     items = StreamField([
-        ('text', blocks.CharBlock(max_length=255,null=True, classname="text", label="Checklist Text")),
-    ], null=True)
+        ('text', blocks.CharBlock(max_length=255,
+                                  null=True,
+                                  classname="text",
+                                  label="Checklist Text",
+                                  help_text="Add a Checklist Item"
+                                  )),
+        ], null=True)
 
     def __unicode__(self):
         return self.name
@@ -71,6 +133,11 @@ class Checklist(models.Model):
         FieldPanel('slug'),
         StreamFieldPanel('items')
     ]
+
+    def save(self):
+        pass
+        # add function here to create step page with slug that matches a checklist
+        # if checklist is deleted, make sure the page deletes too!
 
 
 
