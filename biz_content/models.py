@@ -10,7 +10,8 @@ from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
-
+from wagtail.wagtailimages.models import Image
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 
 
@@ -120,6 +121,16 @@ register_snippet(Checklist)
 class StepPage(Page):
     date = models.DateTimeField("Post date")
     intro = models.CharField(max_length=250)
+    description = models.CharField(max_length=2000,null=True)
+
+    header_img = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     checklist = models.ForeignKey(
     'biz_content.Checklist',
     null=True,
@@ -135,6 +146,8 @@ class StepPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         FieldPanel('intro'),
+        FieldPanel('description'),
+        ImageChooserPanel('header_img'),
         SnippetChooserPanel('checklist'),
         InlinePanel('content_paragraph', label="Paragraph Section")
     ]
@@ -171,6 +184,7 @@ class ContentParagraph(models.Model):
 
     panels = [
         FieldPanel('header'),
+        FieldPanel('subheader'),
         FieldPanel('body'),
         StreamFieldPanel('resources')
     ]
