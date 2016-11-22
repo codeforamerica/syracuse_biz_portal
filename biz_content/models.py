@@ -45,8 +45,7 @@ class Category(ClusterableModel):
 
     panels = [
         FieldPanel('name'),
-        FieldPanel('slug'),
-        InlinePanel('checklist', label="Checklist")
+        FieldPanel('slug')
     ]
 
 class Checklist(models.Model):
@@ -82,8 +81,6 @@ class Checklist(models.Model):
 
     panels = [
         FieldPanel('name'),
-        FieldPanel('description'),
-        FieldPanel('slug'),
         FieldPanel('category'),
         StreamFieldPanel('items')
     ]
@@ -118,9 +115,9 @@ register_snippet(Checklist)
 
 ###################################
 
+# title is inherited from the model!
 class StepPage(Page):
     date = models.DateTimeField("Post date")
-    intro = models.CharField(max_length=250)
     description = models.CharField(max_length=2000,null=True)
 
     header_img = models.ForeignKey(
@@ -145,7 +142,6 @@ class StepPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('date'),
-        FieldPanel('intro'),
         FieldPanel('description'),
         ImageChooserPanel('header_img'),
         SnippetChooserPanel('checklist'),
