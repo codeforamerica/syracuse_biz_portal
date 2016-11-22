@@ -9,62 +9,12 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailsearch import index
+from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
 
 
 
 # Create your models here.
-
-class StepPage(Page):
-    date = models.DateTimeField("Post date")
-    intro = models.CharField(max_length=250)
-
-    search_fields = Page.search_fields + (
-        index.SearchField('intro'),
-    )
-
-    content_panels = Page.content_panels + [
-        FieldPanel('date'),
-        FieldPanel('intro'),
-        InlinePanel('content_paragraph', label="Paragraph Section")
-    ]
-
-class ContentParagraph(models.Model):
-    page = ParentalKey('biz_content.StepPage', related_name='content_paragraph', null=True)
-    header = models.CharField(
-        max_length=1000,null=True
-    )
-    subheader = models.CharField(
-        max_length=1000,null=True
-    )
-    body = RichTextField(blank=True)
-
-    resources = StreamField([
-        ('phone_number', blocks.IntegerBlock(max_length=255,
-                                  null=True,
-                                  classname="phone_number",
-                                  label="Phone Number",
-                                  help_text="Add a Phone Number"
-                                  )),
-        ('email', blocks.EmailBlock(null=True,
-                                  classname="email",
-                                  label="Email",
-                                  help_text="Add an email"
-                                  )),
-        ('link', blocks.CharBlock(max_length=1000,
-                                  null=True,
-                                  classname="text",
-                                  label="Resource Link",
-                                  help_text="Add resource link"
-                                  )),
-    ], null=True)
-
-    panels = [
-        FieldPanel('header'),
-        FieldPanel('body'),
-        StreamFieldPanel('resources')
-    ]
-
 
 
 ############################################################################
@@ -115,7 +65,7 @@ class Checklist(models.Model):
         max_length=255,null=True
     )
 
-    category = models.ForeignKey(Category, related_name="checklists", null=True)
+    category = models.ForeignKey(Category, related_name="checklists", null=True, blank=True)
 
     items = StreamField([
         ('text', blocks.CharBlock(max_length=255,
@@ -133,6 +83,7 @@ class Checklist(models.Model):
         FieldPanel('name'),
         FieldPanel('description'),
         FieldPanel('slug'),
+        FieldPanel('category'),
         StreamFieldPanel('items')
     ]
 
@@ -162,5 +113,65 @@ class ChecklistItem(models.Model):
 
 
 register_snippet(Category)
-register_snippet(Category)
+register_snippet(Checklist)
+
+###################################
+
+class StepPage(Page):
+    date = models.DateTimeField("Post date")
+    intro = models.CharField(max_length=250)
+    checklist = models.ForeignKey(
+    'biz_content.Checklist',
+    null=True,
+    blank=True,
+    on_delete=models.SET_NULL,
+    related_name='+'
+    )
+
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('date'),
+        FieldPanel('intro'),
+        SnippetChooserPanel('checklist'),
+        InlinePanel('content_paragraph', label="Paragraph Section")
+    ]
+
+class ContentParagraph(models.Model):
+    page = ParentalKey('biz_content.StepPage', related_name='content_paragraph', null=True)
+    header = models.CharField(
+        max_length=1000,null=True
+    )
+    subheader = models.CharField(
+        max_length=1000,null=True
+    )
+    body = RichTextField(blank=True)
+
+    resources = StreamField([
+        ('phone_number', blocks.IntegerBlock(max_length=255,
+                                  null=True,
+                                  classname="phone_number",
+                                  label="Phone Number",
+                                  help_text="Add a Phone Number"
+                                  )),
+        ('email', blocks.EmailBlock(null=True,
+                                  classname="email",
+                                  label="Email",
+                                  help_text="Add an email"
+                                  )),
+        ('link', blocks.CharBlock(max_length=1000,
+                                  null=True,
+                                  classname="text",
+                                  label="Resource Link",
+                                  help_text="Add resource link"
+                                  )),
+    ], null=True)
+
+    panels = [
+        FieldPanel('header'),
+        FieldPanel('body'),
+        StreamFieldPanel('resources')
+    ]
 
