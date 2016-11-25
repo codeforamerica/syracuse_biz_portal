@@ -115,10 +115,11 @@ register_snippet(Checklist)
 
 ###################################
 
-# title is inherited from the model!
+# title is inherited from the Page model!
 class StepPage(Page):
     date = models.DateTimeField("Post date")
     description = models.CharField(max_length=2000,null=True)
+    category = models.ForeignKey(Category, related_name="step_pages", null=True, blank=True,on_delete=models.SET_NULL )
 
     header_img = models.ForeignKey(
         'wagtailimages.Image',
@@ -136,15 +137,26 @@ class StepPage(Page):
     related_name='+'
     )
 
-    search_fields = Page.search_fields + (
-        index.SearchField('intro'),
+    link_page = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        on_delete=models.SET_NULL,
+        blank=True,
+        related_name='+',
+        help_text='Choose an existing page if you want the link to point somewhere inside the CMS.'
     )
+
+    # search_fields = Page.search_fields + (
+    #     index.SearchField('intro'),
+    # )
 
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         FieldPanel('description'),
         ImageChooserPanel('header_img'),
         SnippetChooserPanel('checklist'),
+        FieldPanel('link_page'),
+        FieldPanel('category'),
         InlinePanel('content_paragraph', label="Paragraph Section")
     ]
 
