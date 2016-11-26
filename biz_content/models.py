@@ -45,7 +45,8 @@ class Category(ClusterableModel):
 
     panels = [
         FieldPanel('name'),
-        FieldPanel('slug')
+        FieldPanel('slug'),
+        InlinePanel('checklist')
     ]
 
 class Checklist(models.Model):
