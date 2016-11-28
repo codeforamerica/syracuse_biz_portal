@@ -8,3 +8,6 @@ __pycache__
 /media/
 .env
 .idea/
+*.ipynb
+.ipynb_checkpoints/
+/list/
