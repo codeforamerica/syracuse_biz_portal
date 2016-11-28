@@ -156,7 +156,7 @@ class StepPage(Page):
 class ContentParagraph(models.Model):
     page = ParentalKey('biz_content.StepPage', related_name='content_paragraph', null=True)
     header = models.CharField(
-        max_length=1000,null=True
+        max_length=1000,null=True, blank=True
     )
     subheader = models.CharField(
         max_length=1000,null=True, blank=True
