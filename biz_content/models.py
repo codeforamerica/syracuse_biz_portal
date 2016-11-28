@@ -181,7 +181,7 @@ class ContentParagraph(models.Model):
                                   label="Resource Link",
                                   help_text="Add resource link"
                                   )),
-    ], null=True)
+    ], null=True, blank=True)
 
     panels = [
         FieldPanel('header'),
