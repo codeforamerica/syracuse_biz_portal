@@ -22,7 +22,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 """
 CATEGORIES & CHECKLISTS
 """
-class Category(ClusterableModel):
+class Category(models.Model):
     """
     Represents a category for business development.
     """
@@ -46,15 +46,12 @@ class Category(ClusterableModel):
     panels = [
         FieldPanel('name'),
         FieldPanel('slug'),
-        InlinePanel('checklist')
     ]
 
 class Checklist(models.Model):
     """
     Represents a checklist for a given Category.
     """
-    page = ParentalKey('biz_content.Category', related_name='checklist', null=True)
-
 
     name = models.CharField(
         max_length=255,null=True
@@ -86,8 +83,7 @@ class Checklist(models.Model):
         StreamFieldPanel('items')
     ]
 
-    def save(self):
-        pass
+
         # add function here to create step page with slug that matches a checklist
         # if checklist is deleted, make sure the page deletes too!
 
@@ -97,7 +93,7 @@ class ChecklistItem(models.Model):
     """
     Represents an item in a checklist.
     """
-    # checklist = ParentalKey('Checklist', related_name='checklist_items', null=True)
+    checklist = ParentalKey('Checklist', related_name='checklist_items', null=True)
 
     text = models.CharField(
         max_length=255,null=True
@@ -134,7 +130,7 @@ class StepPage(Page):
     'biz_content.Checklist',
     null=True,
     blank=True,
-    on_delete=models.SET_NULL,
+    on_delete=models.PROTECT,
     related_name='+'
     )
 
