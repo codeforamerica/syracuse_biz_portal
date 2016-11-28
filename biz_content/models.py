@@ -143,10 +143,6 @@ class StepPage(Page):
         help_text='Choose an existing page if you want the link to point somewhere inside the CMS.'
     )
 
-    # search_fields = Page.search_fields + (
-    #     index.SearchField('intro'),
-    # )
-
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         FieldPanel('description'),
@@ -163,7 +159,7 @@ class ContentParagraph(models.Model):
         max_length=1000,null=True
     )
     subheader = models.CharField(
-        max_length=1000,null=True
+        max_length=1000,null=True, blank=True
     )
     body = RichTextField(blank=True)
 

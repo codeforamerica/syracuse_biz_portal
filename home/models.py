@@ -8,6 +8,4 @@ class HomePage(Page):
 	def get_context(self, request):
 		context = super(HomePage, self).get_context(request)
 		context['categories'] = Category.objects.all()
-		context['step_pages'] = StepPage.objects.all()
-		print(context['step_pages'] )
 		return context
