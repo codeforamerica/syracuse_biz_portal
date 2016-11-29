@@ -181,7 +181,7 @@ class ContentParagraph(models.Model):
                                   label="Email",
                                   help_text="Add an email"
                                   )),
-        ('link', blocks.CharBlock(max_length=1000,
+        ('link', blocks.URLBlock(max_length=1000,
                                   null=True,
                                   classname="text",
                                   label="Resource Link",
