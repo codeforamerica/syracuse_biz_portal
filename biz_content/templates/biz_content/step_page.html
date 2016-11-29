@@ -14,8 +14,8 @@
       <div class="blog-header">
 
         {% if page.header_img %}
-        	{% image page.header_img width-120 %}
-    	{% endif %}
+          {% image page.header_img width-120 %}
+        {% endif %}
         <h1 class="blog-title">{{ page.title }}</h1>
 
         <p class="lead blog-description">{{page.description}}</p>
@@ -27,7 +27,7 @@
       <div class="row">
 
         <div style="border-right:1px solid #333;" class="col-sm-8 blog-main">
-        {%for p in page.content_paragraph.all %}
+        {% for p in page.content_paragraph.all %}
           <div class="blog-post">
             <h2 class="blog-post-title">{{p.header}}</h2>
             <p class="blog-post-subtitle">{{p.subheader}}</p>
@@ -45,14 +45,14 @@
             <hr>
 
           </div><!-- /.blog-post -->
+        {%endfor%}
 
-          {%endfor%}
+        <nav>
+          <ul class="pager">
+            <li><a href="{{ page.link_page.url }}"><strong>Next Page:</strong> {{ page.link_page }}</a></li>
+          </ul>
+        </nav>
 
-          <nav>
-            <ul class="pager">
-              <li><a href={{p.link_page}}>Next Page</a></li>
-            </ul>
-          </nav>
 
         </div><!-- /.blog-main -->
 
@@ -84,4 +84,3 @@
 
 
 {% endblock %}
-
