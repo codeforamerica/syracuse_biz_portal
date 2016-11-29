@@ -40,9 +40,6 @@ class Category(models.Model):
         max_length=255,null=True
     )
 
-    def __unicode__(self):
-        return self.name
-
     panels = [
         FieldPanel('name'),
         FieldPanel('slug'),
@@ -77,9 +74,6 @@ class Checklist(models.Model):
                                   )),
         ], null=True)
 
-    def __unicode__(self):
-        return self.name
-
     panels = [
         FieldPanel('name'),
         FieldPanel('category'),
@@ -109,7 +103,7 @@ class ChecklistItem(models.Model):
     checklist = models.ForeignKey(Checklist,
         related_name='checklist_items', null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.text
 
 
