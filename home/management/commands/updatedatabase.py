@@ -6,7 +6,7 @@ class Command(BaseCommand):
     help = 'Pulls the database from production so that you can keep your dev environment content up-to-date.'
 
     def handle(self, *args, **options):
-        confirmation = raw_input("WARNING: This will overwrite the contents of your dev database with production. Do you wish to continue? (Y/n)")
+        confirmation = input("WARNING: This will overwrite the contents of your dev database with production. Do you wish to continue? (Y/n)")
 
         if confirmation == 'Y':
             self.stdout.write('== Creating Backup of Heroku Production Database ==')
