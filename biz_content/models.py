@@ -86,6 +86,9 @@ class Checklist(models.Model):
         StreamFieldPanel('items')
     ]
 
+    def __str__(self):
+        return self.name
+
 
         # add function here to create step page with slug that matches a checklist
         # if checklist is deleted, make sure the page deletes too!
