@@ -48,6 +48,9 @@ class Category(models.Model):
         FieldPanel('slug'),
     ]
 
+    def __str__(self):
+        return self.name
+
 class Checklist(models.Model):
     """
     Represents a checklist for a given Category.
@@ -189,4 +192,3 @@ class ContentParagraph(models.Model):
         FieldPanel('body'),
         StreamFieldPanel('resources')
     ]
-
