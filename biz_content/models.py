@@ -28,6 +28,7 @@ class Category(models.Model):
     """
     Represents a category for business development.
     """
+    # what page do we want to display this poll on?
     page = models.ForeignKey(
         'wagtailcore.Page',
         related_name='categories',
