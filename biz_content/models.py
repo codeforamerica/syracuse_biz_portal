@@ -91,24 +91,6 @@ class Checklist(models.Model):
         # if checklist is deleted, make sure the page deletes too!
 
 
-class ChecklistItem(models.Model):
-    """
-    Represents an item in a checklist.
-    """
-    checklist = ParentalKey('Checklist', related_name='checklist_items', null=True)
-
-    text = models.CharField(
-        max_length=255, null=True
-    )
-    completed = models.BooleanField(default=False)
-    order_num = models.IntegerField(default=0)
-    checklist = models.ForeignKey(Checklist,
-        related_name='checklist_items', null=True)
-
-    def __str__(self):
-        return self.text
-
-
 register_snippet(Category)
 register_snippet(Checklist)
 

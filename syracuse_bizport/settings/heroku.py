@@ -5,7 +5,7 @@ from .base import *
 
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
-AWS_ACCESS_ID = os.environ['BUCKETEER_AWS_ACCESS_KEY_ID']
+AWS_ACCESS_KEY_ID = os.environ['BUCKETEER_AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['BUCKETEER_AWS_SECRET_ACCESS_KEY']
 
 AWS_STORAGE_BUCKET_NAME = os.environ['BUCKETEER_BUCKET_NAME']
@@ -21,3 +21,6 @@ ALLOWED_HOSTS = ['*']
 STATIC_ROOT = os.path.join(PROJECT_ROOT, '../staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+MEDIA_URL = "https://%s.s3.amazonaws.com/" % (AWS_ACCESS_KEY_ID)
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
