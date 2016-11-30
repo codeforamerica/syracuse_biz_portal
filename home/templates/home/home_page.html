@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load wagtailcore_tags wagtailimages_tags %}
+
 {% block body_class %}template-homepage{% endblock %}
 
 {% block content %}
@@ -73,7 +75,9 @@
 	                    <a href={{p.slug}} class="portfolio-link">
 	                        <div class="caption">
 	                            <div class="caption-content">
-	                                <i class="fa fa-search-plus fa-3x"></i>
+                                {% if p.header_img %}
+                                  {% image p.header_img width-120 %}
+                                {% endif %}
 	                            </div>
 	                        </div>
 	                    </a>
