@@ -2,6 +2,7 @@
   "name": "syracuse_biz_portal",
   "description": "",
   "scripts": {
+    "postdeploy": "python ./manage.py migrate --no-input"
   },
   "env": {
     "DJANGO_SECRET_KEY": {
