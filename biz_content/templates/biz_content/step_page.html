@@ -26,27 +26,6 @@
 
       <div class="row">
 
-<<<<<<< HEAD
-=======
-        <div class="col-sm-9 blog-main">
-        {% for p in page.content_paragraph.all %}
-          <div class="blog-post">
-            <h2 class="blog-post-title">{{p.header}}</h2>
-            <p class="blog-post-subtitle">{{p.subheader}}</p>
-
-            <p>{{p.body|richtext}}</p>
-            {% for r in p.resources%}
-            	{% if r.block_type == 'phone_number' %}
-            		<p>Phone: {{r}}</p>
-            	{% elif r.block_type == 'email' %}
-            		<p>Email: {{r}}</p>
-            	{% elif r.block_type == 'link' %}
-            		<p>View: {{r}}</p>
-            	{% endif %}
-            {% endfor %}
-            <hr>
->>>>>>> ea6562e73efaf1b24ae4215f3eef1167c3499ca0
-
         <div class="col-sm-9 blog-main">
           <article>
             {% for block in page.page_content %}
@@ -83,19 +62,6 @@
                   </div>
                 {% endfor %}
               </div>
-<<<<<<< HEAD
-=======
-            <br><br>
-            <!-- <div class="sidebar-module">
-              <h4>Resources</h4>
-              <hr>
-              <ol class="list-unstyled">
-                <li><a href="#">GitHub</a></li>
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">Facebook</a></li>
-              </ol>
-            </div> -->
->>>>>>> ea6562e73efaf1b24ae4215f3eef1167c3499ca0
           </div><!-- /.blog-sidebar -->
         {% endif %}
 
