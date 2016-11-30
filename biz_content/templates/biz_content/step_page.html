@@ -28,45 +28,48 @@
 
         <div class="col-sm-9 blog-main">
           <article>
-            {% for block in page.page_content %}
-                {% if block.block_type == 'heading' %}
-                    <h1>{{ block.value }}</h1>
-                {% else %}
-                    <section class="block-{{ block.block_type }}">
-                        {% include_block block %}
-                    </section>
-                {% endif %}
-            {% endfor %}
+            {% for r in page.page_content %}
+
+                	{% if r.block_type == 'phone_number' %}
+                		<p>Phone: {{r}}</p>
+                	{% elif r.block_type == 'email' %}
+                		<p>Email: {{r}}</p>
+                  {% elif r.block_type == 'heading' %}
+                    <h3>{{r}}</h3>
+                  {% elif r.block_type == 'paragraph' %}
+                    <p>{{r}}</p>
+                	{% elif r.block_type == 'link' %}
+                		<p>View: {{r}}</p>
+                	{% endif %}
+                  <br />
+             {%endfor%}
           </article>
         </div>
 
-        <div class="col-xs-12">
-          <nav>
-            <ul class="pager">
-              <li><a href="{{ page.link_page.url }}"><strong>Next Page:</strong> {{ page.link_page }}</a></li>
-            </ul>
-          </nav>
-        </div>
 
 
-        </div><!-- /.blog-main -->
-
-        {% if self.checklist.items %}
-          <div style="border-left:1px solid #333;" class="col-sm-3 blog-sidebar">
-              <div class="sidebar-module sidebar-module-inset">
-                <h4>Checklist</h4>
-                <hr>
-                {% for item in self.checklist.items %}
-                  <div class="checkbox">
-                    <label><input type="checkbox" value="">{{item}}</label>
-                  </div>
-                {% endfor %}
-              </div>
-          </div><!-- /.blog-sidebar -->
-        {% endif %}
+      {% if self.checklist.items %}
+        <div style="border-left:1px solid #333;" class="col-sm-3 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+              <h4>Checklist</h4>
+              <hr>
+              {% for item in self.checklist.items %}
+                <div class="checkbox">
+                  <label><input type="checkbox" value="">{{item}}</label>
+                </div>
+              {% endfor %}
+            </div>
+        </div><!-- /.blog-sidebar -->
+      {% endif %}
 
       </div><!-- /.row -->
-
+      <div class="col-xs-12">
+        <nav>
+          <ul class="pager">
+            <li><a href="{{ page.link_page.url }}"><strong>Next Page:</strong> {{ page.link_page }}</a></li>
+          </ul>
+        </nav>
+      </div>
     </div><!-- /.container -->
 
 
