@@ -27,31 +27,35 @@
       <div class="row">
 
         <div class="col-sm-9 blog-main">
-        {% for p in page.content_paragraph.all %}
           <div class="blog-post">
             <h2 class="blog-post-title">{{p.header}}</h2>
             <p class="blog-post-subtitle">{{p.subheader}}</p>
 
-            <p>{{p.body|richtext}}</p>
-            {% for r in p.resources%}
+        {% for r in page.page_content %}
+
             	{% if r.block_type == 'phone_number' %}
             		<p>Phone: {{r}}</p>
             	{% elif r.block_type == 'email' %}
             		<p>Email: {{r}}</p>
+              {% elif r.block_type == 'heading' %}
+                <h3>{{r}}</h3>
+              {% elif r.block_type == 'paragraph' %}
+                <p>{{r}}</p>
             	{% elif r.block_type == 'link' %}
             		<p>View: {{r}}</p>
             	{% endif %}
-            {% endfor %}
             <hr>
-
-          </div><!-- /.blog-post -->
-        {%endfor%}
+         {%endfor%}
+          </div>
 
         <nav>
           <ul class="pager">
             <li><a href="{{ page.link_page.url }}"><strong>Next Page:</strong> {{ page.link_page }}</a></li>
           </ul>
         </nav>
+          </div><!-- /.blog-post -->
+
+
 
 
         </div><!-- /.blog-main -->
