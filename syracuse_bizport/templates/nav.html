@@ -6,29 +6,36 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a style="height:20px;" class="navbar-brand" href="/">Business Portal</a>
+            <a class="navbar-brand" href="/">Business Portal</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        {% if user.is_authenicated %}
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="hidden">
                     <a href="#page-top"></a>
                 </li>
+                {% for c in categories %}
                 <li class="page-scroll">
-                    <a href="#plan">Plan</a>
+                    <a href="#"{{c.name}}>{{c.name}}</a>
                 </li>
-                <li class="page-scroll">
-                    <a href="#about">About</a>
-                </li>
+                {% endfor %}
                 <li class="page-scroll">
                     <a href="#contact">Contact</a>
                 </li>
+                {% if user.is_authenicated %}
+                  <li>
+                      <a href="#">Profile</a>
+                  </li>
+
+                {% else %}
+                  <li>
+                      <a href="#">Login</a>
+                  </li>
+                {% endif %}
             </ul>
         </div>
         <!-- /.navbar-collapse -->
-        {% endif %}
     </div>
     <!-- /.container-fluid -->
 </nav>
