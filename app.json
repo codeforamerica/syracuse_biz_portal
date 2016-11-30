@@ -2,7 +2,7 @@
   "name": "syracuse_biz_portal",
   "description": "",
   "scripts": {
-    "postdeploy": ""
+    "postdeploy": "touch ."
   },
   "env": {
     "DJANGO_SECRET_KEY": {
