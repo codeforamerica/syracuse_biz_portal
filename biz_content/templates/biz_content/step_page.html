@@ -30,17 +30,17 @@
           <article>
             {% for r in page.page_content %}
 
-                	{% if r.block_type == 'phone_number' %}
-                		<p>Phone: {{r}}</p>
-                	{% elif r.block_type == 'email' %}
-                		<p>Email: {{r}}</p>
+                  {% if r.block_type == 'phone_number' %}
+                    <p>Phone: {{r}}</p>
+                  {% elif r.block_type == 'email' %}
+                    <p>Email: {{r}}</p>
                   {% elif r.block_type == 'heading' %}
                     <h3>{{r}}</h3>
                   {% elif r.block_type == 'paragraph' %}
                     <p>{{r}}</p>
-                	{% elif r.block_type == 'link' %}
-                		<p>View: {{r}}</p>
-                	{% endif %}
+                  {% elif r.block_type == 'link' %}
+                    <p>View: {{r}}</p>
+                  {% endif %}
                   <br />
              {%endfor%}
           </article>
