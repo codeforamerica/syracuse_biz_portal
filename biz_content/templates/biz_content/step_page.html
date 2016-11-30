@@ -26,7 +26,7 @@
 
       <div class="row">
 
-        <div style="border-right:1px solid #333;" class="col-sm-8 blog-main">
+        <div class="col-sm-9 blog-main">
         {% for p in page.content_paragraph.all %}
           <div class="blog-post">
             <h2 class="blog-post-title">{{p.header}}</h2>
@@ -56,27 +56,29 @@
 
         </div><!-- /.blog-main -->
 
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-          <div class="sidebar-module sidebar-module-inset">
-            <h4>Checklist</h4>
-            <hr>
-            {% for item in self.checklist.items %}
-            <div class="checkbox">
-  				<label><input type="checkbox" value="">{{item}}</label>
-			</div>
-			     {% endfor %}
-          </div>
-          <br><br>
-          <!-- <div class="sidebar-module">
-            <h4>Resources</h4>
-            <hr>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-          </div> -->
-        </div><!-- /.blog-sidebar -->
+        {% if self.checklist.items %}
+          <div style="border-left:1px solid #333;" class="col-sm-3 blog-sidebar">
+              <div class="sidebar-module sidebar-module-inset">
+                <h4>Checklist</h4>
+                <hr>
+                {% for item in self.checklist.items %}
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="">{{item}}</label>
+                  </div>
+                {% endfor %}
+              </div>
+            <br><br>
+            <!-- <div class="sidebar-module">
+              <h4>Resources</h4>
+              <hr>
+              <ol class="list-unstyled">
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Facebook</a></li>
+              </ol>
+            </div> -->
+          </div><!-- /.blog-sidebar -->
+        {% endif %}
 
       </div><!-- /.row -->
 
