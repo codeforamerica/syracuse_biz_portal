@@ -8,11 +8,11 @@ from modelcluster.models import ClusterableModel
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.blocks import CharBlock, RichTextBlock, IntegerBlock, URLBlock, EmailBlock
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-
 
 
 # Create your models here.
@@ -22,11 +22,13 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 """
 CATEGORIES & CHECKLISTS
 """
+
+
 class Category(models.Model):
     """
     Represents a category for business development.
     """
-    page = models.ForeignKey( # what page do we want to display this poll on?
+    page = models.ForeignKey(
         'wagtailcore.Page',
         related_name='categories',
         null=True,
@@ -34,10 +36,10 @@ class Category(models.Model):
     )
 
     name = models.CharField(
-        max_length=255,null=True
+        max_length=255, null=True
     )
     slug = models.CharField(
-        max_length=255,null=True
+        max_length=255, null=True
     )
 
     panels = [
@@ -48,19 +50,20 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Checklist(models.Model):
     """
     Represents a checklist for a given Category.
     """
 
     name = models.CharField(
-        max_length=255,null=True
+        max_length=255, null=True
     )
     description = models.CharField(
-        max_length=3000,null=True
+        max_length=3000, null=True
     )
     slug = models.CharField(
-        max_length=255,null=True
+        max_length=255, null=True
     )
 
     category = models.ForeignKey(Category, related_name="checklists", null=True, blank=True)
@@ -72,7 +75,7 @@ class Checklist(models.Model):
                                   label="Checklist Text",
                                   help_text="Add a Checklist Item"
                                   )),
-        ], null=True)
+    ], null=True)
 
     panels = [
         FieldPanel('name'),
@@ -83,10 +86,8 @@ class Checklist(models.Model):
     def __str__(self):
         return self.name
 
-
         # add function here to create step page with slug that matches a checklist
         # if checklist is deleted, make sure the page deletes too!
-
 
 
 class ChecklistItem(models.Model):
@@ -96,7 +97,7 @@ class ChecklistItem(models.Model):
     checklist = ParentalKey('Checklist', related_name='checklist_items', null=True)
 
     text = models.CharField(
-        max_length=255,null=True
+        max_length=255, null=True
     )
     completed = models.BooleanField(default=False)
     order_num = models.IntegerField(default=0)
@@ -113,10 +114,34 @@ register_snippet(Checklist)
 ###################################
 
 # title is inherited from the Page model!
+
+
 class StepPage(Page):
     date = models.DateTimeField("Post date")
-    description = models.CharField(max_length=2000,null=True)
-    category = models.ForeignKey(Category, related_name="step_pages", null=True, blank=True,on_delete=models.SET_NULL )
+    description = models.CharField(max_length=2000, null=True)
+    category = models.ForeignKey(Category, related_name="step_pages", null=True, blank=True, on_delete=models.SET_NULL)
+
+    page_content = StreamField([
+        ('heading', blocks.CharBlock(classname="full title", icon="title")),
+        ('paragraph', blocks.RichTextBlock()),
+        ('email', blocks.EmailBlock(null=True,
+                            classname="email",
+                            label="Email",
+                            help_text="Add an email"
+                            )),
+        ('phone_number', blocks.IntegerBlock(max_length=255,
+                            null=True,
+                            classname="phone_number",
+                            label="Phone Number",
+                            help_text="Add a Phone Number"
+                            )),
+        ('link', blocks.URLBlock(max_length=1000,
+                            null=True,
+                            classname="text",
+                            label="Resource Link",
+                            help_text="Add resource link"
+                            ))
+    ], null=True, blank=True)
 
     header_img = models.ForeignKey(
         'wagtailimages.Image',
@@ -127,11 +152,11 @@ class StepPage(Page):
     )
 
     checklist = models.ForeignKey(
-    'biz_content.Checklist',
-    null=True,
-    blank=True,
-    on_delete=models.PROTECT,
-    related_name='+'
+        'biz_content.Checklist',
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name='+'
     )
 
     link_page = models.ForeignKey(
@@ -147,45 +172,8 @@ class StepPage(Page):
         FieldPanel('date'),
         FieldPanel('description'),
         ImageChooserPanel('header_img'),
+        StreamFieldPanel('page_content'),
         SnippetChooserPanel('checklist'),
         FieldPanel('link_page'),
         FieldPanel('category'),
-        InlinePanel('content_paragraph', label="Paragraph Section")
-    ]
-
-class ContentParagraph(models.Model):
-    page = ParentalKey('biz_content.StepPage', related_name='content_paragraph', null=True)
-    header = models.CharField(
-        max_length=1000,null=True, blank=True
-    )
-    subheader = models.CharField(
-        max_length=1000,null=True, blank=True
-    )
-    body = RichTextField(blank=True)
-
-    resources = StreamField([
-        ('phone_number', blocks.IntegerBlock(max_length=255,
-                                  null=True,
-                                  classname="phone_number",
-                                  label="Phone Number",
-                                  help_text="Add a Phone Number"
-                                  )),
-        ('email', blocks.EmailBlock(null=True,
-                                  classname="email",
-                                  label="Email",
-                                  help_text="Add an email"
-                                  )),
-        ('link', blocks.URLBlock(max_length=1000,
-                                  null=True,
-                                  classname="text",
-                                  label="Resource Link",
-                                  help_text="Add resource link"
-                                  )),
-    ], null=True, blank=True)
-
-    panels = [
-        FieldPanel('header'),
-        FieldPanel('subheader'),
-        FieldPanel('body'),
-        StreamFieldPanel('resources')
     ]
