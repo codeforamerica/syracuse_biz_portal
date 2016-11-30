@@ -10,7 +10,7 @@ psycopg2==2.6.2
 pytz==2016.7
 six==1.10.0
 Unidecode==0.4.19
-wagtail==1.6.3
+wagtail==1.7.0
 Willow==0.3.1
 
 #will move to pypi at first major version
