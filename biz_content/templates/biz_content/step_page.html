@@ -28,20 +28,17 @@
 
         <div class="col-sm-8  blog-main">
           <article>
-            {% for r in page.page_content %}
+            {% for block in page.page_content %}
 
-                  {% if r.block_type == 'phone_number' %}
-                    <p>Phone: {{r}}</p>
-                  {% elif r.block_type == 'email' %}
-                    <p>Email: {{r}}</p>
-                  {% elif r.block_type == 'heading' %}
-                    <h3>{{r}}</h3>
-                  {% elif r.block_type == 'paragraph' %}
-                    <p>{{r}}</p>
-                  {% elif r.block_type == 'link' %}
-                    <p>View: {{r}}</p>
+                  {% if block.block_type == 'heading' %}
+                    <h3>{{ block }}</h3>
+                    <br>
+                  {% elif block.block_type == 'paragraph' %}
+                    <p>{{ block }}</p>
+                    <br>
+                  {% else %}
+                      {% include_block block %}
                   {% endif %}
-                  <br />
              {%endfor%}
           </article>
         </div>

@@ -110,19 +110,26 @@ class StepPage(Page):
         ('email', blocks.EmailBlock(null=True,
                             classname="email",
                             label="Email",
-                            help_text="Add an email"
+                            help_text="Add an email",
+                            template="biz_content/content_blocks/email_block.html"
                             )),
         ('phone_number', blocks.IntegerBlock(max_length=255,
                             null=True,
                             classname="phone_number",
                             label="Phone Number",
-                            help_text="Add a Phone Number"
+                            help_text="Add a Phone Number",
+                            template="biz_content/content_blocks/phone_block.html"
                             )),
-        ('link', blocks.URLBlock(max_length=1000,
+        ('link', blocks.StructBlock(
+                            [
+                                ('link_text', blocks.CharBlock()),
+                                ('link_url', blocks.URLBlock())
+                            ],
                             null=True,
                             classname="text",
                             label="Resource Link",
-                            help_text="Add resource link"
+                            help_text="Add resource link",
+                            template="biz_content/content_blocks/url_block.html"
                             ))
     ], null=True, blank=True)
 
