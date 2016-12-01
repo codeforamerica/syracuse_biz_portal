@@ -24,18 +24,19 @@
       </div>
     </header>
 
+    {% for c in categories %}
 
     <!-- Portfolio Grid Section -->
-    <section id="plan">
+    <section class="{% cycle 'odd' 'success' %}" id={{c.name}}>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Plan</h2>
+                    <h2>{{c.name}}</h2>
                     <hr class="star-primary">
                 </div>
             </div>
             <div class="row">
-                {% for p in step_pages %}
+                {% for p in c.step_pages.all %}
 	                <div class="col-sm-4 portfolio-item">
 	                    <a href={{p.slug}} class="portfolio-link">
 	                        <div class="caption">
@@ -54,29 +55,8 @@
         </div>
     </section>
 
+    {%endfor%}
 
-    <!-- About Section -->
-    <section class="success" id="launch">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Launch</h2>
-                    <hr class="star-light">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p></p>
-                </div>
-                <div class="col-lg-4">
-                    <p></p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Contact Section -->
     <section id="contact">
@@ -91,7 +71,6 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                     <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
                     <form name="sentMessage" id="contactForm" novalidate>
                         <div class="row control-group">
