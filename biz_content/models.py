@@ -36,6 +36,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+register_snippet(Category)
+
 
 class Checklist(models.Model):
     """
@@ -79,9 +81,12 @@ class Checklist(models.Model):
     def __str__(self):
         return self.name
 
-register_snippet(Category)
 register_snippet(Checklist)
 
+
+class ChecklistItem(models.Model):
+    checklist = models.ForeignKey(Checklist)
+    text = models.
 
 class StepPage(Page):
     date = models.DateTimeField("Post date")
