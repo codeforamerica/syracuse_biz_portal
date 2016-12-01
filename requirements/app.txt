@@ -3,6 +3,7 @@ Django==1.9.7
 django-modelcluster==2.0
 django-taggit==0.18.3
 django-treebeard==4.0.1
+django-registration==2.2
 djangorestframework==3.3.3
 html5lib==0.999999
 Pillow==3.4.1
