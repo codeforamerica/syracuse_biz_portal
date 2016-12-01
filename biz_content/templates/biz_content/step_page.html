@@ -26,7 +26,7 @@
 
       <div class="row">
 
-        <div class="col-sm-8 blog-main">
+        <div class="col-sm-8  blog-main">
           <article>
             {% for block in page.page_content %}
 
@@ -46,15 +46,19 @@
 
 
       {% if self.checklist.items %}
-        <div style="border-left:1px solid #333;" class="col-sm-4 blog-sidebar">
-            <div class="sidebar-module sidebar-module-inset">
-              <h4>Checklist</h4>
-              <hr>
-              {% for item in self.checklist.items %}
-                <div class="checkbox">
-                  <label><input type="checkbox" value="">{{item}}</label>
-                </div>
-              {% endfor %}
+        <div class="col-sm-4 blog-sidebar">
+            <div class="panel panel-default sidebar-checklist">
+              <div class="panel-heading">
+                <h4>Checklist</h4>
+              </div>
+
+              <div class="panel-body">
+                {% for item in self.checklist.items %}
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="">{{item}}</label>
+                  </div>
+                {% endfor %}
+              </div>
             </div>
         </div><!-- /.blog-sidebar -->
       {% endif %}
