@@ -49,8 +49,8 @@
 
 
       {% if self.checklist.items %}
-        <div class="col-sm-4 blog-sidebar" >
-            <div class="sidebar-module sidebar-module-inset">
+        <div class="col-sm-4 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset sidebar-checklist" data-spy="affix" data-offset-top="218" data-offset-bottom="321">
               <h4>Checklist</h4>
               <hr>
               {% for item in self.checklist.items %}

@@ -510,16 +510,27 @@ fieldset[disabled] .btn-success.active {
   display: none;
 }
 
+/*Checklist sidebar*/
 .checkbox label, .radio label {
   font-size: 16px;
 }
-
+.blog-sidebar .checkbox, .radio {
+  margin-bottom: 20px;
+}
 .blog-sidebar .checkbox label:hover {
   background-color: rgba(225, 225, 225, 0.5); 
   border-radius: 3px;
   display: block;
 }
-.blog-sidebar {
+.sidebar-checklist {
   background-color: rgba(44, 62, 80, 0.3);
-  padding:5px 0;
+  padding:5px 15px;
+}
+.affix {
+  top: 101px;
+  /*right: 0px;*/
+  max-width: 360px;
+}
+@media (min-width: @screen-sm-min) {
+  .affix {position: relative!important;}
 }
