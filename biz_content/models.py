@@ -4,8 +4,6 @@ from django.db import models
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailadmin.edit_handlers import InlinePanel, PageChooserPanel
-# Installed with Wagtail, ModelCluster provides many custom field-types
-# that Wagtail relies on
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from wagtail.wagtailcore.models import Page
@@ -23,14 +21,6 @@ class Category(models.Model):
     """
     Represents a category for business development.
     """
-    # what page do we want to display this poll on?
-    page = models.ForeignKey(
-        'wagtailcore.Page',
-        related_name='categories',
-        null=True,
-        blank=True
-    )
-
     name = models.CharField(
         max_length=255, null=True
     )
@@ -91,10 +81,6 @@ class Checklist(models.Model):
 
 register_snippet(Category)
 register_snippet(Checklist)
-
-###################################
-
-# title is inherited from the Page model!
 
 
 class StepPage(Page):

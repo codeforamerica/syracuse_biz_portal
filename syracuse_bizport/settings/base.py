@@ -18,7 +18,7 @@ INSTALLED_APPS = [
 
     'home',
     'search',
-
+    'profiles',
     'rest_framework',
     'adminsortable2',
     'wealthmap',
