@@ -12,22 +12,38 @@
         event.preventDefault();
     });
 
-    // Highlight the top nav as scrolling occurs
-    $('body').scrollspy({
-        target: '.navbar-fixed-top',
-        offset: 51
-    });
-
     // Closes the Responsive Menu on Menu Item Click
     $('.navbar-collapse ul li a').click(function(){
             $('.navbar-toggle:visible').click();
     });
 
-    // Offset for Main Navigation
-    $('#mainNav').affix({
+    // Affixed checklist
+    function affixChecklist(){
+      $('.sidebar-checklist').affix({
         offset: {
-            top: 100
+          top: 330,
+          bottom: 350
         }
+      });
+    }
+
+    // Initial load: If the user is on a large screen, show the affixed checklist
+    if($(window).width() > 768){
+      affixChecklist();
+    }
+
+    // On resize, affix the checklist if the window is large
+    // otherwise unbind bootstrap affix
+    $(window).resize(function(){
+      var viewPortWidth = $(window).width();
+      if(viewPortWidth > 768){
+        affixChecklist();
+      } else {
+        $(window).off(".affix");
+        $(".sidebar-checklist")
+          .removeClass("affix affix-top affix-bottom")
+          .removeData("bs.affix");
+      }
     })
 
     // Floating label headings for the contact form
