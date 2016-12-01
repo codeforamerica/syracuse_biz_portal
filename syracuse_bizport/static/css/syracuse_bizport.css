@@ -517,18 +517,18 @@ fieldset[disabled] .btn-success.active {
   margin-bottom: 20px;
 }
 .blog-sidebar .checkbox label:hover {
-  background-color: rgba(225, 225, 225, 0.5); 
+  background-color: rgba(225, 225, 225, 0.5);
   border-radius: 3px;
   display: block;
 }
-.sidebar-checklist {
-  background-color: rgba(44, 62, 80, 0.3);
-  padding:5px 15px;
-}
 .affix {
-  top: 101px;
-  /*right: 0px;*/
-  max-width: 360px;
+	position: fixed !important;
+	top: 50px;
+}
+
+.affix-top, .affix-bottom, .affix {
+	width: 250px;
+	position: static;
 }
 @media (min-width: @screen-sm-min) {
   .affix {position: relative!important;}

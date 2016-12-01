@@ -47,14 +47,18 @@
 
       {% if self.checklist.items %}
         <div class="col-sm-4 blog-sidebar">
-            <div class="sidebar-module sidebar-module-inset sidebar-checklist">
-              <h4>Checklist</h4>
-              <hr>
-              {% for item in self.checklist.items %}
-                <div class="checkbox">
-                  <label><input type="checkbox" value="">{{item}}</label>
-                </div>
-              {% endfor %}
+            <div class="panel panel-default sidebar-checklist">
+              <div class="panel-heading">
+                <h4>Checklist</h4>
+              </div>
+
+              <div class="panel-body">
+                {% for item in self.checklist.items %}
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="">{{item}}</label>
+                  </div>
+                {% endfor %}
+              </div>
             </div>
         </div><!-- /.blog-sidebar -->
       {% endif %}
