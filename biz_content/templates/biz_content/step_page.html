@@ -53,9 +53,9 @@
               </div>
 
               <div class="panel-body">
-                {% for item in self.checklist.items %}
+                {% for item in self.checklist.items.all %}
                   <div class="checkbox">
-                    <label><input type="checkbox" value="">{{item}}</label>
+                    <label><input type="checkbox" value="">{{item.text}}</label>
                   </div>
                 {% endfor %}
               </div>
@@ -67,7 +67,9 @@
       <div class="col-xs-12">
         <nav>
           <ul class="pager">
-            <li><a href="{{ page.link_page.url }}"><strong>Next Page:</strong> {{ page.link_page }}</a></li>
+            <li><a href="{{ page.link_page.url }}">
+                <strong>Next Page:</strong> {{ page.link_page }}
+            </a></li>
           </ul>
         </nav>
       </div>

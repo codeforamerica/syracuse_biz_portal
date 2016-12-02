@@ -6,7 +6,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailadmin.edit_handlers import InlinePanel, PageChooserPanel
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import CharBlock, RichTextBlock, IntegerBlock
@@ -39,7 +39,7 @@ class Category(models.Model):
 register_snippet(Category)
 
 
-class Checklist(models.Model):
+class Checklist(ClusterableModel):
     """
     Represents a checklist for a given Category.
 
@@ -57,25 +57,10 @@ class Checklist(models.Model):
         max_length=255, null=True
     )
 
-    category = models.ForeignKey(
-        Category,
-        related_name="checklists",
-        null=True,
-        blank=True)
-
-    items = StreamField([
-        ('text', blocks.CharBlock(max_length=255,
-                                  null=True,
-                                  classname="text",
-                                  label="Checklist Text",
-                                  help_text="Add a Checklist Item"
-                                  )),
-    ], null=True)
-
     panels = [
         FieldPanel('name'),
         FieldPanel('category'),
-        StreamFieldPanel('items')
+        InlinePanel('items', label="Checklist Items"),
     ]
 
     def __str__(self):
@@ -84,9 +69,10 @@ class Checklist(models.Model):
 register_snippet(Checklist)
 
 
-class ChecklistItem(models.Model):
-    checklist = models.ForeignKey(Checklist)
-    text = models.
+class ChecklistItem(Orderable):
+    checklist = ParentalKey(Checklist, related_name='items')
+    text = models.CharField(max_length=255)
+
 
 class StepPage(Page):
     date = models.DateTimeField("Post date")
