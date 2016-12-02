@@ -3,9 +3,28 @@
 {% block body_class %}template-blogpage{% endblock %}
 
 {% block content %}
-<form action="" method="post">
-  {% csrf_token %}
-  {{ form.as_ul }}
-  <input type="submit" value="{% trans 'Sign Up!' %}" />
-</form>
+
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Register for the Syracuse Business Portal
+      </div>
+      <div class="panel-body">
+      <form action="" method="post">
+        {% csrf_token %}
+          {% for field in form %}
+          <div class="form-group">
+
+            <label for="{{ field.id_for_label }}">{{ field.html_name }}</label>
+            <input class="form-control" id="{{ field.id_for_label }}" name="{{ field.html_name }}" type="{{field.type}}" />
+            {{ field.errors }}
+          </div>
+          {% endfor %}
+        <input type="submit" class="btn btn-primary" value="{% trans 'Sign Up!' %}" />
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
