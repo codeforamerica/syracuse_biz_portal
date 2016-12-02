@@ -4,7 +4,16 @@
 
 {% block content %}
 
-<div class="row">
-  <h1>Profile</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{ username }} Profile</h1>
+      <p>This page is a placeholder template for the profile page.</p>
+      <p>{{ user.username }}</p>
+      <p>{{ user.email }}</p>
+      <p>{{ user.first_name }}</p>
+      <p>{{ user.last_name }}</p>
+    </div>
+  </div>
 </div>
 {% endblock %}
