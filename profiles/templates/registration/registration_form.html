@@ -1,27 +1,26 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n widget_tweaks %}
 {% block body_class %}template-blogpage{% endblock %}
 
 {% block content %}
 
 <div class="row">
   <div class="col-md-4 col-md-offset-4">
-    <div class="panel panel-default">
+    <div class="account-form  panel panel-default">
       <div class="panel-heading">
         Register for the Syracuse Business Portal
       </div>
       <div class="panel-body">
       <form action="" method="post">
-        {% csrf_token %}
+          {% csrf_token %}
           {% for field in form %}
+          {{ form.title }}
           <div class="form-group">
-
-            <label for="{{ field.id_for_label }}">{{ field.html_name }}</label>
-            <input class="form-control" id="{{ field.id_for_label }}" name="{{ field.html_name }}" type="{{field.type}}" />
-            {{ field.errors }}
+            <label>{{ field.label }}</label>
+            {% render_field field class+="form-control" %}
           </div>
           {% endfor %}
-        <input type="submit" class="btn btn-primary" value="{% trans 'Sign Up!' %}" />
+        <input type="submit" class="btn btn-primary" value="{% trans 'Sign Up' %}" />
       </form>
       </div>
     </div>
