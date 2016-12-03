@@ -6,4 +6,4 @@ class Project(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     checklists = models.ManyToManyField('biz_content.Checklist')
-    #checked_items = models.ManyToMany('biz_content.ChecklistItems')
+    checked_items = models.ManyToManyField('biz_content.ChecklistItem')
