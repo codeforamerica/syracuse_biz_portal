@@ -11,7 +11,7 @@ body {
 
 header.step{
 	text-align:left;
-	margin-bottom:60px;
+	margin-bottom:30px;
 	padding:20px;
 	color:white;
 	background-color:#2C3E50;
@@ -40,16 +40,7 @@ a:hover,
 a:focus,
 a:active,
 a.active {
-  color: #18BC9C;
   outline: none;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 700;
 }
 hr.star-light,
 hr.star-primary {
@@ -113,8 +104,7 @@ header .intro-text .skills {
   }
 }
 .navbar-custom {
-  background: #2C3E50;
-  font-weight: 700;
+  background: #233140;
   border: none;
 }
 .navbar-custom a:focus {
@@ -530,3 +520,33 @@ fieldset[disabled] .btn-success.active {
 @media (min-width: @screen-sm-min) {
   .affix {position: relative!important;}
 }
+
+.panel-body, .panel-heading {
+  background-color: rgba(44, 62, 80, 0.1);
+  background-image: none;
+
+}
+
+  /*.panel {
+    border:none!important;
+    border-radius: 0px!important;
+    box-shadow:none!important;
+    -webkit-box-shadow: none;
+  }*/
+
+a .panel-body {
+  padding: 0 10px;
+}
+a .panel-body h3{
+  font-size: 20px;
+  margin-top: 10px;
+}
+a .panel-body h3 .fa-2x{
+  font-size: 1em;
+  color: #777;
+  padding-right: 10px;
+}
+@media (min-width: @screen-sm-min) {
+  a .panel-body {padding: 15px!important;}
+}
+
