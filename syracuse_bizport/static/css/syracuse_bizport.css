@@ -17,6 +17,12 @@ header.step{
 	background-color:#2C3E50;
 }
 
+.navbar-brand img {
+	width: 70px;
+	display: inline-block;
+	vertical-align: top;
+}
+
 .jumbotron {
 	background-color: #3C6EA1 !important;
 }
