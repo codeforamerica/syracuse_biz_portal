@@ -11,7 +11,7 @@ body {
 
 header.step{
 	text-align:left;
-	margin-bottom:60px;
+	margin-bottom:30px;
 	padding:20px;
 	color:white;
 	background-color:#2C3E50;
@@ -59,16 +59,7 @@ a:hover,
 a:focus,
 a:active,
 a.active {
-  color: #18BC9C;
   outline: none;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 700;
 }
 hr.star-light,
 hr.star-primary {
@@ -131,6 +122,7 @@ header .intro-text .skills {
     font-size: 1.75em;
   }
 }
+
 section {
   padding: 30px 0;
 }
@@ -453,11 +445,39 @@ fieldset[disabled] .btn-success.active {
 	position: fixed !important;
 	top: 50px;
 }
-
 .affix-top, .affix-bottom, .affix {
 	width: 250px;
 	position: static;
 }
-@media (min-width: @screen-sm-min) {
-  .affix {position: relative!important;}
+.panel-body {
+  background-color: rgba(44, 62, 80, 0.1);
+}
+.panel-default>.panel-heading {
+  background-image: none;
+  background-color: rgba(44, 62, 80, 0.1);
+}
+.panel-heading {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  padding: 5px 15px;
+}
+.panel {
+  border-radius: 2px;
+  box-shadow:none;
+  -webkit-box-shadow: none;
+}
+a .panel-body {
+  padding: 0 10px;
+}
+a .panel-body h3{
+  font-size: 20px;
+  margin-top: 10px;
+}
+a .panel-body h3 .fa-2x{
+  font-size: 1em;
+  color: #777;
+  padding-right: 10px;
+}
+@media(max-width:768px) {
+  a .panel-body {padding: 15px;}
 }
