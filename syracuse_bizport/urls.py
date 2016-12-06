@@ -1,7 +1,7 @@
-try:
-    import local_settings
-except ImportError:
-    pass
+# try:
+    # import local_settings
+# except ImportError:
+    # pass
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -26,6 +26,6 @@ urlpatterns = [
 ]
 
 # Serve up local images if running in development
-if local_settings.DEBUG is True:
-    print("DEBUG")
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if local_settings.DEBUG is True:
+    # print(local_settings)
+    # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
