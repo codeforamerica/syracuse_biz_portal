@@ -1,3 +1,4 @@
+{% load staticfiles %}
  <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
     <div class="container">
@@ -6,7 +7,10 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu 
             </button>
-            <a class="navbar-brand" href="/">Business Portal</a>
+            <a class="navbar-brand" href="#">
+              <img id="main-logo" alt="Brand" src="{% static 'images/syracuse-seal.png' %}">
+              Business Portal
+            </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -23,14 +27,16 @@
                 <li class="page-scroll">
                     <a href="#contact">Contact</a>
                 </li>
-                {% if user.is_authenicated %}
+                {% if user.is_authenticated %}
                   <li>
                       <a href="#">Profile</a>
                   </li>
-
+                  <li>
+                      <a href="#">Log Out</a>
+                  </li>
                 {% else %}
                   <li>
-                      <a href="#">Login</a>
+                      <a href="/accounts/login/">Login</a>
                   </li>
                 {% endif %}
             </ul>
