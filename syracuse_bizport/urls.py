@@ -1,4 +1,8 @@
-import local_settings
+try:
+    import local_settings
+except ImportError:
+    pass
+
 from django.conf import settings
 from django.conf.urls.static import static
 
