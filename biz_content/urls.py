@@ -10,6 +10,5 @@ from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from .import views
 
 urlpatterns = [
-    url(r'^profile/(\w+)/$', views.profile, name="profile"),
-    url(r'', include('registration.backends.simple.urls')),
+    url(r'^profile/$', views.profile, name="profile"),
 ]
