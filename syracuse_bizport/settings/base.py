@@ -14,9 +14,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'widget_tweaks',
+    'registration',
+
     'home',
     'search',
-
+    'profiles',
     'rest_framework',
     'adminsortable2',
     'wealthmap',
@@ -60,10 +63,10 @@ ROOT_URLCONF = 'syracuse_bizport.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ os.path.join(PROJECT_DIR, 'templates'),
-                os.path.join(PROJECT_DIR, 'biz_content/templates/biz_content')
+        'DIRS': [os.path.join(PROJECT_DIR, 'templates'),
+                 os.path.join(PROJECT_DIR, 'biz_content/templates/biz_content')
 
-        ],
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
