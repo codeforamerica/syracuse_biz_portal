@@ -88,19 +88,19 @@ class StepPage(Page):
         ('heading', blocks.CharBlock(classname="full title", icon="title")),
         ('paragraph', blocks.RichTextBlock()),
         ('email', blocks.EmailBlock(
-                    null=True,
-                    classname="email",
-                    label="Email",
-                    help_text="Add an email",
-                    template="biz_content/content_blocks/email_block.html"
+            null=True,
+            classname="email",
+            label="Email",
+            help_text="Add an email",
+            template="biz_content/content_blocks/email_block.html"
         )),
         ('phone_number', blocks.IntegerBlock(
-                    max_length=255,
-                    null=True,
-                    classname="phone_number",
-                    label="Phone Number",
-                    help_text="Add a Phone Number",
-                    template="biz_content/content_blocks/phone_block.html"
+            max_length=255,
+            null=True,
+            classname="phone_number",
+            label="Phone Number",
+            help_text="Add a Phone Number",
+            template="biz_content/content_blocks/phone_block.html"
         )),
         ('link', blocks.StructBlock(
             [

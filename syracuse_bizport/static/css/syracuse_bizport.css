@@ -31,8 +31,14 @@ header.step{
 	transition: height 0.3s ease;
 }
 
-.jumbotron {
-	background-color: #3C6EA1 !important;
+.jumbotron.hero-shade {
+	background-color: rgba(51,122,183,0.8);
+}
+
+.hero-background {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 .account-form {

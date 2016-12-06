@@ -1,4 +1,7 @@
+import local_settings
 from django.conf import settings
+from django.conf.urls.static import static
+
 from django.conf.urls import include, url
 from django.contrib import admin
 
@@ -17,3 +20,8 @@ urlpatterns = [
 
     url(r'', include(wagtail_urls)),
 ]
+
+# Serve up local images if running in development
+if local_settings.DEBUG is True:
+    print("DEBUG")
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
