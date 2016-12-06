@@ -17,10 +17,18 @@ header.step{
 	background-color:#2C3E50;
 }
 
-.navbar-brand img {
-	width: 70px;
+#main-logo {
+	height: 70px;
 	display: inline-block;
 	vertical-align: top;
+	transition: height 0.3s ease;
+}
+
+#main-logo.minimized {
+	height: 30px;
+	width: auto;
+	vertical-align: middle;
+	transition: height 0.3s ease;
 }
 
 .jumbotron {
