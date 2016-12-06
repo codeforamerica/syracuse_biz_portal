@@ -53,7 +53,7 @@
               </div>
 
               <div class="panel-body">
-                {% for item in self.checklist.items.all %}
+                {% for item in self.items.all %}
                   <div class="checkbox">
                     <label><input type="checkbox" value="">{{item.text}}</label>
                   </div>
