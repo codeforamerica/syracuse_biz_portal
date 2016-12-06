@@ -3,6 +3,19 @@
 (function($) {
     "use strict"; // Start of use strict
 
+    // jQuery for minimizing logo on scroll down page
+
+    $(window).scroll(function(){
+      var scroll = $(window).scrollTop();
+      // Minimize if the user scrolls more than 50px
+      if(scroll >= 50){
+        // This just adds a class, the rest is CSS
+        $('#main-logo').addClass('minimized');
+      } else {
+        $('#main-logo').removeClass('minimized');
+      }
+    });
+
     // jQuery for page scrolling feature - requires jQuery Easing plugin
     $('.page-scroll a').bind('click', function(event) {
         var $anchor = $(this);
