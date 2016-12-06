@@ -1,5 +1,4 @@
-from __future__ import unicode_literals
-
+from django.conf import settings
 from django.db import models
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
@@ -150,3 +149,10 @@ class StepPage(Page):
         FieldPanel('link_page'),
         FieldPanel('category'),
     ]
+
+
+class Project(models.Model):
+    name = models.CharField(max_length=255)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
+    checklists = models.ManyToManyField(Checklist)
+    checked_items = models.ManyToManyField(ChecklistItem)
