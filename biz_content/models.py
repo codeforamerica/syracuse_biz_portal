@@ -112,12 +112,12 @@ class StepPage(Page):
         StreamFieldPanel('page_content'),
         FieldPanel('link_page'),
         FieldPanel('category'),
-        InlinePanel('items', label="Checklist Items"),
+        InlinePanel('checklist_items', label="Checklist Items"),
     ]
 
 
 class ChecklistItem(Orderable):
-    checklist = ParentalKey(StepPage, related_name='items')
+    checklist = ParentalKey(StepPage, related_name='checklist_items')
     text = models.CharField(max_length=255)
 
 
