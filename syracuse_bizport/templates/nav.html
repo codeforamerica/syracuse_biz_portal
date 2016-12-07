@@ -1,11 +1,14 @@
 {% load staticfiles %}
  <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+    {% include 'translation_bar.html' %}
+
+
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> Menu 
+                <span class="sr-only">Toggle navigation</span> Menu
             </button>
             <a class="navbar-brand" href="#">
               <img id="main-logo" alt="Brand" src="{% static 'images/syracuse-seal.png' %}">
@@ -13,9 +16,11 @@
             </a>
         </div>
 
+
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+
                 <li class="hidden">
                     <a href="#page-top"></a>
                 </li>
@@ -39,7 +44,9 @@
                       <a href="/accounts/login/">Login</a>
                   </li>
                 {% endif %}
+
             </ul>
+
         </div>
         <!-- /.navbar-collapse -->
     </div>
