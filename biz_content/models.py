@@ -66,6 +66,14 @@ class StepPage(Page):
                     help_text="Add a Phone Number",
                     template="biz_content/content_blocks/phone_block.html"
         )),
+        ('alert_text', blocks.CharBlock(
+                    max_length=2000,
+                    null=True,
+                    classname="alert_text",
+                    label="Alert Text",
+                    help_text="Add Alert Text",
+                    template="biz_content/content_blocks/alert_text.html"
+        )),
         ('link', blocks.StructBlock(
             [
                 ('link_text', blocks.CharBlock()),
