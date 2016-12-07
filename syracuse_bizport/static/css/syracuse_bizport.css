@@ -478,6 +478,16 @@ a .panel-body h3 .fa-2x{
   color: #777;
   padding-right: 10px;
 }
+
+.goog-te-gadget-simple{
+  border-radius:40px;
+  padding:20px;
+}
+
+a:hover .goog-te-menu-value{
+  text-decoration: none;
+}
+
 @media(max-width:768px) {
   a .panel-body {padding: 15px;}
 }
