@@ -1,0 +1,25 @@
+{% extends "wagtailadmin/base.html" %}
+{% load wagtailadmin_tags i18n staticfiles gravatar %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title='Analytics' %}
+
+    <div class="nice-padding">
+    	<h1>Site Stats</h1>
+        <div>
+        	Chart to come
+        </div>
+		<hr>
+        <h1>Google Analytics</h1>
+        <div>
+			<iframe style="width:800px;height:600px;" src="https://app.databox.com/datawall/eb275f6298916aa5fc074d7ad63ddf9205848525a"></iframe>
+        </div>
+        <hr>
+        <h1>Zendesk Analytics</h1>
+        <div>
+        	<iframe style="width:800px;height:600px;" src="https://app.databox.com/datawall/0523c780dacb2a213d7e4d88291949f30584862c0"></iframe>
+       </div>
+    </div>
+
+{% endblock %}
+

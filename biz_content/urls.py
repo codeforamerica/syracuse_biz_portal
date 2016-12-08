@@ -11,4 +11,5 @@ from .import views
 
 urlpatterns = [
     url(r'^profile/$', views.profile, name="profile"),
+    url(r'^dashboard/$', views.dashboard, name='wagalytics_dashboard'),
 ]
