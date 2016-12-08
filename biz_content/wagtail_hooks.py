@@ -6,15 +6,7 @@ from wagtail.wagtailadmin.menu import MenuItem
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
-import urls
-import views
-
-
-@hooks.register('register_admin_urls')
-def register_admin_urls():
-    return [
-        url(r'^analytics/', include(urls)),
-    ]
+from biz_content import views
 
 @hooks.register('register_admin_menu_item')
 def register_styleguide_menu_item():
