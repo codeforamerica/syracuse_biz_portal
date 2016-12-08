@@ -39,13 +39,14 @@
                   {% else %}
                       {% include_block block %}
                   {% endif %}
+
              {%endfor%}
           </article>
         </div>
 
 
 
-      {% if self.checklist.items %}
+      {% if self.checklist_items %}
         <div class="col-sm-4 blog-sidebar">
             <div class="panel panel-default sidebar-checklist">
               <div class="panel-heading">
@@ -53,7 +54,7 @@
               </div>
 
               <div class="panel-body">
-                {% for item in self.checklist.items.all %}
+                {% for item in self.checklist_items.all %}
                   <div class="checkbox">
                     <label><input type="checkbox" value="">{{item.text}}</label>
                   </div>

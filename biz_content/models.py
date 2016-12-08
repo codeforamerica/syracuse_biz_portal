@@ -38,41 +38,6 @@ class Category(models.Model):
 register_snippet(Category)
 
 
-class Checklist(ClusterableModel):
-    """
-    Represents a checklist for a given Category.
-
-    TODO: add function here to create step page with slug that matches a
-    checklist if checklist is deleted, make sure the page deletes too!
-    """
-
-    name = models.CharField(
-        max_length=255, null=True
-    )
-    description = models.CharField(
-        max_length=3000, null=True
-    )
-    slug = models.CharField(
-        max_length=255, null=True
-    )
-
-    panels = [
-        FieldPanel('name'),
-        FieldPanel('category'),
-        InlinePanel('items', label="Checklist Items"),
-    ]
-
-    def __str__(self):
-        return self.name
-
-register_snippet(Checklist)
-
-
-class ChecklistItem(Orderable):
-    checklist = ParentalKey(Checklist, related_name='items')
-    text = models.CharField(max_length=255)
-
-
 class StepPage(Page):
     date = models.DateTimeField("Post date")
     description = models.CharField(max_length=2000, null=True)
@@ -130,14 +95,6 @@ class StepPage(Page):
         related_name='+'
     )
 
-    checklist = models.ForeignKey(
-        'biz_content.Checklist',
-        null=True,
-        blank=True,
-        on_delete=models.PROTECT,
-        related_name='+'
-    )
-
     link_page = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
@@ -153,14 +110,19 @@ class StepPage(Page):
         FieldPanel('description'),
         ImageChooserPanel('header_img'),
         StreamFieldPanel('page_content'),
-        SnippetChooserPanel('checklist'),
         FieldPanel('link_page'),
         FieldPanel('category'),
+        InlinePanel('checklist_items', label="Checklist Items"),
     ]
+
+
+class ChecklistItem(Orderable):
+    checklist = ParentalKey(StepPage, related_name='checklist_items')
+    text = models.CharField(max_length=255)
 
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
-    checklists = models.ManyToManyField(Checklist)
+    checklists = models.ManyToManyField(StepPage)
     checked_items = models.ManyToManyField(ChecklistItem)
