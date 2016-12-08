@@ -21,6 +21,13 @@ class ProjectFactory(dfactory.DjangoModelFactory):
     owner = factory.SubFactory(UserFactory)
 
 
+class ChecklistItemFactory(dfactory.DjangoModelFactory):
+    text = factory.Sequence(lambda n: "This is checkbox label: %03d" % n)
+
+    class Meta:
+        model = 'biz_content.ChecklistItem'
+
+
 class StepPageFactory(dfactory.DjangoModelFactory):
     title = factory.sequence(lambda n: "%03d" % n)
     slug = factory.Sequence(lambda n: "%03d" % n)
@@ -29,13 +36,8 @@ class StepPageFactory(dfactory.DjangoModelFactory):
     depth = 1
     path = 'test'
     checklist_item1 = factory.RelatedFactory(
-                            ChecklistItemFactory, 'checklist_items')
+                            ChecklistItemFactory, 'checklist')
+    checklist_item2 = factory.RelatedFactory(
+                            ChecklistItemFactory, 'checklist')
     class Meta:
         model = 'biz_content.StepPage'
-
-
-class ChecklistItemFactory(dfactory.DjangoModelFactory):
-    date = factory.LazyFunction(datetime.datetime.utcnow)
-
-    class Meta:
-        model = 'biz_content.ChecklistItem'

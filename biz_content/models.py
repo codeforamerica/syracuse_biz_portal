@@ -120,6 +120,9 @@ class ChecklistItem(Orderable):
     checklist = ParentalKey(StepPage, related_name='checklist_items')
     text = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.text
+
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
