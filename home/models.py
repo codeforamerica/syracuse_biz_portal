@@ -1,5 +1,5 @@
 from django.db import models
-from biz_content.models import Category, StepPage
+from biz_content.models import Category, CollectionPage, StepPage
 
 from wagtail.wagtailcore.models import Page
 
@@ -9,6 +9,7 @@ class HomePage(Page):
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
         context['categories'] = Category.objects.all()
+        context['collection_pages'] = CollectionPage.objects.all()
         context['step_pages'] = StepPage.objects.all()
 
         return context

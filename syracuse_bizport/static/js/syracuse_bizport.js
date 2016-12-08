@@ -34,7 +34,7 @@
     function affixChecklist(){
       $('.sidebar-checklist').affix({
         offset: {
-          top: 330,
+          top: 185,
           bottom: 350
         }
       });
