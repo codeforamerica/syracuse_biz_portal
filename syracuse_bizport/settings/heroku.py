@@ -2,7 +2,6 @@ import os
 import dj_database_url
 from .base import *
 
-
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 AWS_ACCESS_KEY_ID = os.environ['BUCKETEER_AWS_ACCESS_KEY_ID']
@@ -24,3 +23,5 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_URL = "https://%s.s3.amazonaws.com/" % (AWS_ACCESS_KEY_ID)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+
