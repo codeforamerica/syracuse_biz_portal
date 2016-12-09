@@ -6,7 +6,8 @@
 
 /* Padding top to avoid navbar */
 body {
-	padding-top: 50px;
+	padding-top: 95px;
+	background-color: #FAFAF9;
 }
 
 header.step{
@@ -38,6 +39,17 @@ header.step{
 .account-form {
 	margin-top: 100px;
 	margin-bottom: 100px;
+}
+
+/* Reposition wagtail admin button away from chat */
+.wagtail-userbar-trigger {
+	bottom: 35px;
+	left: 10px;
+}
+
+.wagtail-userbar-items {
+	bottom: 90px;
+	right: -10px;
 }
 
 /*!
@@ -443,15 +455,13 @@ fieldset[disabled] .btn-success.active {
 }
 .affix {
 	position: fixed !important;
-	top: 50px;
+	top: 95px;
 }
 .affix-top, .affix-bottom, .affix {
 	width: 250px;
 	position: static;
 }
-.panel-body {
-  background-color: rgba(44, 62, 80, 0.1);
-}
+
 .panel-default>.panel-heading {
   background-image: none;
   background-color: rgba(44, 62, 80, 0.1);
@@ -463,6 +473,8 @@ fieldset[disabled] .btn-success.active {
 }
 .panel {
   border-radius: 2px;
+	border-width: 2px;
+	border-color: #DEDED1;
   box-shadow:none;
   -webkit-box-shadow: none;
 }

@@ -38,9 +38,84 @@ class Category(models.Model):
 register_snippet(Category)
 
 
+class CollectionPage(Page):
+    """
+    Represents a collection of step pages.
+    """
+
+    header_img = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    date = models.DateTimeField("Post date")
+    description = models.CharField(max_length=2000, null=True)
+    page_content = StreamField([
+        ('heading', blocks.CharBlock(classname="full title", icon="title")),
+        ('paragraph', blocks.RichTextBlock()),
+        ('email', blocks.EmailBlock(
+            null=True,
+            classname="email",
+            label="Email",
+            help_text="Add an email",
+            template="biz_content/content_blocks/email_block.html"
+        )),
+        ('phone_number', blocks.IntegerBlock(
+            max_length=255,
+            null=True,
+            classname="phone_number",
+            label="Phone Number",
+            help_text="Add a Phone Number",
+            template="biz_content/content_blocks/phone_block.html"
+        )),
+        ('alert_text', blocks.CharBlock(
+            max_length=2000,
+            null=True,
+            classname="alert_text",
+            label="Alert Text",
+            help_text="Add Alert Text",
+            template="biz_content/content_blocks/alert_text.html"
+        )),
+        ('link', blocks.StructBlock(
+            [
+                ('link_text', blocks.CharBlock()),
+                ('link_url', blocks.URLBlock())
+            ],
+            null=True,
+            classname="text",
+            label="Resource Link",
+            help_text="Add resource link",
+            template="biz_content/content_blocks/url_block.html"
+        ))
+    ], null=True, blank=True)
+
+    start_link = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        on_delete=models.SET_NULL,
+        blank=True,
+        related_name='+',
+        help_text=('Choose an existing page if you want the link ',
+                   'to point somewhere inside the CMS.')
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('description'),
+        ImageChooserPanel('header_img'),
+        FieldPanel('date'),
+        StreamFieldPanel('page_content'),
+        FieldPanel('start_link'),
+    ]
+
+    subpage_types = ['biz_content.StepPage']
+
+
 class StepPage(Page):
     date = models.DateTimeField("Post date")
     description = models.CharField(max_length=2000, null=True)
+
     category = models.ForeignKey(
         Category,
         related_name="step_pages",
@@ -52,27 +127,27 @@ class StepPage(Page):
         ('heading', blocks.CharBlock(classname="full title", icon="title")),
         ('paragraph', blocks.RichTextBlock()),
         ('email', blocks.EmailBlock(
-                    null=True,
-                    classname="email",
-                    label="Email",
-                    help_text="Add an email",
-                    template="biz_content/content_blocks/email_block.html"
+            null=True,
+            classname="email",
+            label="Email",
+            help_text="Add an email",
+            template="biz_content/content_blocks/email_block.html"
         )),
         ('phone_number', blocks.IntegerBlock(
-                    max_length=255,
-                    null=True,
-                    classname="phone_number",
-                    label="Phone Number",
-                    help_text="Add a Phone Number",
-                    template="biz_content/content_blocks/phone_block.html"
+            max_length=255,
+            null=True,
+            classname="phone_number",
+            label="Phone Number",
+            help_text="Add a Phone Number",
+            template="biz_content/content_blocks/phone_block.html"
         )),
         ('alert_text', blocks.CharBlock(
-                    max_length=2000,
-                    null=True,
-                    classname="alert_text",
-                    label="Alert Text",
-                    help_text="Add Alert Text",
-                    template="biz_content/content_blocks/alert_text.html"
+            max_length=2000,
+            null=True,
+            classname="alert_text",
+            label="Alert Text",
+            help_text="Add Alert Text",
+            template="biz_content/content_blocks/alert_text.html"
         )),
         ('link', blocks.StructBlock(
             [
