@@ -10,7 +10,6 @@ from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import CharBlock, RichTextBlock, IntegerBlock
 from wagtail.wagtailcore.blocks import URLBlock, EmailBlock
-from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel

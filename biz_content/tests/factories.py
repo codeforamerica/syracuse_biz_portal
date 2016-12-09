@@ -1,5 +1,5 @@
-import datetime
 import factory
+from django.utils import timezone
 from factory import django as dfactory
 
 
@@ -14,6 +14,7 @@ class UserFactory(dfactory.DjangoModelFactory):
 
 
 class ProjectFactory(dfactory.DjangoModelFactory):
+
     class Meta:
         model = 'biz_content.Project'
 
@@ -32,12 +33,13 @@ class StepPageFactory(dfactory.DjangoModelFactory):
     title = factory.sequence(lambda n: "%03d" % n)
     slug = factory.Sequence(lambda n: "%03d" % n)
     description = factory.Sequence(lambda n: "%03d" % n)
-    date = factory.LazyFunction(datetime.datetime.utcnow)
+    date = factory.LazyFunction(timezone.now)
     depth = 1
     path = 'test'
     checklist_item1 = factory.RelatedFactory(
-                            ChecklistItemFactory, 'checklist')
+        ChecklistItemFactory, 'checklist')
     checklist_item2 = factory.RelatedFactory(
-                            ChecklistItemFactory, 'checklist')
+        ChecklistItemFactory, 'checklist')
+
     class Meta:
         model = 'biz_content.StepPage'
