@@ -4,7 +4,7 @@ from django.test import TransactionTestCase, TestCase
 from django.core.urlresolvers import reverse
 
 
-class CheckListFormTestCase(TestCase):
+class CheckListFormTestCase(TransactionTestCase):
     def setUp(self):
         self.project = factories.ProjectFactory()
         self.step_page = factories.StepPageFactory()
@@ -12,7 +12,7 @@ class CheckListFormTestCase(TestCase):
     def test_init_without_project(self):
         form = forms.ChecklistForm(self.step_page)
         cl = form.fields['checklist']
-        form_qs = list(cl._queryset.values_list('pk', flat=True))
-        qs = list(self.step_page.checklist_items.values_list('pk', flat=True))
-        self.assertListEqual(form_qs, qs)
+        form_qs = cl._queryset.values('pk')
+        qs = self.step_page.checklist_items.values('pk')
+        self.assertQuerysetEqual(form_qs, map(str,qs))
 
