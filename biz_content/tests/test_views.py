@@ -4,6 +4,30 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
 
+class ProfileViewTestCase(TestCase):
+
+    def setUp(self):
+        """Set Up User
+        Set up user with permissions to access admin."""
+        self.user = factories.UserFactory()
+        self.user.save()
+
+    def test_view_redirects_to_login(self):
+        """Profile redirect to login if not logged in.
+        """
+
+        res = self.client.get(reverse('profile'))
+        expected_redirect = "%s?next=%s" % (
+            reverse('auth_login'), reverse('profile'))
+
+        self.assertRedirects(res, expected_redirect)
+
+    def test_auth_user_logs_in(self):
+        """User goes to profile if logged in.
+        """
+        self.client.force_login(self.user)
+        res = self.client.get(reverse('profile'))
+        self.assertEquals(res.status_code, 200)
 
 class DashboardViewTestCase(TestCase):
 
