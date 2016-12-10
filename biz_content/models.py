@@ -13,6 +13,7 @@ from wagtail.wagtailcore.blocks import URLBlock, EmailBlock
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.contrib.settings.models import BaseSetting, register_setting
 
 
 class Category(models.Model):
@@ -203,3 +204,16 @@ class Project(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     checklists = models.ManyToManyField(StepPage)
     checked_items = models.ManyToManyField(ChecklistItem)
+
+
+@register_setting
+class FooterSettings(BaseSetting):
+    department_name = models.CharField(
+        max_length=255,
+        help_text="The name of the department.")
+    phone = models.CharField(
+        max_length=255,
+        help_text="The departnment's phone number")
+    address = models.CharField(
+        max_length=255,
+        help_text="Department address.")
