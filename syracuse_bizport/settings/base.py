@@ -145,6 +145,10 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = '/login'
 LOGIN_REDIRECT_URL = '/profile'
 
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "syracuse_bizport"
