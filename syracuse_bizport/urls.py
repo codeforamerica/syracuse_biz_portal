@@ -18,7 +18,6 @@ urlpatterns = [
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'', include(urls)),
-    url(r'', include(wagtail_urls)),
-    url(r'', include('django.contrib.auth.urls'))
+    url(r'', include(wagtail_urls))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
