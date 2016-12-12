@@ -14,5 +14,5 @@ class ChecklistForm(forms.Form):
             pks = set(items.values_list('pk', flat=True))
             checked_items = self.project.checked_items
             checked_pks = set(checked_items.values_list('pk', flat=True))
-            checked_pks.intersection(pksx)
+            checked_pks.intersection(pks)
             self.fields['checklist'].initial = checked_items.values('pk')
