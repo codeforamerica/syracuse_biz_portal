@@ -25,6 +25,7 @@ INSTALLED_APPS = [
 
     'biz_content',
 
+    'wagtail.contrib.settings',
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
     'wagtail.wagtailembeds',
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
+                'wagtail.contrib.settings.context_processors.settings',
             ],
         },
     },
