@@ -10,8 +10,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'syracuse_biz_portal',
-        'USER': 'postgres',
+        'USER': 'travis',
         'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': 5432
     }
 }
 
