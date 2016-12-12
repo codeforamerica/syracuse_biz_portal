@@ -19,16 +19,14 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^user/password/reset/$',
         auth_views.password_reset,
-        {'post_reset_redirect' : '/user/password/reset/done/'},
+        {'post_reset_redirect': '/user/password/reset/done/'},
         name="password_reset"),
     url(r'^user/password/reset/done/$',
         auth_views.password_reset_done),
-	url(r'^password_reset_confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-		auth_views.password_reset_confirm,
-        {'post_reset_redirect' : '/user/password/done/'},
+    url(r'^password_reset_confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        auth_views.password_reset_confirm,
+        {'post_reset_redirect': '/user/password/done/'},
         name='password_reset_confirm'),
     url(r'^user/password/done/$',
         auth_views.password_reset_complete),
 ]
-
-
