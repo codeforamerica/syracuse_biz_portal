@@ -1,0 +1,5 @@
+# Included because Heroku require a requirements.txt file in the project root
+# Just installs the production requirements for heroku on top of normal ones
+-r requirements/app.txt
+-r requirements/dev.txt
+
