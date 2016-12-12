@@ -18,7 +18,6 @@ INSTALLED_APPS = [
     'registration',
 
     'home',
-    'search',
     'rest_framework',
     'adminsortable2',
     'wealthmap',
@@ -34,7 +33,6 @@ INSTALLED_APPS = [
     'wagtail.wagtailsnippets',
     'wagtail.wagtaildocs',
     'wagtail.wagtailimages',
-    'wagtail.wagtailsearch',
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
 

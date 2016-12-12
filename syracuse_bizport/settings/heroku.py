@@ -2,7 +2,6 @@ import os
 import dj_database_url
 from .base import *
 
-
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 AWS_ACCESS_KEY_ID = os.environ['BUCKETEER_AWS_ACCESS_KEY_ID']
