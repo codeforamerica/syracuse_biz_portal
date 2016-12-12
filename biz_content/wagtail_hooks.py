@@ -5,8 +5,16 @@ from wagtail.wagtailcore import hooks
 from wagtail.wagtailadmin.menu import MenuItem
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from . import urls
 
 from biz_content import views
+
+
+@hooks.register('register_admin_urls')
+def register_admin_urls():
+    return [
+        url(r'^dashboard/$', views.dashboard, name='wagalytics_dashboard'),
+    ]
 
 
 @hooks.register('register_admin_menu_item')

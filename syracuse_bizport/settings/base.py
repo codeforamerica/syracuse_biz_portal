@@ -60,10 +60,7 @@ ROOT_URLCONF = 'syracuse_bizport.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_DIR, 'templates'),
-                 os.path.join(PROJECT_DIR, 'biz_content/templates/biz_content')
-
-                 ],
+        'DIRS': [os.path.join(PROJECT_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
