@@ -5,7 +5,6 @@ from wagtail.wagtailcore import hooks
 from wagtail.wagtailadmin.menu import MenuItem
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
-from . import urls
 
 from biz_content import views
 
