@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
 
+
 class ProfileViewTestCase(TestCase):
 
     def setUp(self):
@@ -28,6 +29,7 @@ class ProfileViewTestCase(TestCase):
         self.client.force_login(self.user)
         res = self.client.get(reverse('profile'))
         self.assertEquals(res.status_code, 200)
+
 
 class DashboardViewTestCase(TestCase):
 
