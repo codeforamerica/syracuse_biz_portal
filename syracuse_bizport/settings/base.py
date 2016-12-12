@@ -25,6 +25,7 @@ INSTALLED_APPS = [
 
     'biz_content',
 
+    'wagtail.contrib.settings',
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
     'wagtail.wagtailembeds',
@@ -60,10 +61,7 @@ ROOT_URLCONF = 'syracuse_bizport.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_DIR, 'templates'),
-                 os.path.join(PROJECT_DIR, 'biz_content/templates/biz_content')
-
-                 ],
+        'DIRS': [os.path.join(PROJECT_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
+                'wagtail.contrib.settings.context_processors.settings',
             ],
         },
     },
