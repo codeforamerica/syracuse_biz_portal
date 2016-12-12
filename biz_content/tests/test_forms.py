@@ -28,4 +28,3 @@ class CheckListFormTestCase(TransactionTestCase):
         form_items = cl.initial
         self.assertQuerysetEqual(model_items, form_items,
                                  transform=lambda x: x)
-
