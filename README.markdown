@@ -66,6 +66,6 @@ This will allow you to work on both repositories and without having to push and 
 The best way to help us is to look through existing issues or create new issues. Once its triaged then to fork this code and make a branch.
 
 
-Once you've made your proposed changes, if the tests pass(if we have tests) and the pep8 linter passes( see `.pep8` file) you're ready to file a PR.  Once a PR is filed heroku will automatically build a review app for testing.
+Once you've made your proposed changes, if the tests pass locally and the pep8 linter passes( see `.pep8` file) you're ready to file a PR.  Once a PR is filed heroku will automatically build a review app for manual testing and travis-ci will run the tests and linter.
 
 Doing this will mean your changes are highly likely to make it into the main repository.  Once a PR is accepted it will be deployed to the staging server and can have further manual testing done.  If that is successful we can then promote those changes to the production server from the pipeline page in the heroku admin.
