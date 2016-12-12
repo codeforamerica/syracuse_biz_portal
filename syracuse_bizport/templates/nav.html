@@ -37,11 +37,11 @@
                       <a href="#">Profile</a>
                   </li>
                   <li>
-                      <a href="#">Log Out</a>
+                      <a href="{% url 'logout' %}">Log out</a>
                   </li>
                 {% else %}
                   <li>
-                      <a href="/accounts/login/">Login</a>
+                      <a href="{% url 'login' %}">Login</a>
                   </li>
                 {% endif %}
 
