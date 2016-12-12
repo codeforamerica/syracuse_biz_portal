@@ -25,6 +25,7 @@ INSTALLED_APPS = [
 
     'biz_content',
 
+    'wagtail.contrib.settings',
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
     'wagtail.wagtailembeds',

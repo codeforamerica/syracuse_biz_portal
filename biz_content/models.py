@@ -210,10 +210,21 @@ class Project(models.Model):
 class FooterSettings(BaseSetting):
     department_name = models.CharField(
         max_length=255,
-        help_text="The name of the department.")
+        help_text="The name of the department.",
+        null=True)
     phone = models.CharField(
         max_length=255,
-        help_text="The departnment's phone number")
-    address = models.CharField(
+        help_text="The departnment's phone number",
+        null=True)
+    street_address = models.CharField(
         max_length=255,
-        help_text="Department address.")
+        help_text="The department's street address, e.g. 1234 Main St.",
+        null=True)
+    city_state_zip = models.CharField(
+        max_length=255,
+        help_text="E.g. Syracuse, NY 13202.",
+        null=True)
+    footer_description = models.CharField(
+        max_length=255,
+        help_text="E.g. Syracuse, NY 13202.",
+        null=True)
