@@ -10,6 +10,8 @@ addons:
 before_script: python ./manage.py collectstatic --noinput
 script:
   - pep8
-  - python ./manage.py test
+  - coverage run --source='.' ./manage.py test
+
+after_script: coverage report
 notifications:
     slack: cfa:0TrBnxh9hLyVfs2jxUHrMvW2
