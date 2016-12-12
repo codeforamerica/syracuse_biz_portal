@@ -1,8 +1,3 @@
-try:
-    import local_settings
-except ImportError:
-    pass
-
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -22,15 +17,4 @@ urlpatterns = [
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'', include(urls)),
     url(r'', include(wagtail_urls)),
-<<<<<<< HEAD
-]
-
-# Serve up local images if running locally
-try:
-    if local_settings.DEBUG is True:
-        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-except AttributeError:
-    pass
-=======
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
->>>>>>> master
