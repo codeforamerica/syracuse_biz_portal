@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^profile/$', views.profile, name="profile"),
 
     url('^register/', CreateView.as_view(
-            template_name='registration/register.html',
+            template_name='registration/registration_form.html',
             form_class=forms.CustomUserCreationForm,
             success_url='/login/',
     ), name="register"),
