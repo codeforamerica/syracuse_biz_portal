@@ -11,6 +11,8 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 
+from . import forms
+
 from .import views
 
 
@@ -20,7 +22,7 @@ urlpatterns = [
 
     url('^register/', CreateView.as_view(
             template_name='registration/register.html',
-            form_class=UserCreationForm,
+            form_class=forms.CustomUserCreationForm,
             success_url='/login/',
     ), name="register"),
 
