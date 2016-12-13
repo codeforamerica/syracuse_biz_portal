@@ -11,9 +11,6 @@
         Log in to the Syracuse Business Portal
       </div>
       <div class="panel-body">
-      {% if reguser %}
-        hi!
-      {% endif %}
         <form action="" method="post">
           {% csrf_token %}
           {% for field in form %}
@@ -22,10 +19,8 @@
               {% render_field field class+="form-control" %}
             </div>
           {% endfor %}
-          <input type="submit" class="btn btn-primary" value="{% trans 'Log In' %}" />
+          <input type="submit" class="btn btn-primary" value="{% trans 'Create an Account' %}" />
         </form>
-        <br>
-        <p><a style="font=size:10px;" href="{% url 'password_reset' %}">Lost your password? Reset it here.</a></p>
       </div>
     </div>
   </div>

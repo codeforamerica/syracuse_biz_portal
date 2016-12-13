@@ -13,7 +13,6 @@ from wagtail.wagtaildocs import urls as wagtaildocs_urls
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    # url(r'^accounts/', include('registration.backends.simple.urls')),
 
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),

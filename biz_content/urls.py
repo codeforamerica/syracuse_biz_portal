@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtailcore import urls as wagtail_urls
@@ -15,6 +17,13 @@ from .import views
 urlpatterns = [
     url(r'^profile/$', views.profile, name="profile"),
     url(r'^dashboard/$', views.dashboard, name='wagalytics_dashboard'),
+
+    url('^register/', CreateView.as_view(
+            template_name='registration/register.html',
+            form_class=UserCreationForm,
+            success_url='/login/',
+    ), name="register"),
+
     url(r'^login/$', auth_views.login, name="login"),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^user/password/reset/$',
