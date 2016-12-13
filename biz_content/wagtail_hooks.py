@@ -24,4 +24,3 @@ def register_styleguide_menu_item():
         classnames='icon icon-fa-bar-chart',
         order=1000
     )
-
