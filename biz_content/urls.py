@@ -18,7 +18,6 @@ from .import views
 
 urlpatterns = [
     url(r'^profile/$', views.profile, name="profile"),
-    url(r'^dashboard/$', views.dashboard, name='wagalytics_dashboard'),
 
     url('^register/', CreateView.as_view(
             template_name='registration/register.html',

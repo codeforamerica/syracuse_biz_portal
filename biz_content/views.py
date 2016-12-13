@@ -11,6 +11,5 @@ from django.contrib.admin.views.decorators import staff_member_required
 def profile(request):
     return render(request, 'biz_content/profile.html', {})
 
-
 def dashboard(request):
     return render(request, 'biz_content/dashboard.html', {})
