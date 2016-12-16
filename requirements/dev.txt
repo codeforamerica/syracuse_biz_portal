@@ -1,4 +1,5 @@
 pep8
 autopep8
-factory_boy==2.7.1
+factory_boy==2.7.0
+fake-factory==0.7.3
 coverage==4.2
