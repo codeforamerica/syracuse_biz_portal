@@ -1,5 +1,6 @@
 # Syracuse Biz Portal
 
+[![Build Status](https://travis-ci.org/codeforamerica/syracuse_biz_portal.svg?branch=master)](https://travis-ci.org/codeforamerica/syracuse_biz_portal)
 
 ## Install Instructions for Developing with the Sample Project
 
