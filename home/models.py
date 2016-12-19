@@ -1,9 +1,11 @@
 from django.db import models
-from biz_content.models import Category, CollectionPage, StepPage
+from biz_content.models import CollectionPage, StepPage
 from modelcluster.fields import ParentalKey
-from wagtail.wagtailadmin.edit_handlers import InlinePanel, ImageChooserPanel
+from wagtail.wagtailadmin.edit_handlers import InlinePanel
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, PageChooserPanel
-from wagtail.wagtailcore.models import Page, Orderable, Image
+from wagtail.wagtailcore.models import Page, Orderable
+from wagtail.wagtailimages.models import Image
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 
 class SelectablePages(models.Model):
