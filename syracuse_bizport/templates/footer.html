@@ -1,17 +1,19 @@
+  {% load wagtailsettings_tags %}
+  {% get_settings %}
+
 <!-- Footer -->
     <footer>
         <div class="footer-above">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
-                      <p><strong>Department of Business Development</strong></p>
-                      <p>Phone: 555-555-5555</p>
-                      <p>Fax: 555-555-5555</p>
-                      <p>123 Main Street</p>
-                      <p>Syracuse, NY 12345</p>
+                      <p><strong>{{ settings.biz_content.FooterSettings.department_name }}</strong></p>
+                      <p>Phone: {{ settings.biz_content.FooterSettings.phone }}</p>
+                      <p>{{ settings.biz_content.FooterSettings.street_address }}</p>
+                      <p>{{ settings.biz_content.FooterSettings.city_state_zip }}</p>
                     </div>
                     <div class="col-sm-4">
-                        Site Links Here
+                      <p>{{ settings.biz_content.FooterSettings.footer_description }}</p>
                     </div>
                     <div class="col-sm-4">
                         Some other content here

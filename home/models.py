@@ -1,10 +1,9 @@
 from django.db import models
 from biz_content.models import Category, CollectionPage, StepPage
 from modelcluster.fields import ParentalKey
-
-from wagtail.wagtailadmin.edit_handlers import InlinePanel
+from wagtail.wagtailadmin.edit_handlers import InlinePanel, ImageChooserPanel
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, PageChooserPanel
-from wagtail.wagtailcore.models import Page, Orderable
+from wagtail.wagtailcore.models import Page, Orderable, Image
 
 
 class SelectablePages(models.Model):
@@ -33,13 +32,23 @@ class HomePageSelectedPages(Orderable, SelectablePages):
 
 class HomePage(Page):
 
+    header_img = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     content_panels = Page.content_panels + [
+        ImageChooserPanel('header_img'),
         InlinePanel('selected_pages', label="Selected Pages"),
     ]
 
+    subpage_types = ['biz_content.CollectionPage']
+
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
-        context['categories'] = Category.objects.all()
         context['collection_pages'] = CollectionPage.objects.all()
         context['step_pages'] = StepPage.objects.all()
 

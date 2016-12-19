@@ -10,32 +10,10 @@ from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import CharBlock, RichTextBlock, IntegerBlock
 from wagtail.wagtailcore.blocks import URLBlock, EmailBlock
-from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-
-
-class Category(models.Model):
-    """
-    Represents a category for business development.
-    """
-    name = models.CharField(
-        max_length=255, null=True
-    )
-    slug = models.CharField(
-        max_length=255, null=True
-    )
-
-    panels = [
-        FieldPanel('name'),
-        FieldPanel('slug'),
-    ]
-
-    def __str__(self):
-        return self.name
-
-register_snippet(Category)
+from wagtail.contrib.settings.models import BaseSetting, register_setting
 
 
 class CollectionPage(Page):
@@ -50,7 +28,6 @@ class CollectionPage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    date = models.DateTimeField("Post date")
     description = models.CharField(max_length=2000, null=True)
     page_content = StreamField([
         ('heading', blocks.CharBlock(classname="full title", icon="title")),
@@ -104,7 +81,6 @@ class CollectionPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('description'),
         ImageChooserPanel('header_img'),
-        FieldPanel('date'),
         StreamFieldPanel('page_content'),
         FieldPanel('start_link'),
     ]
@@ -113,15 +89,7 @@ class CollectionPage(Page):
 
 
 class StepPage(Page):
-    date = models.DateTimeField("Post date")
     description = models.CharField(max_length=2000, null=True)
-
-    category = models.ForeignKey(
-        Category,
-        related_name="step_pages",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL)
 
     page_content = StreamField([
         ('heading', blocks.CharBlock(classname="full title", icon="title")),
@@ -181,12 +149,10 @@ class StepPage(Page):
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel('date'),
         FieldPanel('description'),
         ImageChooserPanel('header_img'),
         StreamFieldPanel('page_content'),
         FieldPanel('link_page'),
-        FieldPanel('category'),
         InlinePanel('checklist_items', label="Checklist Items"),
     ]
 
@@ -195,9 +161,36 @@ class ChecklistItem(Orderable):
     checklist = ParentalKey(StepPage, related_name='checklist_items')
     text = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.text
+
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     checklists = models.ManyToManyField(StepPage)
     checked_items = models.ManyToManyField(ChecklistItem)
+
+
+@register_setting
+class FooterSettings(BaseSetting):
+    department_name = models.CharField(
+        max_length=255,
+        help_text="The name of the department.",
+        null=True)
+    phone = models.CharField(
+        max_length=255,
+        help_text="The departnment's phone number",
+        null=True)
+    street_address = models.CharField(
+        max_length=255,
+        help_text="The department's street address, e.g. 1234 Main St.",
+        null=True)
+    city_state_zip = models.CharField(
+        max_length=255,
+        help_text="E.g. Syracuse, NY 13202.",
+        null=True)
+    footer_description = models.CharField(
+        max_length=255,
+        help_text="E.g. Syracuse, NY 13202.",
+        null=True)

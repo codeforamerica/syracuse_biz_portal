@@ -23,5 +23,3 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_URL = "https://%s.s3.amazonaws.com/" % (AWS_ACCESS_KEY_ID)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-

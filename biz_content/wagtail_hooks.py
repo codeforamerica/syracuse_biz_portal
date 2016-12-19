@@ -8,6 +8,14 @@ from django.core.urlresolvers import reverse
 
 from biz_content import views
 
+
+@hooks.register('register_admin_urls')
+def register_admin_urls():
+    return [
+        url(r'^dashboard/$', views.dashboard, name='wagalytics_dashboard'),
+    ]
+
+
 @hooks.register('register_admin_menu_item')
 def register_styleguide_menu_item():
     return MenuItem(
