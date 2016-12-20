@@ -2,12 +2,16 @@
   "name": "syracuse_biz_portal",
   "description": "",
   "scripts": {
+    "postdeploy": "./setup_review_app"
   },
   "env": {
     "DJANGO_SECRET_KEY": {
       "required": true
     },
     "DJANGO_SETTINGS_MODULE": {
+      "required": true
+    },
+    "TEST_ADMIN_PASSWORD": {
       "required": true
     }
   },
@@ -19,7 +23,8 @@
   "addons": [
     "bucketeer",
     "papertrail",
-    "heroku-postgresql"
+    "heroku-postgresql",
+    "sendgrid"
   ],
   "buildpacks": [
     {

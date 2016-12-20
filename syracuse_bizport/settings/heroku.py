@@ -23,3 +23,9 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_URL = "https://%s.s3.amazonaws.com/" % (AWS_ACCESS_KEY_ID)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
+EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

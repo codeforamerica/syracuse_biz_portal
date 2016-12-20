@@ -14,13 +14,17 @@
         <form action="" method="post">
           {% csrf_token %}
           {% for field in form %}
+
             <div class="form-group">
+              <p style="color:red;">{{field.errors}}</p>
               <label>{{ field.label }}</label>
               {% render_field field class+="form-control" %}
             </div>
           {% endfor %}
           <input type="submit" class="btn btn-primary" value="{% trans 'Log In' %}" />
         </form>
+        <br>
+        <p><a style="font=size:10px;" href="{% url 'auth_password_reset' %}">Lost your password? Reset it here.</a></p>
       </div>
     </div>
   </div>
