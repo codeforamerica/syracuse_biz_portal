@@ -15,7 +15,6 @@ from wagtail.wagtaildocs import urls as wagtaildocs_urls
 
 from biz_content import forms
 from biz_content import views
-from . import views as project_views
 
 
 urlpatterns = [
@@ -24,18 +23,11 @@ urlpatterns = [
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search', include('wealthmap.frontend_urls', namespace='wealthmap')),
+    url(r'^accounts/register/', views.UserRegistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^accounts/', include('biz_content.urls')),
-    url(r'^register/complete/$', project_views.register_complete,
-        name='register-complete'),
-    url(r'^register/', CreateView.as_view(
-        template_name='registration/registration_form.html',
-        form_class=forms.CustomUserCreationForm,
-        success_url='/register/complete/',
-    ), name="register"),
 
     url(r'', include(urls)),
-
     url(r'', include(wagtail_urls))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

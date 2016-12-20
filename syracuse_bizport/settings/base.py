@@ -151,3 +151,6 @@ WEALTHMAP_SEARCHABLE_OPPORTUNITY = dict(
     app_label='matcher',
     model_name='Opportunity'
 )
+
+LOGIN_REDIRECT = 'profile'
+LOGIN_URL = 'auth_login'
