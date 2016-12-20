@@ -21,6 +21,13 @@ class CollectionPage(Page):
     Represents a collection of step pages.
     """
 
+    icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     header_img = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -80,6 +87,7 @@ class CollectionPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('description'),
+        ImageChooserPanel('icon'),
         ImageChooserPanel('header_img'),
         StreamFieldPanel('page_content'),
         FieldPanel('start_link'),

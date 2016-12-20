@@ -11,7 +11,7 @@
                 <span class="sr-only">Toggle navigation</span> Menu
             </button>
             <a class="navbar-brand" href="/">
-              <img id="main-logo" alt="Brand" src="{% static 'images/syracuse-seal.png' %}">
+              <img id="main-logo" alt="Brand" src="{% static 'biz_content/images/syracuse-seal.png' %}">
               Business Portal
             </a>
         </div>
@@ -27,6 +27,7 @@
                 <li class="page-scroll">
                     <a href="#contact">Contact</a>
                 </li>
+
                 {% if user.is_authenticated %}
                   <li>
                       <a href="#">Profile</a>
