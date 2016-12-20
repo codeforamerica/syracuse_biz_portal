@@ -23,10 +23,9 @@ urlpatterns = [
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search', include('wealthmap.frontend_urls', namespace='wealthmap')),
-    url(r'^accounts/register/', views.UserRegistrationView.as_view(), name='registration_register'),
+    url(r'^accounts/register/', views.UserRegistrationView.as_view(),
+        name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
-    url(r'^accounts/', include('biz_content.urls')),
-
     url(r'', include(urls)),
     url(r'', include(wagtail_urls))
 
