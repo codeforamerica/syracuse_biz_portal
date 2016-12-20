@@ -14,10 +14,10 @@
         <div class="jumbotron hero-shade">
           <div class="container">
               <div class="row">
-                  <div class="col-lg-12">
+                  <div class="col-lg-8">
                     <div class="intro-text">
-                        <span class="name">Plan - Launch - Grow</span>
-                        <span class="skills">Build your business in Syracuse, NY</span>
+                        <h1 class="hero-tagline">Build your business in Syracuse</h1>
+                        <button class="btn btn-default btn-lg">Learn Why <i class="fa fa-arrow-right"></i></button>
                       </div>
                   </div>
               </div>
@@ -30,21 +30,24 @@
     <section>
       <div class="container">
         <div class="row">
+          <div class="col-md-12">
+            <legend><h3><i class="fa fa-check-square-o" aria-hidden="true"></i> Checklist Guides</h3></legend>
+          </div>
+        </div>
+        <div class="row">
           {% for collection_page in collection_pages %}
           <a href={{collection_page.slug}} class="portfolio-link">
-              <div class="col-sm-4 portfolio-item">
-                <div class="panel panel-default">
+              <div class="col-sm-4">
+                <div class="panel panel-default portfolio-item">
                   <div class="panel-body">
-                        <div class="caption">
-                            <div class="caption-content">
-                              {% if collection_page.header_img %}
-                                {% image p.header_img width-120 %}
+                        <div class="collection-page-icon">
+                              {% if collection_page.icon %}
+                                {% image collection_page.icon width-80 %}
                               {% endif %}
-                            </div>
                         </div>
                     <br>
-                    <h2>{{collection_page.title}}</h2>
-                    <p>{{collection_page.description}}</p>
+                    <h2 class="text-center">{{collection_page.title}}</h2>
+                    <p class="text-center">{{collection_page.description}}</p>
                   </div>
                 </div>
               </div>
@@ -53,15 +56,36 @@
           </div>
       </div>
     </section>
-    <hr>
 
     <section>
       <div class="container">
         <div class="row">
-          {% for page in selected_pages %}
-            <h1>Page</h1>
-          {%endfor%}
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <legend><h3><i class="fa fa-search" aria-hidden="true"></i> Search</h3></legend>
+            <div class="input-group input-group-lg">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Search</button>
+              </span>
+            </div><!-- /input-group -->
           </div>
+          <div class="col-sm-6">
+            <legend><h3><i class="fa fa-star" aria-hidden="true"></i> Popular Pages</h3></legend>
+            <ul class="list-group">
+              {% for selected_page in self.selected_pages.all %}
+                <li class="list-group-item">
+                    <h4>
+                      <a href="{% pageurl selected_page.step_pages %}">
+                        {{ selected_page.step_pages.title }}
+                      </a>
+                    </h4>
+                </li>
+              {%endfor%}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
