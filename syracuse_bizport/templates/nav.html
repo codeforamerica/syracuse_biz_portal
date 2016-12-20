@@ -32,11 +32,11 @@
                       <a href="#">Profile</a>
                   </li>
                   <li>
-                      <a href="{% url 'logout' %}">Log out</a>
+                      <a href="{% url 'auth_logout' %}">Log out</a>
                   </li>
                 {% else %}
                   <li>
-                      <a href="{% url 'login' %}">Login</a>
+                      <a href="{% url 'auth_login' %}">Login</a>
                   </li>
                   <li>
                       <a href="{% url 'register' %}">Sign up</a>

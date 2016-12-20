@@ -10,12 +10,17 @@
       <div class="panel-heading">
         Register for the Syracuse Business Portal
       </div>
+      {%if request.POST %}
+          <h1>hi</h1>
+      {% endif %}
       <div class="panel-body">
       <form action="" method="post">
           {% csrf_token %}
           {% for field in form %}
           {{ form.title }}
           <div class="form-group">
+            <label>{{ field.errors }}</label>
+
             <label>{{ field.label }}</label>
             {% render_field field class+="form-control" %}
           </div>

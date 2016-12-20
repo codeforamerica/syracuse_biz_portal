@@ -141,9 +141,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL = '/login/'
-LOGIN_URL = '/login/'
-
+# LOGIN_REDIRECT_URL = '/login/'
+# LOGIN_URL = '/login/'
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587

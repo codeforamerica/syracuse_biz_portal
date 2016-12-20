@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n widget_tweaks %}
-{% block body_class %}template-blogpage{% endblock %}
+
+{% block title %}Password reset complete{% endblock %}
 
 {% block content %}
 
@@ -8,16 +9,14 @@
   <div class="col-md-4 col-md-offset-4">
     <div class="account-form panel panel-default">
       <div class="panel-heading">
-        Logout Syracuse Business Portal
+        Sign Up Complete Syracuse Business Portal
       </div>
       <div class="panel-body">
-        <h2>You've been logged out.</h2>
-        <h3>Thank you for visiting our website.</h3>
-        <br>
-        <a href="{% url 'login' %}">Login again here.</a>
-        <br>
+		<p>Your account has been created. You may go ahead and log in now.</p>
+		<p><a href="{% url 'auth_login' %}">Login here.</a></p>
       </div>
     </div>
   </div>
 </div>
+
 {% endblock %}
