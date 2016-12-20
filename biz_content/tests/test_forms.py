@@ -28,3 +28,13 @@ class CheckListFormTestCase(TransactionTestCase):
         form_items = cl.initial
         self.assertQuerysetEqual(model_items, form_items,
                                  transform=lambda x: x)
+
+class UserFormTestCase(TransactionTestCase):
+
+    def setUp(self):
+        self.user = factories.UserFactory()
+
+    def test_create_user(self):
+        """Checkbox items and form items should match"""
+
+        self.assertQuerysetEqual(qs, form_qs, transform=lambda x: x)
