@@ -23,7 +23,8 @@
   "addons": [
     "bucketeer",
     "papertrail",
-    "heroku-postgresql"
+    "heroku-postgresql",
+    "sendgrid"
   ],
   "buildpacks": [
     {

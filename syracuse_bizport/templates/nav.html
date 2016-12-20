@@ -10,7 +10,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu
             </button>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
               <img id="main-logo" alt="Brand" src="{% static 'images/syracuse-seal.png' %}">
               Business Portal
             </a>
@@ -33,11 +33,14 @@
                       <a href="#">Profile</a>
                   </li>
                   <li>
-                      <a href="#">Log Out</a>
+                      <a href="{% url 'auth_logout' %}">Log out</a>
                   </li>
                 {% else %}
                   <li>
-                      <a href="/accounts/login/">Login</a>
+                      <a href="{% url 'auth_login' %}">Login</a>
+                  </li>
+                  <li>
+                      <a href="{% url 'register' %}">Sign up</a>
                   </li>
                 {% endif %}
 
