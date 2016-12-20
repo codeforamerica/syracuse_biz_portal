@@ -18,7 +18,7 @@ class ProfileViewTestCase(TestCase):
         """
         res = self.client.get(reverse('profile'))
         expected_redirect = "%s?next=%s" % (
-            reverse('login'), reverse('profile'))
+            reverse('auth_login'), reverse('profile'))
 
         self.assertRedirects(res, expected_redirect)
 
