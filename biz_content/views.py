@@ -14,4 +14,3 @@ def profile(request):
 
 def dashboard(request):
     return render(request, 'biz_content/dashboard.html', {})
-
