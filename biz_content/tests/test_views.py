@@ -16,7 +16,6 @@ class ProfileViewTestCase(TestCase):
     def test_view_redirects_to_login(self):
         """Profile redirect to login if not logged in.
         """
-
         res = self.client.get(reverse('profile'))
         expected_redirect = "%s?next=%s" % (
             reverse('auth_login'), reverse('profile'))
