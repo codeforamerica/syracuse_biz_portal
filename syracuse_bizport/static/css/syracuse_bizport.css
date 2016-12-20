@@ -10,6 +10,10 @@ body {
 	background-color: #FAFAF9;
 }
 
+h1, h2, h3, h4, h5, h6 {
+	color: #555;
+}
+
 header.step{
 	text-align:left;
 	margin-bottom:30px;
@@ -33,7 +37,11 @@ header.step{
 }
 
 .jumbotron.hero-shade {
-	background-color: rgba(51,122,183,0.8);
+	background: #1ad6fd; /* Old browsers */
+	background: -moz-linear-gradient(-45deg, #1d62f0 0%, rgba(26, 214, 253, 0.8) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg, #1d62f0 0%,rgba(26, 214, 253, 0.8) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, #1d62f0 0%,rgba(26, 214, 253, 0.8) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(26, 214, 253, 0.8)', endColorstr='#1d62f0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .hero-background {
@@ -56,6 +64,11 @@ header.step{
 .wagtail-userbar-items {
 	bottom: 90px;
 	right: -10px;
+}
+
+.collection-page-icon {
+	text-align: center;
+	padding: 1.5em;
 }
 
 /*!
@@ -116,34 +129,27 @@ hr.star-primary:after {
   margin: 0 auto;
 }
 header {
-  text-align: center;
   background: #2C3E50;
   color: white;
-}
-header img {
-  display: block;
 }
 header .intro-text .name {
   display: block;
   font-weight: 700;
   font-size: 2em;
 }
-header .intro-text .skills {
-  font-size: 1.25em;
-  font-weight: 300;
+header .intro-text {
+	font-size: 4em;
+  padding-top: 1em;
+  padding-bottom: 0em;
 }
-@media (min-width: 768px) {
-  header .intro-text .name {
-    font-size: 4.75em;
-  }
-  header .intro-text .skills {
-    font-size: 1.75em;
+@media (max-width: 768px) {
+  header .intro-text {
+		font-size: 1.75em;
+		padding-top: .5em;
+		padding-bottom: 0em;
   }
 }
 
-section {
-  padding: 30px 0;
-}
 section h2 {
   margin: 0;
   font-size: 3em;
@@ -160,6 +166,16 @@ section.success {
     padding-top: 75px;
   }
 }
+.portfolio-item {
+	top: 0px;
+	transition: all 0.15s ease;
+}
+.portfolio-item:hover {
+	top: -5px;
+	box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+	transition: all 0.15s ease;
+}
+
 #portfolio .portfolio-item {
   margin: 0 0 15px;
   right: 0;
@@ -274,6 +290,18 @@ footer .footer-below {
   padding: 25px 0;
   background-color: #233140;
 }
+
+/* Bootstrap button overrides */
+.btn {
+	box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+	border-width: 0;
+}
+
+.btn-default {
+	color: #1d62f0;
+	background-image: none;
+}
+
 .btn-outline {
   color: white;
   font-size: 20px;
@@ -464,7 +492,7 @@ fieldset[disabled] .btn-success.active {
 	top: 95px;
 }
 .affix-top, .affix-bottom, .affix {
-	width: 250px;
+	width: 300px;
 	position: static;
 }
 
@@ -478,14 +506,7 @@ fieldset[disabled] .btn-success.active {
   padding: 5px 15px;
 }
 .panel {
-  border-radius: 2px;
-	border-width: 2px;
-	border-color: #DEDED1;
-  box-shadow:none;
-  -webkit-box-shadow: none;
-}
-a .panel-body {
-  padding: 0 10px;
+  box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
 }
 a .panel-body h3{
   font-size: 20px;
@@ -504,4 +525,12 @@ a .panel-body h3 .fa-2x{
 
 @media(max-width:768px) {
   a .panel-body {padding: 15px;}
+}
+
+.input-group .form-control:first-child {
+	box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+	border: 0;
+}
+.input-group-btn {
+	z-index: 2000;
 }

@@ -10,12 +10,26 @@
  -->
  <!-- Navigation -->
 
-    <header class="step">
-      <div class="blog-header container">
-        <h1 class="blog-title">{{ page.title }}</h1>
-        {% if page.description %}
-          <p class="lead blog-description">{{page.description}}</p>
-        {% endif %}
+    <header>
+      {% image self.header_img width-1200 as header_img %}
+      <div class="hero-background" style="background-image: url({{ header_img.url }})">
+        <div class="jumbotron hero-shade">
+          <div class="container">
+            <div class="row text-center">
+              <div class="col-sm-12">
+                {% if page.icon %}
+                  {% image page.icon width-120 %}
+                {% endif %}
+              </div>
+              <div class="col-sm-6 col-sm-offset-3">
+                <h1 class="blog-title">{{ page.title }}</h1>
+                {% if page.description %}
+                  <p class="lead blog-description">{{page.description}}</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -23,10 +37,7 @@
 
       <div class="row">
 
-        <div class="col-sm-8  blog-main">
-          {% if page.header_img %}
-            {% image page.header_img width-900 %}
-          {% endif %}
+        <div class="col-sm-7 blog-main">
           <article>
             {% for block in page.page_content %}
               {% if block.block_type == 'heading' %}
@@ -42,14 +53,14 @@
           </article>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-5">
             {% if page.get_children %}
-            <h2>Contents</h2>
-            <ul class="list-group">
+            <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> Checklist Guides</h2>
+            <ol class="list-group">
             {% for page in page.get_children %}
               <li class="list-group-item"><a href="{{ page.slug }}">{{ page.title }}</a></li>
             {% endfor %}
-            </ul>
+            </ol>
             {% endif %}
         </div>
 
