@@ -1,5 +1,6 @@
 # Syracuse Biz Portal
 
+[![Build Status](https://travis-ci.org/codeforamerica/syracuse_biz_portal.svg?branch=master)](https://travis-ci.org/codeforamerica/syracuse_biz_portal)
 
 ## Install Instructions for Developing with the Sample Project
 
@@ -63,9 +64,10 @@ This will allow you to work on both repositories and without having to push and 
 
 ### Pushing Up Changes
 
-The best way to help us is to look through existing issues or create new issues. Once its triaged then to fork this code and make a branch.
+The best way to help us is to look through existing issues or create new issues. Once its triaged then just fork this code(if not on the team) and make a branch labeled feature/thing_changed.
 
+Once you've made your proposed changes, if the tests pass locally and the pep8 linter doesn't complain (see `.pep8` file) you're ready to file a push your changes up to a branch.  If you are a member of the team Travis-CI will start running tests and will verify all the tests are passing.  If all is well you are ready to file a PR(pull request).
 
-Once you've made your proposed changes, if the tests pass locally and the pep8 linter passes( see `.pep8` file) you're ready to file a PR.  Once a PR is filed heroku will automatically build a review app for manual testing and travis-ci will run the tests and linter.
+When a PR is filed out on Github the description should include the issue it fixes, if there is no issue then explain what has changed.  Heroku will automatically build a review app for manual testing and travis-ci will run and include the results on the PR page in the review section.  Review apps are setup to create a admin user and example content.  Whenever frontend changes are made please include a before and after screenshot of the relevant areas and manually test that content creation works.
 
-Doing this will mean your changes are highly likely to make it into the main repository.  Once a PR is accepted it will be deployed to the staging server and can have further manual testing done.  If that is successful we can then promote those changes to the production server from the pipeline page in the heroku admin.
+Doing this will mean your changes are highly likely to make it into the main repository and keep runtime errors out of production.  Once a PR is accepted it will be immediately deployed to the staging server and can have further manual testing done and/or evaulated by stakeholders.  If that is successful we can then promote those changes to the production server from the pipeline page in the heroku admin.

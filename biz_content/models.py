@@ -16,28 +16,6 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 
 
-class Category(models.Model):
-    """
-    Represents a category for business development.
-    """
-    name = models.CharField(
-        max_length=255, null=True
-    )
-    slug = models.CharField(
-        max_length=255, null=True
-    )
-
-    panels = [
-        FieldPanel('name'),
-        FieldPanel('slug'),
-    ]
-
-    def __str__(self):
-        return self.name
-
-register_snippet(Category)
-
-
 class CollectionPage(Page):
     """
     Represents a collection of step pages.
@@ -50,7 +28,6 @@ class CollectionPage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    date = models.DateTimeField("Post date")
     description = models.CharField(max_length=2000, null=True)
     page_content = StreamField([
         ('heading', blocks.CharBlock(classname="full title", icon="title")),
@@ -104,7 +81,6 @@ class CollectionPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('description'),
         ImageChooserPanel('header_img'),
-        FieldPanel('date'),
         StreamFieldPanel('page_content'),
         FieldPanel('start_link'),
     ]
@@ -113,15 +89,7 @@ class CollectionPage(Page):
 
 
 class StepPage(Page):
-    date = models.DateTimeField("Post date")
     description = models.CharField(max_length=2000, null=True)
-
-    category = models.ForeignKey(
-        Category,
-        related_name="step_pages",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL)
 
     page_content = StreamField([
         ('heading', blocks.CharBlock(classname="full title", icon="title")),
@@ -181,12 +149,10 @@ class StepPage(Page):
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel('date'),
         FieldPanel('description'),
         ImageChooserPanel('header_img'),
         StreamFieldPanel('page_content'),
         FieldPanel('link_page'),
-        FieldPanel('category'),
         InlinePanel('checklist_items', label="Checklist Items"),
     ]
 

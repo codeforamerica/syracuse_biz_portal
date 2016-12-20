@@ -1,5 +1,5 @@
 from django.db import models
-from biz_content.models import Category, CollectionPage, StepPage
+from biz_content.models import CollectionPage, StepPage
 
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.models import Image
@@ -20,9 +20,10 @@ class HomePage(Page):
         ImageChooserPanel('header_img'),
     ]
 
+    subpage_types = ['biz_content.CollectionPage']
+
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
-        context['categories'] = Category.objects.all()
         context['collection_pages'] = CollectionPage.objects.all()
         context['step_pages'] = StepPage.objects.all()
 
