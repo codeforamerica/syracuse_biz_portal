@@ -17,6 +17,7 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 
 from biz_content import forms
 
+
 class CollectionPage(Page):
     """
     Represents a collection of step pages.
@@ -169,7 +170,7 @@ class StepPage(Page):
         context = super().get_context(request)
         projects = []
         checklists = []
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             projects = request.user.projects.all()
         if projects:
             for project in projects:
@@ -191,7 +192,7 @@ class ChecklistItem(Orderable):
 class Project(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-            related_name='projects')
+                              related_name='projects')
     checklists = models.ManyToManyField(StepPage)
     checked_items = models.ManyToManyField(ChecklistItem)
 
