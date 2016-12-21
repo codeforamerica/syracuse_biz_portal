@@ -1,3 +1,4 @@
+from biz_content.models import Project, ChecklistItem
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -11,8 +12,12 @@ from . import forms
 
 
 @login_required
-def profile(request):
-    return render(request, 'biz_content/profile.html', {})
+def profile(request, username):
+    if username == request.user.username:
+        projects = request.user.projects.all()
+        return render(request, 'biz_content/profile.html', {'projects': projects})
+    else:
+        return HttpResponseRedirect('/')
 
 
 def dashboard(request):

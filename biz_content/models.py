@@ -198,6 +198,9 @@ class Project(models.Model):
     checklists = models.ManyToManyField(StepPage)
     checked_items = models.ManyToManyField(ChecklistItem)
 
+    def __str__(self):
+        return self.name
+
 
 def create_users_first_project(sender, instance, created, **kwargs):
     if created:
