@@ -4,8 +4,6 @@ from django.test import TransactionTestCase, TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
-import pdb
-
 
 class CheckListFormTestCase(TransactionTestCase):
 
@@ -37,14 +35,17 @@ class UserFormTestCase(TransactionTestCase):
 
     def setUp(self):
         self.email = 'test@gmail.com'
-        self.initial_data = {'email': self.email,
-                             'password1': 'knew1for!',
-                             'password2': 'knew1for!'}
+        self.password1 = 'knew1for!'
+        self.password2 = 'knew1for!'
 
     def test_create_user(self):
         """Checkbox items and form items should match"""
 
-        form = forms.CustomUserCreationForm(self.initial_data)
+        initial_data = {'email': self.email,
+                        'password1': self.password1,
+                        'password2': self.password2}
+
+        form = forms.CustomUserCreationForm(initial_data)
 
         self.assertTrue(form.is_valid())
 
