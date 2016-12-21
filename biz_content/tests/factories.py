@@ -7,6 +7,7 @@ from factory import django as dfactory
 
 
 class UserFactory(dfactory.DjangoModelFactory):
+
     class Meta:
         model = 'auth.User'
 
@@ -17,14 +18,15 @@ class UserFactory(dfactory.DjangoModelFactory):
 
 
 class ProjectFactory(dfactory.DjangoModelFactory):
+
     class Meta:
         model = 'biz_content.Project'
 
     name = 'Name'
-    owner = factory.SubFactory(UserFactory)
 
 
 class ChecklistItemFactory(dfactory.DjangoModelFactory):
+
     class Meta:
         model = 'biz_content.ChecklistItem'
 
@@ -32,6 +34,7 @@ class ChecklistItemFactory(dfactory.DjangoModelFactory):
 
 
 class StepPageFactory(dfactory.DjangoModelFactory):
+
     class Meta:
         model = 'biz_content.StepPage'
 

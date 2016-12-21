@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 class CheckListFormTestCase(TransactionTestCase):
 
     def setUp(self):
-        self.project = factories.ProjectFactory()
+        self.user = factories.UserFactory()
+        self.project = self.user.projects.all()[0]
         self.step_page = factories.StepPageFactory()
 
     def test_init_without_project(self):

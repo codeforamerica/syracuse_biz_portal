@@ -11,7 +11,7 @@ class ChecklistForm(forms.Form):
         super().__init__(*args, **kwargs)
         items = self.step_page.checklist_items
         self.fields['checklist'] = forms.ModelMultipleChoiceField(
-            queryset=items)
+            queryset=items, widget=forms.CheckboxSelectMultiple)
         if self.project:
             pks = set(items.values_list('pk', flat=True))
             checked_items = self.project.checked_items
