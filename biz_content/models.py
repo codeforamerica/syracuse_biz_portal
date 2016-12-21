@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.db import models
+from django.db.models.signals import post_save
+
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailadmin.edit_handlers import InlinePanel, PageChooserPanel
@@ -195,6 +197,13 @@ class Project(models.Model):
                               related_name='projects')
     checklists = models.ManyToManyField(StepPage)
     checked_items = models.ManyToManyField(ChecklistItem)
+
+
+def create_users_first_project(sender, instance, created, **kwargs):
+    if created:
+        Project.objects.create(owner=instance)
+
+post_save.connect(create_users_first_project, sender='auth.User')
 
 
 @register_setting

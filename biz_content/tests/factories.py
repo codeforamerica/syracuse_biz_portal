@@ -23,7 +23,6 @@ class ProjectFactory(dfactory.DjangoModelFactory):
         model = 'biz_content.Project'
 
     name = 'Name'
-    owner = factory.SubFactory(UserFactory)
 
 
 class ChecklistItemFactory(dfactory.DjangoModelFactory):

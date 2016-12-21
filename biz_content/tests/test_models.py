@@ -8,7 +8,8 @@ from django.test.client import RequestFactory
 class StepPageTestCase(TransactionTestCase):
 
     def setUp(self):
-        self.project = factories.ProjectFactory()
+        self.user = factories.UserFactory()
+        self.project = self.user.projects.all()[0]
         self.step_page = factories.StepPageFactory()
         self.rf = RequestFactory()
 
@@ -31,3 +32,11 @@ class StepPageTestCase(TransactionTestCase):
         self.assertEqual(len(checklists), 1)
         self.assertTrue(isinstance(checklists[0], forms.ChecklistForm))
         self.assertEqual(checklists[0].project, self.project)
+
+
+class ProjectTestCase(TransactionTestCase):
+
+    def test_create_user_creates_project(self):
+        user = factories.UserFactory()
+        projects = user.projects.all()
+        self.assertEquals(projects.count(), 1)
