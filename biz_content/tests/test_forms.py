@@ -2,6 +2,7 @@ from . import factories
 from biz_content import models, forms
 from django.test import TransactionTestCase, TestCase
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 
 class CheckListFormTestCase(TransactionTestCase):
@@ -29,3 +30,28 @@ class CheckListFormTestCase(TransactionTestCase):
         form_items = cl.initial
         self.assertQuerysetEqual(model_items, form_items,
                                  transform=lambda x: x)
+
+
+class UserFormTestCase(TransactionTestCase):
+
+    def setUp(self):
+        self.email = 'test@gmail.com'
+        self.password1 = 'knew1for!'
+        self.password2 = 'knew1for!'
+
+    def test_create_user(self):
+        """Checkbox items and form items should match"""
+
+        initial_data = {'email': self.email,
+                        'password1': self.password1,
+                        'password2': self.password2}
+
+        form = forms.CustomUserCreationForm(initial_data)
+
+        self.assertTrue(form.is_valid())
+
+        form.save()
+
+        u = User.objects.get(email=self.email)
+
+        self.assertEqual(u.username, self.email)
