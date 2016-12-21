@@ -15,6 +15,7 @@ from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 
+from biz_content import forms
 
 class CollectionPage(Page):
     """
@@ -164,6 +165,20 @@ class StepPage(Page):
         InlinePanel('checklist_items', label="Checklist Items"),
     ]
 
+    def get_context(self, request):
+        context = super().get_context(request)
+        projects = []
+        checklists = []
+        if request.user.is_authenticated:
+            projects = request.user.projects.all()
+        if projects:
+            for project in projects:
+                checklists.append(forms.ChecklistForm(self, project=project))
+        else:
+            checklists.append(forms.ChecklistForm(self))
+        context['checklists'] = checklists
+        return context
+
 
 class ChecklistItem(Orderable):
     checklist = ParentalKey(StepPage, related_name='checklist_items')
@@ -175,7 +190,8 @@ class ChecklistItem(Orderable):
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+            related_name='projects')
     checklists = models.ManyToManyField(StepPage)
     checked_items = models.ManyToManyField(ChecklistItem)
 
