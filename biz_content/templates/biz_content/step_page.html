@@ -50,23 +50,25 @@
           </article>
         </div>
 
-      {% if self.checklist_items %}
+        {% if checklists %}
         <div class="col-sm-5 blog-sidebar">
             <div class="panel panel-default sidebar-checklist">
+              {% for checklist in checklists %}
               <div class="panel-heading">
                 <h4>Checklist</h4>
               </div>
-
               <div class="panel-body">
-                {% for item in self.checklist_items.all %}
-                  <div class="checkbox">
-                    <label><input type="checkbox" value="">{{item.text}}</label>
-                  </div>
+                <form action="">
+                {% csrf_token %}
+                {% for item in checklist.checklist %}
+                  <div class="checkbox">{{ item }}</div>
                 {% endfor %}
+                </form>
               </div>
+              {% endfor %}
             </div>
         </div><!-- /.blog-sidebar -->
-      {% endif %}
+        {% endif %}
 
       </div><!-- /.row -->
       <div class="col-xs-12">
