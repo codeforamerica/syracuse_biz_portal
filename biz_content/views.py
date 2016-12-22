@@ -9,13 +9,29 @@ from django.contrib.admin.views.decorators import staff_member_required
 from registration.backends.simple.views import RegistrationView
 from django.core.urlresolvers import reverse
 from . import forms
+from .model_forms import ProjectNotebookForm
 
 
 @login_required
 def profile(request, username):
     if username == request.user.username:
         projects = request.user.projects.all()
-        return render(request, 'biz_content/profile.html', {'projects': projects})
+        for p in projects:
+            p.business_information_form = ProjectNotebookForm()
+        # if request.GET:
+#             project = Project.objects.get()
+#             initial = {'owner': request.user}
+#             form = ProjectNotebookForm(initial=initial)
+        if request.POST:
+            form = ProjectNotebookForm(request.POST)
+            if form.is_valid():
+                raise
+                form.save(commit=False)
+
+        return render(
+            request,
+            'biz_content/profile.html',
+            {'checklist': {}})
     else:
         return HttpResponseRedirect('/')
 
