@@ -15,38 +15,20 @@
           <p>{{ user.email }}</p>
           <p>{{ user.first_name }}</p>
           <p>{{ user.last_name }}</p>
-          <div id="test-tabs">
 
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-          </ul>
-
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="home">1</div>
-            <div role="tabpanel" class="tab-pane" id="profile">2</div>
-            <div role="tabpanel" class="tab-pane" id="messages">3</div>
-            <div role="tabpanel" class="tab-pane" id="settings">4</div>
-          </div>
-
-        </div>
           <div id="project-tabs">
-            <ul id="project-tabs" class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs" role="tablist">
               {% for project in projects %}
-                <li role="presentation">
-                  <a href="#" role="tab" id="{{ forloop.counter }}" data-toggle="tab">
+                <li role="presentation" {% if forloop.counter == 1 %}class="active"{% endif %}>
+                  <a href='#{{ forloop.counter }}' aria-controls='{{ forloop.counter }}' role="tab" data-toggle="tab">
                     {{ project.name }}
                   </a>
                 </li>
               {% endfor %}
             </ul>
-            <div class="tab-content" id="project-tab-content">
+            <div class="tab-content">
               {% for project in projects %}
-                <div class="tab-pane fade" role="tabpanel" id="{{ forloop.counter }}">
+                <div class="tab-pane fade" {% if forloop.counter == 1 %}role="tabpanel active" {%else%} role="tabpanel"{% endif %} id="{{ forloop.counter }}">
                   {{ project.name }}
                 </div>
               {% endfor %}
@@ -61,7 +43,7 @@
 
 {% block extra_js %}
     <script type="text/javascript">
-    $('#test-tabs').click(function (e) {
+    $('#project-tabs').click(function (e) {
       e.preventDefault()
       $(this).tab('show')
     })
