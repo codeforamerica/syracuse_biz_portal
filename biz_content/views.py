@@ -10,25 +10,41 @@ from registration.backends.simple.views import RegistrationView
 from django.core.urlresolvers import reverse
 from . import forms
 from .models import StepPage
-import pdb
+
+from .model_forms import ProjectNotebookForm
 
 
 @login_required
 def profile(request):
     steppages = StepPage.objects.all()
-    if request.user.username:
-        checklists = []
-        empty_checklists = []
-        projects = request.user.projects.all()
+    projects = request.user.projects.all()
+    form = None
 
-        project = request.user.projects.all()[0]
-        for sp in steppages:
+    empty_checklists = []
+    project = request.user.projects.all()[0]
+    for sp in steppages:
+        if sp.checklist_items.all():
             empty_checklists.append(forms.ChecklistForm(steppage=sp, project=project))
-        return render(request, 'biz_content/profile.html',
-                        { 'empty_checklists':empty_checklists,
-                        'projects':projects})
-    else:
-        return HttpResponseRedirect('/')
+
+    for p in projects:
+        p.business_information_form = ProjectNotebookForm()
+
+        if request.GET:
+            project = Project.objects.get()
+            initial = {'owner': request.user}
+            form = ProjectNotebookForm(initial=initial)
+
+        if request.POST:
+            form = ProjectNotebookForm(request.POST)
+            if form.is_valid():
+                raise
+                form.save(commit=False)
+
+    return render(request, 'biz_content/profile.html',
+                    { 'empty_checklists':empty_checklists,
+                    'projects':projects,
+                    'form':form})
+
 
 def dashboard(request):
     return render(request, 'biz_content/dashboard.html', {})

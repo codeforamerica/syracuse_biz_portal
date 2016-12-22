@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n widget_tweaks %}
 {% block body_class %}template-blogpage{% endblock %}
 
 {% block content %}
@@ -16,11 +16,6 @@
           <p>{{ user.first_name }}</p>
           <p>{{ user.last_name }}</p>
 
-
-
-
-
-
           <div id="project-tabs">
             <ul class="nav nav-tabs" role="tablist">
               {% for project in projects %}
@@ -34,9 +29,26 @@
             <div class="tab-content">
               {% for project in projects %}
                 <div class="tab-pane fade {% if forloop.first %}active in{% endif %}" role="tabpanel" id="{{ forloop.counter }}">
-                  {% for c in empty_checklists %}
-                    {{c}}
-                 {% endfor %}
+                  <legend><h3>{{ project.name }} Notebook</h3></legend>
+                  <form action="." method="post">
+                    {% csrf_token %}
+                    {% for field in project.business_information_form %}
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <p style="color:red;">{{field.errors}}</p>
+                          <label>{{ field.label }}</label>
+                          {% render_field field class+="form-control" %}
+                        </div>
+                      </div>
+                    {% endfor %}
+                    <input type="submit" class="btn btn-primary" value="{% trans 'Save' %}" />
+                  </form>
+                  <br>
+
+                  <legend><h3>{{ project.name }} Checklist</h3></legend>
+                   {% for c in empty_checklists %}
+                      {{c}}
+                   {% endfor %}
                 </div>
               {% endfor %}
             </div>
