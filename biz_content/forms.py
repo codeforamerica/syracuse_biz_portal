@@ -35,3 +35,5 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
 
         return user
+
+

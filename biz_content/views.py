@@ -9,16 +9,26 @@ from django.contrib.admin.views.decorators import staff_member_required
 from registration.backends.simple.views import RegistrationView
 from django.core.urlresolvers import reverse
 from . import forms
+from .models import StepPage
+import pdb
 
 
 @login_required
-def profile(request, username):
-    if username == request.user.username:
+def profile(request):
+    steppages = StepPage.objects.all()
+    if request.user.username:
+        checklists = []
+        empty_checklists = []
         projects = request.user.projects.all()
-        return render(request, 'biz_content/profile.html', {'projects': projects})
+
+        project = request.user.projects.all()[0]
+        for sp in steppages:
+            empty_checklists.append(forms.ChecklistForm(steppage=sp, project=project))
+        return render(request, 'biz_content/profile.html',
+                        { 'empty_checklists':empty_checklists,
+                        'projects':projects})
     else:
         return HttpResponseRedirect('/')
-
 
 def dashboard(request):
     return render(request, 'biz_content/dashboard.html', {})

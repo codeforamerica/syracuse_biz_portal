@@ -52,10 +52,10 @@
 
         {% if checklists %}
         <div class="col-sm-5 blog-sidebar">
-            <div class="panel panel-default sidebar-checklist">
+            <div class="panel panel-default">
               {% for checklist in checklists %}
               <div class="panel-heading">
-                <h4>Checklist</h4>
+                <h4>Checklist for Project: {{checklist.project.name}}</h4>
               </div>
               <div class="panel-body">
                 <form action="">
