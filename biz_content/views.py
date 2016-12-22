@@ -20,11 +20,16 @@ def profile(request):
     projects = request.user.projects.all()
     form = None
 
-    empty_checklists = []
+    empty_checklists = {}
     project = request.user.projects.all()[0]
-    for sp in steppages:
-        if sp.checklist_items.all():
-            empty_checklists.append(forms.ChecklistForm(steppage=sp, project=project))
+    for i, project in enumerate(projects):
+        for sp in steppages:
+            if sp.checklist_items.all():
+                project_name = projects[i].name
+                if project_name in empty_checklists.keys():
+                    empty_checklists[project_name].append(forms.ChecklistForm(steppage=sp, project=projects[i]))
+                else:
+                    empty_checklists[project_name] = [forms.ChecklistForm(steppage=sp, project=projects[i])]
 
     for p in projects:
         p.business_information_form = ProjectNotebookForm()

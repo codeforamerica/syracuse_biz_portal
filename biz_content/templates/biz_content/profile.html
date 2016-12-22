@@ -9,6 +9,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-body">
+          <div style='background:lightgray;' class="panel-heading">
+            <h1>My Profile</h1>
+          </div>
           <h1>{{ user.username }} Profile</h1>
           <p>This page is a placeholder template for the profile page.</p>
           <p>{{ user.username }}</p>
@@ -16,6 +19,11 @@
           <p>{{ user.first_name }}</p>
           <p>{{ user.last_name }}</p>
 
+          <div style='background:lightgray;' class="panel-heading">
+            <h1>My Projects</h1>
+          </div>
+          <br>
+          <br>
           <div id="project-tabs">
             <ul class="nav nav-tabs" role="tablist">
               {% for project in projects %}
@@ -46,8 +54,12 @@
                   <br>
 
                   <legend><h3>{{ project.name }} Checklist</h3></legend>
-                   {% for c in empty_checklists %}
-                      {{c}}
+                   {% for k,v in empty_checklists.items %}
+                      {% if k == project.name %}
+                        {% for checklist_item in v%}
+                          {{checklist_item}}
+                        {% endfor %}
+                      {%endif%}
                    {% endfor %}
                 </div>
               {% endfor %}
