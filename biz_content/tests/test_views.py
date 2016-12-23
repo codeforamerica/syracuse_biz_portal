@@ -18,7 +18,6 @@ class ProfileViewTestCase(TestCase):
         self.project = self.user.projects.first()
         self.project.checklists.add(self.steppage)
 
-
     def test_view_redirects_to_login(self):
         """Profile redirect to login if not logged in.
         """

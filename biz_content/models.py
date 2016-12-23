@@ -196,7 +196,9 @@ class Project(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               related_name='projects')
     ny_state_cert_of_auth_number = models.CharField(max_length=255, null=True)
-    additional_state_license_number = models.CharField(max_length=255, null=True)
+    additional_state_license_number = models.CharField(
+                                                    max_length=255,
+                                                    null=True)
     business_license_number = models.CharField(max_length=255, null=True)
     business_structure = models.CharField(max_length=255, null=True)
     dba_name = models.CharField(max_length=255, null=True)
@@ -217,7 +219,6 @@ class Project(models.Model):
     def get_checklists(self):
         for checklist in self.checklists.all():
             yield forms.ChecklistForm(checklist, project=self)
-
 
     def __str__(self):
         return self.name
