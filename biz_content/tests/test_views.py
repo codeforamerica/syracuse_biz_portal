@@ -3,6 +3,7 @@ from biz_content import models, forms
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
+from mock import patch
 
 
 class ProfileViewTestCase(TestCase):
@@ -12,6 +13,11 @@ class ProfileViewTestCase(TestCase):
         Set up user with permissions to access admin."""
         self.user = factories.UserFactory()
         self.user.save()
+        self.steppage = factories.StepPageFactory()
+        self.steppage.save()
+        self.project = self.user.projects.first()
+        self.project.checklists.add(self.steppage)
+
 
     def test_view_redirects_to_login(self):
         """Profile redirect to login if not logged in.
@@ -28,6 +34,17 @@ class ProfileViewTestCase(TestCase):
         self.client.force_login(self.user)
         res = self.client.get(reverse('profile'))
         self.assertEquals(res.status_code, 200)
+
+#    @patch('biz_content.views.foo')
+#    def test_project_checklists(self, mock_render):
+#        """Test project checklist.
+#        """
+
+#        self.client.force_login(self.user)
+#        res = self.client.get(reverse('profile'))
+#        called_with = mock_render.call_args
+#        checklists = called_with[2]['checklists']
+#        self.assertEquals(checklists[0], self.steppage)
 
 
 class DashboardViewTestCase(TestCase):

@@ -16,20 +16,9 @@ from .model_forms import ProjectNotebookForm
 
 @login_required
 def profile(request):
-    steppages = StepPage.objects.all()
     projects = request.user.projects.all()
-    form = None
 
-    empty_checklists = {}
-    project = request.user.projects.all()[0]
-    for i, project in enumerate(projects):
-        for sp in steppages:
-            if sp.checklist_items.all():
-                project_name = projects[i].name
-                if project_name in empty_checklists.keys():
-                    empty_checklists[project_name].append(forms.ChecklistForm(steppage=sp, project=projects[i]))
-                else:
-                    empty_checklists[project_name] = [forms.ChecklistForm(steppage=sp, project=projects[i])]
+    form = None # set variable for project notebook form
 
     for p in projects:
         p.business_information_form = ProjectNotebookForm()
@@ -46,8 +35,7 @@ def profile(request):
                 form.save(commit=False)
 
     return render(request, 'biz_content/profile.html',
-                    { 'empty_checklists':empty_checklists,
-                    'projects':projects,
+                    {'projects':projects,
                     'form':form})
 
 

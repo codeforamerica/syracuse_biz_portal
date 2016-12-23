@@ -214,6 +214,11 @@ class Project(models.Model):
     checklists = models.ManyToManyField(StepPage)
     checked_items = models.ManyToManyField(ChecklistItem)
 
+    def get_checklists(self):
+        for checklist in self.checklists.all():
+            yield forms.ChecklistForm(checklist, project=self)
+
+
     def __str__(self):
         return self.name
 

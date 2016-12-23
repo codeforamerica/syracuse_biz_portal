@@ -1,8 +1,11 @@
+{#
+
 {% extends "base.html" %}
 {% load i18n widget_tweaks %}
 {% block body_class %}template-blogpage{% endblock %}
 
 {% block content %}
+
 
 <div class="container">
   <div class="row">
@@ -54,13 +57,12 @@
                   <br>
 
                   <legend><h3>{{ project.name }} Checklist</h3></legend>
-                   {% for k,v in empty_checklists.items %}
-                      {% if k == project.name %}
-                        {% for checklist_item in v%}
-                          {{checklist_item}}
-                        {% endfor %}
-                      {%endif%}
-                   {% endfor %}
+                      {% for checklist in project.get_checklists %}
+                        <form action="." method="post">
+                        {% csrf_token %}
+                        {{ checklist.as_p }}
+                        </form>
+                      {% endfor %}
                 </div>
               {% endfor %}
             </div>
@@ -80,3 +82,4 @@
       })
     </script>
 {% endblock %}
+#}
