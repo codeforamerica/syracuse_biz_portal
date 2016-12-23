@@ -20,7 +20,7 @@ from .model_forms import ProjectNotebookForm
 def profile(request):
     steppages = StepPage.objects.all()
     projects = request.user.projects.all()
-    form = None
+    notebook_form = None
 
     empty_checklists = []
     project = request.user.projects.all()[0]
@@ -30,25 +30,25 @@ def profile(request):
                 forms.ChecklistForm(steppage=sp, project=project))
 
     for p in projects:
-        p.business_information_form = ProjectNotebookForm()
+        p.notebook_form = ProjectNotebookForm()
 
         if request.GET:
             project = Project.objects.get()
             initial = {'owner': request.user}
-            form = ProjectNotebookForm(initial=initial)
+            notebook_form = ProjectNotebookForm(initial=initial)
 
         if request.POST:
-            form = ProjectNotebookForm(request.POST)
-            if form.is_valid():
+            notebook_form = ProjectNotebookForm(request.POST)
+            if notebook_form.is_valid():
                 raise
-                form.save(commit=False)
+                notebook_form.save(commit=False)
 
     return render(
                 request,
                 'biz_content/profile.html', {
                     'empty_checklists': empty_checklists,
                     'projects': projects,
-                    'form', form
+                    'form': notebook_form,
                 })
 
 
