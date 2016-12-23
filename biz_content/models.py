@@ -195,23 +195,56 @@ class Project(models.Model):
     name = models.CharField(max_length=255, default="New Project")
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               related_name='projects')
-    ny_state_cert_of_auth_number = models.CharField(max_length=255, null=True)
+    ny_state_cert_of_auth_number = models.CharField(
+                                                    max_length=255,
+                                                    blank=True,
+                                                    null=True)
     additional_state_license_number = models.CharField(
                                                     max_length=255,
+                                                    blank=True,
                                                     null=True)
-    business_license_number = models.CharField(max_length=255, null=True)
-    business_structure = models.CharField(max_length=255, null=True)
-    dba_name = models.CharField(max_length=255, null=True)
-    business_type = models.CharField(max_length=255, null=True)
-    number_of_employees = models.CharField(max_length=255, null=True)
-    street_address = models.CharField(max_length=255, null=True)
-    tax_address = models.CharField(max_length=255, null=True)
-    emergency_address = models.CharField(max_length=255, null=True)
-    zip_code = models.CharField(max_length=255, null=True)
-    parcel_number = models.CharField(max_length=255, null=True)
-    business_improvement_district = models.CharField(max_length=255, null=True)
-    square_footage = models.CharField(max_length=255, null=True)
-    number_parking_spaces = models.CharField(max_length=255, null=True)
+    business_license_number = models.CharField(
+                                            max_length=255,
+                                            blank=True,
+                                            null=True)
+    business_structure = models.CharField(
+                                        max_length=255,
+                                        blank=True,
+                                        null=True)
+    dba_name = models.CharField(max_length=255, blank=True, null=True)
+    business_type = models.CharField(max_length=255, blank=True, null=True)
+    number_of_employees = models.CharField(
+                                        max_length=255,
+                                        blank=True,
+                                        null=True)
+    street_address = models.CharField(
+                                        max_length=255,
+                                        blank=True,
+                                        null=True)
+    tax_address = models.CharField(max_length=255, blank=True, null=True)
+    emergency_address = models.CharField(
+                                        max_length=255,
+                                        blank=True,
+                                        null=True)
+    zip_code = models.CharField(
+                                max_length=255,
+                                blank=True, null=True)
+    parcel_number = models.CharField(
+                                max_length=255,
+                                blank=True,
+                                null=True)
+    business_improvement_district = models.CharField(
+                                max_length=255,
+                                blank=True,
+                                null=True)
+    square_footage = models.CharField(
+                                max_length=255,
+                                blank=True,
+                                null=True)
+    number_parking_spaces = models.CharField(
+                                max_length=255,
+                                blank=True,
+                                null=True)
 
     checklists = models.ManyToManyField(StepPage)
     checked_items = models.ManyToManyField(ChecklistItem)
