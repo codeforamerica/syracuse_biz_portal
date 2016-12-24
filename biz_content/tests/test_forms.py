@@ -1,11 +1,13 @@
 from . import factories
 from biz_content import models, forms
-from django.test import TransactionTestCase, TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.http import QueryDict
+from django.test import TransactionTestCase, TestCase
+from django.test.client import RequestFactory
 
 
-class CheckListFormTestCase(TransactionTestCase):
+class ChecklistFormTestCase(TransactionTestCase):
 
     def setUp(self):
         self.user = factories.UserFactory()
@@ -31,27 +33,52 @@ class CheckListFormTestCase(TransactionTestCase):
         self.assertQuerysetEqual(model_items, form_items,
                                  transform=lambda x: x)
 
+    def test_valid_save(self):
+        rf = RequestFactory()
+        request = rf.post('/', {})
+        request.user = self.user
+        request._dont_enforce_csrf_check = False
+        form = forms.ChecklistForm(self.step_page, request.POST,
+                                   project=self.project)
+        self.assertTrue(form.is_valid())
+        form.save()
+        self.assertEqual(self.project.checklists.count(), 1)
+
+    def test_valid_save_with_items(self):
+        rf = RequestFactory()
+        items = self.step_page.checklist_items.all()
+        pks = tuple(items.values_list('pk', flat=True))
+        query_str = []
+        for pk in pks:
+            query_str.append('checklist=%s' % pk)
+        query_str = '&'.join(query_str)
+        query = QueryDict(query_str)
+        request = rf.post('/', query)
+        request.user = self.user
+        request._dont_enforce_csrf_check = False
+        form = forms.ChecklistForm(self.step_page, request.POST,
+                                   project=self.project)
+        self.assertTrue(form.is_valid())
+        form.save()
+        self.assertEqual(self.project.checklists.count(), 1)
+        self.assertEqual(self.project.checked_items.count(), 2)
+
 
 class UserFormTestCase(TransactionTestCase):
 
     def setUp(self):
         self.email = 'test@gmail.com'
-        self.password1 = 'knew1for!'
-        self.password2 = 'knew1for!'
+        self.password = 'knew1for!'
 
     def test_create_user(self):
         """Checkbox items and form items should match"""
 
         initial_data = {'email': self.email,
-                        'password1': self.password1,
-                        'password2': self.password2}
+                        'password1': self.password,
+                        'password2': self.password}
 
         form = forms.CustomUserCreationForm(initial_data)
-
         self.assertTrue(form.is_valid())
-
         form.save()
-
         u = User.objects.get(email=self.email)
-
         self.assertEqual(u.username, self.email)
