@@ -52,15 +52,6 @@ def profile(request):
                 })
 
 
-class CreateProject():
-    def post(request):
-        user = request.user
-        number_of_projects = len(user.projects)
-        name = 'Default' + str(number_of_projects)
-        project = Project(name=name, owner_id=user.id)
-        project.save()
-
-
 def dashboard(request):
     return render(request, 'biz_content/dashboard.html', {})
 

@@ -39,7 +39,8 @@
               {% for project in projects %}
                 <div class="tab-pane fade {% if forloop.first %}active in{% endif %}" role="tabpanel" id="{{ forloop.counter }}">
                   <legend><h3>{{ project.name }} Notebook</h3></legend>
-                  <form method="post" action="/profile/">
+
+                  <form name="project-notebook" method="post" action="/profile/">
                     <div class="row">
                     {% csrf_token %}
                     {% for field in project.notebook_form %}
@@ -60,25 +61,16 @@
                       </div>
                     </div>
                   </form>
+
                   <br>
 
                   <legend><h3>{{ project.name }} Checklist</h3></legend>
-                      {% for checkbox in project.get_checklists %}
-                      {% comment %}
-                      <form action="." method="post">
-                        {% csrf_token "widget_tweaks can't find as_widget" %}
-                        <div class="checkbox">
-                          <label>
-                            {% render_field checkbox.fields.checklist class+="form-control" %}
-                          <label>
-                        </div>
-                      </form>
-                      {% endcomment %}
-                      <form action="." method="post">
-                        {% csrf_token %}
-                        {{ checkbox.as_p }}
-                      </form>
+                  <form name="project-checklist" action="." method="post">
+                      {% csrf_token %}
+                      {% for field in project.get_checklists %}
+                          <div id="checklist-{{forloop.counter}}" class="checklist">{{ field }}</div>
                       {% endfor %}
+                    </form>
                 </div>
               {% endfor %}
             </div>
@@ -91,10 +83,43 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script type="text/javascript">
-      $('#project-tabs').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.checklist').click(function(e){
+      var context = $(this);
+
+      // Halt function if the ajax call is still running
+      if(context.data('requestRunning')) {
+        return;
+      }
+      context.data('requestRunning', true);
+      // Get the IDs of each checked box
+      var data = { 'checklists' : {}};
+      // Loop through checklists
+      $(".checklist").each(function(){
+        var
+          checklist = $(this),
+          checklist_name = $(this).attr('id');
+          data.checklists[checklist_name] = [];
+          // Within checklist, loop through boxes
+
+          $(checklist).each(function() {
+            checkbox = $(this);
+
+            // If the checkbox is checked, push it to
+            // the data object
+            if(checkbox.is(":checked")){
+              data.checklists[checklist_name].push($(this).val());
+            }
+
+          });
       })
-    </script>
+
+      console.log(data);
+      $.post("/profile/", data).always(function(){
+        context.data('requestRunning', false);
+      });
+    })
+  })
+</script>
 {% endblock %}
