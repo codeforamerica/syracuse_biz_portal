@@ -35,3 +35,12 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
 
         return user
+
+class PermitStatusForm(forms.Form):
+    permit_id = forms.CharField(required = True,
+                                   label="Permit ID",
+                                   help_text="Enter your Permit Application ID")
+
+    def clean(self):
+        cleaned_data = super(PermitStatusForm, self).clean()
+        permit_id = cleaned_data.get("permit_id")

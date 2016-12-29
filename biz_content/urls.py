@@ -17,4 +17,6 @@ from .import views
 
 urlpatterns = [
     url(r'^profile/$', views.profile, name="profile"),
+    url(r'^permit-status/$', views.PermitStatusView.as_view(), name="permit-status"),
 ]
+
