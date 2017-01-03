@@ -40,7 +40,6 @@ def profile(request):
         if request.POST:
             notebook_form = ProjectNotebookForm(request.POST)
             if notebook_form.is_valid():
-                raise
                 notebook_form.save(commit=False)
 
     return render(
