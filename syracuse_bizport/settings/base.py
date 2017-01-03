@@ -152,5 +152,5 @@ WEALTHMAP_SEARCHABLE_OPPORTUNITY = dict(
     model_name='Opportunity'
 )
 
-LOGIN_REDIRECT = 'profile'
+LOGIN_REDIRECT_URL = 'profile'
 LOGIN_URL = 'auth_login'
