@@ -15,11 +15,24 @@
       <div class="hero-background" style="background-image: url({{ header_img.url }})">
         <div class="jumbotron hero-shade">
           <div class="blog-header container">
-            <div class="row text-center">
-              <div class="col-sm-8 col-sm-offset-2">
+            <div class="row">
+              <div class="col-sm-9">
+                {% if self.get_ancestors|length > 1 %}
+                  <ol class="breadcrumb">
+
+                  {% for page in self.get_ancestors %}
+                    {% if page.is_root == False %}
+                      <li><a href="{% pageurl page %}">{{ page.title }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+
+                  <li class="active">{{ self.title }}</li>
+
+                  </ol>
+                {% endif %}
                 <h1 class="blog-title">{{ page.title }}</h1>
                 {% if page.description %}
-                  <p class="lead blog-description">{{page.description}}</p>
+                  <h2 class="lead blog-description">{{page.description}}</h2>
                 {% endif %}
               </div>
             </div>
@@ -71,15 +84,15 @@
         {% endif %}
 
       </div><!-- /.row -->
-      <div class="col-xs-12">
+      {% if page.link_page %}
+      <div class="col-sm-7">
         <nav>
-          <ul class="pager">
-            <li><a href="{{ page.link_page.url }}">
-                <strong>Next Page:</strong> {{ page.link_page }}
-            </a></li>
-          </ul>
+          <a class="pull-right btn btn-default btn-lg" href="{{ page.link_page.url }}">
+            <strong>Next Step:</strong> {{ page.link_page }}
+          </a>
         </nav>
       </div>
+      {% endif %}
     </div><!-- /.container -->
 
 
