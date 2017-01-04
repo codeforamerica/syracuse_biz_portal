@@ -84,15 +84,22 @@
         {% endif %}
 
       </div><!-- /.row -->
-      {% if page.link_page %}
-      <div class="col-sm-7">
-        <nav>
-          <a class="pull-right btn btn-default btn-lg" href="{{ page.link_page.url }}">
-            <strong>Next Step:</strong> {{ page.link_page }}
-          </a>
-        </nav>
+      <div class="row">
+        <div class="col-sm-7">
+          <nav>
+          {% if page.previous_step %}
+            <a class="pull-left btn btn-primary btn-lg" href="{{ page.previous_step.url }}">
+              <strong><i class="fa fa-arrow-left"></i> Previous Step:</strong> {{ page.previous_step }}
+            </a>
+          {% endif %}
+          {% if page.next_step %}
+            <a class="pull-right btn btn-primary btn-lg" href="{{ page.next_step.url }}">
+              <strong>Next Step:</strong> {{ page.next_step }} <i class="fa fa-arrow-right"></i>
+            </a>
+          {% endif %}
+          </nav>
+        </div>
       </div>
-      {% endif %}
     </div><!-- /.container -->
 
 
