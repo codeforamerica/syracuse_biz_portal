@@ -4,6 +4,7 @@ django-registration==2.2
 djangorestframework==3.3.3
 django-widget-tweaks==1.4.1
 psycopg2==2.6.2
+requests==2.12.4
 wagtail==1.7.0
 
 #will move to pypi at first major version
