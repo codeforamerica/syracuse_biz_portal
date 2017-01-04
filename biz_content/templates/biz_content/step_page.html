@@ -17,6 +17,19 @@
           <div class="blog-header container">
             <div class="row">
               <div class="col-sm-9">
+                {% if self.get_ancestors|length > 1 %}
+                  <ol class="breadcrumb">
+
+                  {% for page in self.get_ancestors %}
+                    {% if page.is_root == False %}
+                      <li><a href="{% pageurl page %}">{{ page.title }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+
+                  <li class="active">{{ self.title }}</li>
+
+                  </ol>
+                {% endif %}
                 <h1 class="blog-title">{{ page.title }}</h1>
                 {% if page.description %}
                   <h2 class="lead blog-description">{{page.description}}</h2>

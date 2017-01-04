@@ -46,6 +46,7 @@ header.step{
 
 .jumbotron h2 {
 	color: white;
+	margin-bottom: 0;
 	font-weight: normal;
 }
 
@@ -74,6 +75,21 @@ header.step{
 .collection-page-icon {
 	text-align: center;
 	padding: 1.5em;
+}
+
+.breadcrumb {
+	padding: 0;
+	background-color: inherit;
+	font-size: 12px;
+}
+
+.breadcrumb li a {
+	text-decoration: underline;
+	color: white;
+}
+
+.breadcrumb .active {
+	color: white;
 }
 
 .blog-main li {
