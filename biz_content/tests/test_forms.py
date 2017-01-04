@@ -33,7 +33,7 @@ class ChecklistFormTestCase(TransactionTestCase):
         self.assertQuerysetEqual(model_items, form_items,
                                  transform=lambda x: x)
 
-    def test_valid_save(self):
+    def test_add_checklist_without_checked_items(self):
         rf = RequestFactory()
         request = rf.post('/', {})
         request.user = self.user
@@ -44,15 +44,23 @@ class ChecklistFormTestCase(TransactionTestCase):
         form.save()
         self.assertEqual(self.project.checklists.count(), 1)
 
-    def test_valid_save_with_items(self):
+    def test_cleaned_data(self):
         rf = RequestFactory()
         items = self.step_page.checklist_items.all()
-        pks = tuple(items.values_list('pk', flat=True))
-        query_str = []
-        for pk in pks:
-            query_str.append('checklist=%s' % pk)
-        query_str = '&'.join(query_str)
-        query = QueryDict(query_str)
+        query = {'checklist': tuple(items.values_list('pk', flat=True))}
+        request = rf.post('/', query)
+        request.user = self.user
+        request._dont_enforce_csrf_check = False
+        form = forms.ChecklistForm(self.step_page, request.POST,
+                                   project=self.project)
+        self.assertTrue(form.is_valid())
+        checked_items = form.cleaned_data['checklist']
+        self.assertEquals(checked_items.count(), items.count())
+
+    def test_add_checklist_with_checked_items(self):
+        rf = RequestFactory()
+        items = self.step_page.checklist_items.all()
+        query = {'checklist': tuple(items.values_list('pk', flat=True))}
         request = rf.post('/', query)
         request.user = self.user
         request._dont_enforce_csrf_check = False
@@ -61,7 +69,7 @@ class ChecklistFormTestCase(TransactionTestCase):
         self.assertTrue(form.is_valid())
         form.save()
         self.assertEqual(self.project.checklists.count(), 1)
-        self.assertEqual(self.project.checked_items.count(), 2)
+        self.assertEqual(self.project.checked_items.count(), items.count())
 
 
 class UserFormTestCase(TransactionTestCase):
