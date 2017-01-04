@@ -31,6 +31,7 @@ class UserRegistrationView(RegistrationView):
     def get_success_url(self, user):
         return reverse('profile')
 
+
 class PermitStatusView(TemplateView):
     template_name = "biz_content/permit_status.html"
     form_class = forms.PermitStatusForm
@@ -53,10 +54,10 @@ class PermitStatusView(TemplateView):
                 raise Http404
 
             if not permit_data:
-                messages.error(request, "Your permit could not be found. Please contact the NBD with questions.")
-        return render(request, self.template_name, {'form': form, 'permit_data': permit_data})
-
-
-
-
-
+                messages.error(
+                    request,
+                    "Your permit could not be found. Please contact the NBD.")
+        return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'permit_data': permit_data})
