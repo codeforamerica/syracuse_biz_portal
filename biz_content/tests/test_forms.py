@@ -3,11 +3,11 @@ from biz_content import models, forms
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.http import QueryDict
-from django.test import TransactionTestCase, TestCase
+from django.test import TestCase, TestCase
 from django.test.client import RequestFactory
 
 
-class ChecklistFormTestCase(TransactionTestCase):
+class ChecklistFormTestCase(TestCase):
 
     def setUp(self):
         self.user = factories.UserFactory()
@@ -72,7 +72,7 @@ class ChecklistFormTestCase(TransactionTestCase):
         self.assertEqual(self.project.checked_items.count(), items.count())
 
 
-class UserFormTestCase(TransactionTestCase):
+class UserFormTestCase(TestCase):
 
     def setUp(self):
         self.email = 'test@gmail.com'

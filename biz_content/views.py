@@ -32,8 +32,8 @@ class UserRegistrationView(RegistrationView):
 def update_checkbox(request, steppage_id, project_id):
     if not request.POST:
         raise SuspiciousOperation("Invalid request")
-    steppage = get_object_or_404(models.Steppage, pk=steppage_id)
-    project = request.user.projects.filter(pk=project_id)
+    steppage = get_object_or_404(models.StepPage, pk=steppage_id)
+    project = request.user.projects.get(pk=project_id)
     if not project:
         raise Http404("Project does not exist")
     form = forms.ChecklistForm(steppage, request.POST, project=project)
@@ -41,4 +41,6 @@ def update_checkbox(request, steppage_id, project_id):
         checked_items = form.save()
     else:
         raise SuspiciousOperation(str(form.POST))
-    return JsonResponse(checked_items.values())
+    return JsonResponse({
+        'checked_items': list(checked_items.values_list('pk', flat=True)),
+    })

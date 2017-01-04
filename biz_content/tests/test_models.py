@@ -5,7 +5,7 @@ from django.test import TransactionTestCase, TestCase
 from django.test.client import RequestFactory
 
 
-class StepPageTestCase(TransactionTestCase):
+class StepPageTestCase(TestCase):
 
     def setUp(self):
         self.user = factories.UserFactory()
@@ -34,7 +34,7 @@ class StepPageTestCase(TransactionTestCase):
         self.assertEqual(checklists[0].project, self.project)
 
 
-class ProjectTestCase(TransactionTestCase):
+class ProjectTestCase(TestCase):
 
     def test_create_user_creates_project(self):
         user = factories.UserFactory()
