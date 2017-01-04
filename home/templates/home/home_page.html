@@ -30,11 +30,6 @@
     <section>
       <div class="container">
         <div class="row">
-          <div class="col-md-12">
-            <legend><h3><i class="fa fa-check-square-o" aria-hidden="true"></i> Checklist Guides</h3></legend>
-          </div>
-        </div>
-        <div class="row">
           {% for collection_page in collection_pages %}
           <a href={{collection_page.slug}} class="portfolio-link">
               <div class="col-sm-4">
@@ -45,9 +40,8 @@
                                 {% image collection_page.icon width-80 %}
                               {% endif %}
                         </div>
-                    <br>
                     <h2 class="text-center">{{collection_page.title}}</h2>
-                    <p class="text-center">{{collection_page.description}}</p>
+                    <p>{{collection_page.description}}</p>
                   </div>
                 </div>
               </div>
@@ -73,9 +67,9 @@
           </div>
           <div class="col-sm-6">
             <legend><h3><i class="fa fa-star" aria-hidden="true"></i> Popular Pages</h3></legend>
-            <ul class="list-group">
+            <ul class="list-unstyled">
               {% for selected_page in self.selected_pages.all %}
-                <li class="list-group-item">
+                <li>
                     <h4>
                       <a href="{% pageurl selected_page.step_pages %}">
                         {{ selected_page.step_pages.title }}
