@@ -59,16 +59,16 @@ class ProfileViewTestCase(TestCase):
         res = self.client.get(reverse('profile'))
         self.assertEquals(res.status_code, 200)
 
-#    @patch('biz_content.views.foo')
-#    def test_project_checklists(self, mock_render):
-#        """Test project checklist.
-#        """
+# @patch('biz_content.views.foo')
+# def test_project_checklists(self, mock_render):
+#     """Test project checklist.
+#     """
 
-#        self.client.force_login(self.user)
-#        res = self.client.get(reverse('profile'))
-#        called_with = mock_render.call_args
-#        checklists = called_with[2]['checklists']
-#        self.assertEquals(checklists[0], self.steppage)
+#     self.client.force_login(self.user)
+#     res = self.client.get(reverse('profile'))
+#     called_with = mock_render.call_args
+#     checklists = called_with[2]['checklists']
+#     self.assertEquals(checklists[0], self.steppage)
 
 
 class DashboardViewTestCase(TestCase):

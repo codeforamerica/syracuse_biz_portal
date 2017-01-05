@@ -45,16 +45,8 @@ def profile(request):
         request,
         'biz_content/profile.html', {
             'projects': projects,
-            'project_id':project_id
+            'project_id': project_id
         })
-
-
-def update_project(request):
-    if request.method == 'POST':
-        p.notebook_form = ProjectNotebookForm(request.POST)
-        p.notebook_form.save()
-        data = {'success': True}
-        return JsonResponse(data, status_code=200)
 
 
 def dashboard(request):
