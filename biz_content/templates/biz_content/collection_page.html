@@ -15,16 +15,31 @@
       <div class="hero-background" style="background-image: url({{ header_img.url }})">
         <div class="jumbotron hero-shade">
           <div class="container">
-            <div class="row text-center">
+            <div class="row">
+              <!--
               <div class="col-sm-12">
                 {% if page.icon %}
                   {% image page.icon width-120 %}
                 {% endif %}
               </div>
-              <div class="col-sm-6 col-sm-offset-3">
+            -->
+              <div class="col-sm-6">
+                {% if self.get_ancestors|length > 1 %}
+                  <ol class="breadcrumb">
+
+                  {% for page in self.get_ancestors %}
+                    {% if page.is_root == False %}
+                      <li><a href="{% pageurl page %}">{{ page.title }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+
+                  <li class="active">{{ self.title }}</li>
+
+                  </ol>
+                {% endif %}
                 <h1 class="blog-title">{{ page.title }}</h1>
                 {% if page.description %}
-                  <p class="lead blog-description">{{page.description}}</p>
+                  <h2 class="lead blog-description">{{page.description}}</h2>
                 {% endif %}
               </div>
             </div>
@@ -55,7 +70,7 @@
 
         <div class="col-sm-5">
             {% if page.get_children %}
-            <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> Checklist Guides</h2>
+            <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> Section Content</h2>
             <ol class="list-group">
             {% for page in page.get_children %}
               <li class="list-group-item"><a href="{{ page.slug }}">{{ page.title }}</a></li>
@@ -68,13 +83,11 @@
 
       {% if page.start_link %}
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-sm-7">
           <nav>
-            <ul class="pager">
-              <li><a href="{{ page.start_link.url }}">
-                  <strong>Get Started:</strong> {{ page.start_link }}
-              </a></li>
-            </ul>
+            <a class="pull-right btn btn-default btn-lg" href="{{ page.start_link.url }}">
+              <strong>Get Started</strong>
+            </a>
           </nav>
         </div>
       </div>
