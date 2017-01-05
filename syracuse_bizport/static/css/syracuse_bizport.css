@@ -68,7 +68,7 @@ header.step{
 }
 
 .wagtail-userbar-items {
-	bottom: 90px;
+	bottom: 150%;
 	right: -10px;
 }
 
@@ -302,6 +302,10 @@ footer {
 }
 footer h3 {
   margin-bottom: 30px;
+}
+footer a p {
+	color: white;
+	text-decoration: underline;
 }
 footer .footer-above {
   padding-top: 50px;
