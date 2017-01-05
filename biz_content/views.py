@@ -20,15 +20,7 @@ from . import forms, models
 
 @login_required
 def profile(request):
-    steppages = StepPage.objects.all()
     projects = request.user.projects.all()
-
-    empty_checklists = []
-    project = request.user.projects.all()[0]
-    for sp in steppages:
-        if sp.checklist_items.all():
-            empty_checklists.append(
-                forms.ChecklistForm(steppage=sp, project=project))
 
     for p in projects:
         p.notebook_form = ProjectNotebookForm()
@@ -36,7 +28,6 @@ def profile(request):
     return render(
         request,
         'biz_content/profile.html', {
-            'empty_checklists': empty_checklists,
             'projects': projects
         })
 
