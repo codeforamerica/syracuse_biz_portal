@@ -64,6 +64,7 @@
         </div>
 
         {% if checklists %}
+
         <div class="col-sm-5 blog-sidebar">
             <div class="panel panel-default sidebar-checklist">
               {% for checklist in checklists %}
@@ -71,9 +72,10 @@
                 <h4>Checklist</h4>
               </div>
               <div class="panel-body">
-                <form action="">
+                <form action="/update-checkbox/{{ checklist.step_page.id }}/{{ checklist.project.id }}">
                 {% csrf_token %}
                 {% for item in checklist.checklist %}
+                  {{ item.checklist_id }}
                   <div class="checkbox">{{ item }}</div>
                 {% endfor %}
                 </form>
