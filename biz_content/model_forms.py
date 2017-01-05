@@ -3,6 +3,8 @@ from .models import Project
 
 
 class ProjectNotebookForm(forms.ModelForm):
+    id = forms.CharField(widget=forms.HiddenInput())
+
     class Meta:
         model = Project
         fields = [
@@ -22,3 +24,4 @@ class ProjectNotebookForm(forms.ModelForm):
             'square_footage',
             'number_parking_spaces',
         ]
+

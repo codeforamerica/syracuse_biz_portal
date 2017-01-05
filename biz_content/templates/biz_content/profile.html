@@ -30,14 +30,28 @@
                 <div class="tab-pane fade {% if forloop.first %}active in{% endif %}" role="tabpanel" id="{{ forloop.counter }}">
                   <legend><h3>{{ project.name }} Notebook</h3></legend>
 
-                  <form name="project-notebook" method="post" action="/profile/">
+                    <div class="alert alert-success">  <!-- singular -->
+                        <a class="close" data-dismiss="alert">×</a>
+                        <p class='succes' style="color:red;font-size:12px;"></p>
+                    </div>
+
+                    <div class="alert alert-error">  <!-- singular -->
+                        <a class="close" data-dismiss="alert">×</a>
+                        <p class='succes' style="color:red;font-size:12px;"></p>
+                    </div>
+
+
+                  <form id=project_{{project.id}} name="project-notebook" method="post" action="/profile/">
                     <div class="row">
                     {% csrf_token %}
                     {% for field in project.notebook_form %}
                       <div class="col-md-4">
                         <div class="form-group">
                           <p style="color:red;">{{field.errors}}</p>
-                          <label>{{ field.label }}</label>
+                           {% if not field.label == 'Id' %}
+                              <label>{{ field.label }}</label>
+                            {% endif %}
+
                           {% render_field field class+="form-control" %}
                         </div>
                       </div>
@@ -76,10 +90,47 @@
 
 {% block extra_js %}
 <script type="text/javascript">
+  $( "div.alert" ).hide();
+
   $(document).ready(function(){
+
     $('.project-checklist input[name="checklist"]').on('change',function(){
       $('form[name="project-checklist"]').submit();
     });
+
+    var id = $( "input#id_id" ).val();
+    var frm = $('form#project_' + id);
+
+    frm.submit(function () {
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            success: function (data) {
+                $("p.success").html(data);
+            },
+            error: function(data) {
+                $("#MESSAGE-DIV").html("Something went wrong!");
+            }
+        });
+        return false;
+    });
+
+    // var request = $.ajax({
+    //   url: "/project/" + id,
+    //   method: "POST",
+    //   data: { id : id },
+    //   dataType: "json"
+    // });
+
+    // request.done(function( msg ) {
+    //   $( "#log" ).html( msg );
+    // });
+
+    // request.fail(function( jqXHR, textStatus ) {
+    //   alert( "Request failed: " + textStatus );
+    // });
+
   })
 </script>
 {% endblock %}
