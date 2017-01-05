@@ -23,19 +23,19 @@ from . import forms, models
 
 @login_required
 def profile(request):
-    projects = request.user.projects.all()
-
-    if request.method == 'GET':
-        for p in projects:
-            initial = p.__dict__
-            p.notebook_form = ProjectNotebookForm(initial)
-
     if request.method == 'POST':
         project_id = request.POST['id']
         instance = get_object_or_404(Project, id=project_id)
         form = ProjectNotebookForm(request.POST, instance=instance)
         if form.is_valid:
             form.save()
+            messages.success(request, 'Your project has saved.')
+
+    projects = request.user.projects.all()
+
+    for p in projects:
+        initial = p.__dict__
+        p.notebook_form = ProjectNotebookForm(initial)
 
     return render(
             request,
