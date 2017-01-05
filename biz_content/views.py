@@ -33,7 +33,7 @@ def profile(request):
         else:
             messages.error(request, 'Your project could not be saved.')
 
-    projects = request.user.projects.all()
+    projects = request.user.projects.all().order_by('name')
 
     for p in projects:
         initial = p.__dict__

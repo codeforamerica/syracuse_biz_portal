@@ -34,7 +34,7 @@
                     {% for message in messages %}
                         <div class="alert alert-{{ message.tags }}">  <!-- singular -->
                             <a class="close" data-dismiss="alert">×</a>
-                            <p style="color:red;font-size:12px;">{{ message }}</p>
+                            <p style="color:black;font-size:12px;">{{ message }}</p>
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -95,39 +95,6 @@
     $('.project-checklist input[name="checklist"]').on('change',function(){
       $('form[name="project-checklist"]').submit();
     });
-
-    var id = $( "input#id_id" ).val();
-    var frm = $('form#project_' + id);
-
-    frm.submit(function () {
-        $.ajax({
-            type: frm.attr('method'),
-            url: frm.attr('action'),
-            data: frm.serialize(),
-            success: function (data) {
-                $("p.success").html(data);
-            },
-            error: function(data) {
-                $("#MESSAGE-DIV").html("Something went wrong!");
-            }
-        });
-        return false;
-    });
-
-    // var request = $.ajax({
-    //   url: "/project/" + id,
-    //   method: "POST",
-    //   data: { id : id },
-    //   dataType: "json"
-    // });
-
-    // request.done(function( msg ) {
-    //   $( "#log" ).html( msg );
-    // });
-
-    // request.fail(function( jqXHR, textStatus ) {
-    //   alert( "Request failed: " + textStatus );
-    // });
 
   })
 </script>
