@@ -40,17 +40,18 @@ def profile(request):
         p.notebook_form = ProjectNotebookForm(initial)
 
     return render(
-            request,
-            'biz_content/profile.html', {
-                'projects': projects
-            })
+        request,
+        'biz_content/profile.html', {
+            'projects': projects
+        })
+
 
 def update_project(request):
     if request.method == 'POST':
         p.notebook_form = ProjectNotebookForm(request.POST)
         p.notebook_form.save()
-        data = {'success':True}
-        return JsonResponse(data, status_code = 200)
+        data = {'success': True}
+        return JsonResponse(data, status_code=200)
 
 
 def dashboard(request):

@@ -24,4 +24,3 @@ class ProjectNotebookForm(forms.ModelForm):
             'square_footage',
             'number_parking_spaces',
         ]
-
