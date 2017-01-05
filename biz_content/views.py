@@ -23,8 +23,10 @@ from . import forms, models
 
 @login_required
 def profile(request):
+    project_id = int(request.user.projects.all().order_by('name').first().id)
+
     if request.method == 'POST':
-        project_id = request.POST['id']
+        project_id = int(request.POST['id'])
         instance = get_object_or_404(Project, id=project_id)
         form = ProjectNotebookForm(request.POST, instance=instance)
         if form.is_valid:
@@ -42,7 +44,8 @@ def profile(request):
     return render(
         request,
         'biz_content/profile.html', {
-            'projects': projects
+            'projects': projects,
+            'project_id':project_id
         })
 
 

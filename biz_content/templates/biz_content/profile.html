@@ -18,8 +18,8 @@
           <div id="project-tabs">
             <ul class="nav nav-tabs" role="tablist">
               {% for project in projects %}
-                <li role="presentation" {% if forloop.counter == 1 %}class="active"{% endif %}>
-                  <a href='#{{ forloop.counter }}' aria-controls='{{ forloop.counter }}' role="tab" data-toggle="tab">
+                <li role="presentation" {% if project.id == project_id %}class="active"{% endif %}>
+                  <a href='#{{ project.id }}' aria-controls='{{ project.id }}' role="tab" data-toggle="tab">
                     {{ project.name }}
                   </a>
                 </li>
@@ -27,7 +27,7 @@
             </ul>
             <div class="tab-content">
               {% for project in projects %}
-                <div class="tab-pane fade {% if forloop.first %}active in{% endif %}" role="tabpanel" id="{{ forloop.counter }}">
+                <div class="tab-pane fade {% if project.id == project_id %}active in{% endif %}" role="tabpanel" id="{{ project.id }}">
                   <legend><h3>{{ project.name }} Notebook</h3></legend>
 
                 {% if messages %}
