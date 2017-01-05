@@ -1,9 +1,34 @@
 from . import factories
 from biz_content import models, forms
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
 from mock import patch
+
+
+class UpdateCheckboxTestCase(TestCase):
+
+    def setUp(self):
+        self.user = factories.UserFactory()
+        self.project = self.user.projects.all()[0]
+        self.step_page = factories.StepPageFactory()
+        self.url = reverse('update-checkbox', kwargs={
+            'steppage_id': self.step_page.pk,
+            'project_id': self.project.pk,
+        })
+
+    def test_valid_checked_item(self):
+        self.client.force_login(self.user)
+        item = self.step_page.checklist_items.first()
+        res = self.client.post(self.url, {
+            'checklist': (item.pk,),
+        })
+        self.assertEquals(res.status_code, 200)
+        json = res.json()
+        checked_items = json['checked_items']
+        self.assertEquals(len(checked_items), 1)
+        pk = checked_items[0]
+        self.assertEquals(pk, item.pk)
 
 
 class ProfileViewTestCase(TestCase):
