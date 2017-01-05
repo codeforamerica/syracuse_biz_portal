@@ -30,6 +30,8 @@ def profile(request):
         if form.is_valid:
             form.save()
             messages.success(request, 'Your project has saved.')
+        else:
+            messages.error(request, 'Your project could not be saved.')
 
     projects = request.user.projects.all()
 
