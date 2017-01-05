@@ -8,9 +8,15 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
-                      <a href="{% pageurl settings.biz_content.FooterSettings.first_link %}"><p>{{ settings.biz_content.FooterSettings.first_link }}</p></a>
-                      <a href="{% pageurl settings.biz_content.FooterSettings.second_link %}"><p>{{ settings.biz_content.FooterSettings.second_link }}</p></a>
-                      <a href="{% pageurl settings.biz_content.FooterSettings.third_link %}"><p>{{ settings.biz_content.FooterSettings.third_link }}</p></a>
+                      {% if settings.biz_content.FooterSettings.first_link %}
+                        <a href="{% pageurl settings.biz_content.FooterSettings.first_link %}"><p>{{ settings.biz_content.FooterSettings.first_link }}</p></a>
+                      {% endif %}
+                      {% if settings.biz_content.FooterSettings.second_link %}
+                        <a href="{% pageurl settings.biz_content.FooterSettings.second_link %}"><p>{{ settings.biz_content.FooterSettings.second_link }}</p></a>
+                      {% endif %}
+                      {% if settings.biz_content.FooterSettings.third_link %}
+                        <a href="{% pageurl settings.biz_content.FooterSettings.third_link %}"><p>{{ settings.biz_content.FooterSettings.third_link }}</p></a>
+                      {% endif %}
                     </div>
                     <div class="col-sm-4">
                       <p><strong>{{ settings.biz_content.FooterSettings.department_name }}</strong></p>
