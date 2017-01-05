@@ -30,15 +30,14 @@
                 <div class="tab-pane fade {% if forloop.first %}active in{% endif %}" role="tabpanel" id="{{ forloop.counter }}">
                   <legend><h3>{{ project.name }} Notebook</h3></legend>
 
-                    <div class="alert alert-success">  <!-- singular -->
-                        <a class="close" data-dismiss="alert">×</a>
-                        <p class='succes' style="color:red;font-size:12px;"></p>
-                    </div>
-
-                    <div class="alert alert-error">  <!-- singular -->
-                        <a class="close" data-dismiss="alert">×</a>
-                        <p class='succes' style="color:red;font-size:12px;"></p>
-                    </div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">  <!-- singular -->
+                            <a class="close" data-dismiss="alert">×</a>
+                            <p style="color:red;font-size:12px;">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
 
 
                   <form id=project_{{project.id}} name="project-notebook" method="post" action="/profile/">

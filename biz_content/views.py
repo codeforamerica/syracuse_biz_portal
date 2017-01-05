@@ -1,5 +1,5 @@
 from biz_content.models import Project, ChecklistItem
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
 
@@ -13,6 +13,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from registration.backends.simple.views import RegistrationView
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView, UpdateView
+from django.contrib import messages
+
 
 from .models import StepPage
 from .model_forms import ProjectNotebookForm
@@ -25,7 +27,7 @@ def profile(request):
 
     if request.method == 'GET':
         for p in projects:
-            initial = {'id':p.id, 'owner_id':request.user.id}
+            initial = p.__dict__
             p.notebook_form = ProjectNotebookForm(initial)
 
     if request.method == 'POST':
