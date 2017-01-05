@@ -11,16 +11,6 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <div style='background:lightgray;' class="panel-heading">
-            <h1>My Profile</h1>
-          </div>
-          <h1>{{ user.username }} Profile</h1>
-          <p>This page is a placeholder template for the profile page.</p>
-          <p>{{ user.username }}</p>
-          <p>{{ user.email }}</p>
-          <p>{{ user.first_name }}</p>
-          <p>{{ user.last_name }}</p>
-
-          <div style='background:lightgray;' class="panel-heading">
             <h1>My Projects</h1>
           </div>
           <br>
@@ -68,7 +58,9 @@
                   <form name="project-checklist" action="." method="post">
                       {% csrf_token %}
                       {% for field in project.get_checklists %}
-                          <div id="checklist-{{forloop.counter}}" class="checklist">{{ field }}</div>
+                          <div id="checklist-{{forloop.counter}}" class="project-checklist">
+                            {{ field }}
+                          </div>
                       {% endfor %}
                     </form>
                 </div>
@@ -85,41 +77,9 @@
 {% block extra_js %}
 <script type="text/javascript">
   $(document).ready(function(){
-    $('.checklist').click(function(e){
-      var context = $(this);
-
-      // Halt function if the ajax call is still running
-      if(context.data('requestRunning')) {
-        return;
-      }
-      context.data('requestRunning', true);
-      // Get the IDs of each checked box
-      var data = { 'checklists' : {}};
-      // Loop through checklists
-      $(".checklist").each(function(){
-        var
-          checklist = $(this),
-          checklist_name = $(this).attr('id');
-          data.checklists[checklist_name] = [];
-          // Within checklist, loop through boxes
-
-          $(checklist).each(function() {
-            checkbox = $(this);
-
-            // If the checkbox is checked, push it to
-            // the data object
-            if(checkbox.is(":checked")){
-              data.checklists[checklist_name].push($(this).val());
-            }
-
-          });
-      })
-
-      console.log(data);
-      $.post("/profile/", data).always(function(){
-        context.data('requestRunning', false);
-      });
-    })
+    $('.project-checklist input[name="checklist"]').on('change',function(){
+      $('form[name="project-checklist"]').submit();
+    });
   })
 </script>
 {% endblock %}
