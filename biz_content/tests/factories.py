@@ -47,3 +47,5 @@ class StepPageFactory(dfactory.DjangoModelFactory):
         ChecklistItemFactory, 'checklist')
     checklist_item2 = factory.RelatedFactory(
         ChecklistItemFactory, 'checklist')
+    checklist_item3 = factory.RelatedFactory(
+        ChecklistItemFactory, 'checklist')
