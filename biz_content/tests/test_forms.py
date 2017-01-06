@@ -59,7 +59,7 @@ class ChecklistFormTestCase(TestCase):
 
     def test_add_checklist_with_checked_items(self):
         rf = RequestFactory()
-        items = self.step_page.checklist_items.all()
+        items = self.step_page.checklist_items.all()[:2]
         query = {'checklist': tuple(items.values_list('pk', flat=True))}
         request = rf.post('/', query)
         request.user = self.user
@@ -68,8 +68,10 @@ class ChecklistFormTestCase(TestCase):
                                    project=self.project)
         self.assertTrue(form.is_valid())
         form.save()
-        self.assertEqual(self.project.checklists.count(), 1)
-        self.assertEqual(self.project.checked_items.count(), items.count())
+        self.assertEqual(self.project.checklists.first().pk, self.step_page.pk)
+        self.assertQuerysetEqual(
+            self.project.checked_items.all(), items,
+            ordered=False, transform=lambda x: x)
 
 
 class UserFormTestCase(TestCase):
