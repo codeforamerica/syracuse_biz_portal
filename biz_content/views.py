@@ -11,7 +11,6 @@ from django.core.urlresolvers import reverse
 from django.views.generic.base import TemplateView
 from . import forms
 import requests
-import pdb
 
 SYRACUSE_PERMIT_URL = 'http://24.97.110.146:8081/api/permits/'
 
