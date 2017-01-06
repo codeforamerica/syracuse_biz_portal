@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.base import TemplateView
 from . import forms
 import requests
+import pdb
 
 SYRACUSE_PERMIT_URL = 'http://24.97.110.146:8081/api/permits/'
 
@@ -48,10 +49,10 @@ class PermitStatusView(TemplateView):
             permit_id = form_data['permit_id']
             try:
                 r = requests.get(SYRACUSE_PERMIT_URL + permit_id)
-                permit_data = r.json()
             except:
-                raise Http404
-
+                pass
+            else:
+                permit_data = r.json()
             if not permit_data:
                 messages.error(
                     request,
