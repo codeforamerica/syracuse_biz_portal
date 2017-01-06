@@ -27,11 +27,7 @@ class ChecklistForm(forms.Form):
             self.project.checklists.get(pk=self.step_page.pk)
         except ObjectDoesNotExist:
             self.project.checklists.add(self.step_page)
-        with transaction.atomic():
-            self.project.checked_items.filter(
-                checklist=self.step_page).delete()
-            for item in self.cleaned_data['checklist']:
-                self.project.checked_items.add(item)
+        self.project.checked_items.set(self.cleaned_data['checklist'])
         return self.project.checked_items
 
 
