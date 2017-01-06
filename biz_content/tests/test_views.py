@@ -93,15 +93,6 @@ class ProfileViewTestCase(TestCase):
         self.assertContains(res, 'bakery')
         self.assertContains(res, html.conditional_escape(PROJECT_FAILURE))
 
-# def test_project_checklists(self):
-#     """Test project checklist.
-#     """
-#     self.client.force_login(self.user)
-#     res = self.client.get(reverse('profile'))
-#     import pdb; pdb.set_trace()
-#     checklists = res.context['checklists']
-#     self.assertEquals(checklists[0], self.steppage)
-
 
 class DashboardViewTestCase(TestCase):
 

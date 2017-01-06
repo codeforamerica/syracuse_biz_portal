@@ -68,16 +68,6 @@
                   </form>
 
                   <br>
-
-                  <legend><h3>{{ project.name }} Checklist</h3></legend>
-                  <form name="project-checklist" action="." method="post">
-                      {% csrf_token %}
-                      {% for field in project.get_checklists %}
-                          <div id="checklist-{{forloop.counter}}" class="project-checklist">
-                            {{ field }}
-                          </div>
-                      {% endfor %}
-                    </form>
                 </div>
               {% endfor %}
             </div>
