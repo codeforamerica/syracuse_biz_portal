@@ -46,7 +46,9 @@
                     {% for field in project.notebook_form %}
                       <div class="col-md-4">
                         <div class="form-group">
-                          <p style="color:red;">{{field.errors}}</p>
+                          {% for e in field.errors %}
+                            <p style="color:red;">{{e}}</p>
+                          {% endfor %}
                            {% if not field.label == 'Id' %}
                               <label>{{ field.label }}</label>
                             {% endif %}

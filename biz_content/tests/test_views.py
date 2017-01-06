@@ -4,6 +4,8 @@ from django.test import TestCase, TransactionTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
 from mock import patch
+from django.utils import html
+from biz_content.views import PROJECT_SUCCESS, PROJECT_FAILURE
 
 
 class UpdateCheckboxTestCase(TestCase):
@@ -42,6 +44,9 @@ class ProfileViewTestCase(TestCase):
         self.steppage.save()
         self.project = self.user.projects.first()
         self.project.checklists.add(self.steppage)
+        self.project_default_data = {'business_type':'llc','dba_name':'bakery'}
+        self.project.__dict__.update(self.project_default_data)
+        self.project.save()
 
     def test_view_redirects_to_login(self):
         """Profile redirect to login if not logged in.
@@ -59,16 +64,40 @@ class ProfileViewTestCase(TestCase):
         res = self.client.get(reverse('profile'))
         self.assertEquals(res.status_code, 200)
 
-# @patch('biz_content.views.foo')
-# def test_project_checklists(self, mock_render):
-#     """Test project checklist.
-#     """
+    def test_user_can_view_project_information(self):
+        self.client.force_login(self.user)
+        res = self.client.get(reverse('profile'))
 
-#     self.client.force_login(self.user)
-#     res = self.client.get(reverse('profile'))
-#     called_with = mock_render.call_args
-#     checklists = called_with[2]['checklists']
-#     self.assertEquals(checklists[0], self.steppage)
+        for k,v in self.project_default_data.items():
+            self.assertContains(res, html.conditional_escape(v))
+
+    def test_can_user_update_project_information(self):
+        self.client.force_login(self.user)
+        project_updated_data = {'dba_name':'pizzeria', 'id':self.project.id}
+        res = self.client.post(reverse('profile'), project_updated_data, follow=True)
+        self.assertEquals(res.status_code, 200)
+        self.assertContains(res, 'pizzeria')
+        self.assertContains(res, html.conditional_escape(PROJECT_SUCCESS))
+        # a user can update project data and save the data
+
+    def test_user_gets_error_if_invalid_information(self):
+        self.client.force_login(self.user)
+        bad_data_variable = 'this'*200
+        project_updated_data = {'dba_name':bad_data_variable, 'id':self.project.id}
+        res = self.client.post(reverse('profile'), project_updated_data, follow=True)
+        self.assertEquals(res.status_code, 200)
+        self.assertContains(res, 'bakery')
+        self.assertContains(res, html.conditional_escape(PROJECT_FAILURE))
+
+
+    # def test_project_checklists(self):
+    #     """Test project checklist.
+    #     """
+    #     self.client.force_login(self.user)
+    #     res = self.client.get(reverse('profile'))
+    #     import pdb; pdb.set_trace()
+    #     checklists = res.context['checklists']
+    #     self.assertEquals(checklists[0], self.steppage)
 
 
 class DashboardViewTestCase(TestCase):

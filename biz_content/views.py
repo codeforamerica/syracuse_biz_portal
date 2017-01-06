@@ -20,6 +20,8 @@ from .models import StepPage
 from .model_forms import ProjectNotebookForm
 from . import forms, models
 
+PROJECT_SUCCESS = 'Your project has saved.'
+PROJECT_FAILURE = 'Your project could not be saved.'
 
 @login_required
 def profile(request):
@@ -29,14 +31,15 @@ def profile(request):
         project_id = int(request.POST['id'])
         instance = get_object_or_404(Project, id=project_id)
         form = ProjectNotebookForm(request.POST, instance=instance)
-        if form.is_valid:
+        # import pdb;pdb.set_trace()
+        if form.is_valid():
             form.save()
-            messages.success(request, 'Your project has saved.')
+            messages.success(request, PROJECT_SUCCESS)
         else:
-            messages.error(request, 'Your project could not be saved.')
+            messages.error(request, PROJECT_FAILURE)
 
     projects = request.user.projects.all().order_by('name')
-
+    # projects in projects
     for p in projects:
         initial = p.__dict__
         p.notebook_form = ProjectNotebookForm(initial)
