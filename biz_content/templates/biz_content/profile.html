@@ -30,7 +30,7 @@
                 <div class="tab-pane fade {% if project.id == project_id %}active in{% endif %}" role="tabpanel" id="{{ project.id }}">
                   <legend><h3>{{ project.name }} Notebook</h3></legend>
 
-                {% if messages %}
+                {% if messages and project.id == project_id %}
                     {% for message in messages %}
                         <div class="alert alert-{{ message.tags }}">  <!-- singular -->
                             <a class="close" data-dismiss="alert">×</a>
