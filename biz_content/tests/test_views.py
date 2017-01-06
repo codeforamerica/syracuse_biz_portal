@@ -3,7 +3,6 @@ from biz_content import models, forms
 from django.test import TestCase, TransactionTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
-from mock import patch
 from django.utils import html
 from biz_content.views import PROJECT_SUCCESS, PROJECT_FAILURE
 
@@ -78,9 +77,11 @@ class ProfileViewTestCase(TestCase):
         res = self.client.post(
             reverse('profile'), project_updated_data, follow=True)
         self.assertEquals(res.status_code, 200)
-        self.assertContains(res, 'pizzeria')
-        self.assertContains(res, html.conditional_escape(PROJECT_SUCCESS))
-        # a user can update project data and save the data
+        context = res.context
+        self.assertEquals(context['projects'][0], self.project)
+        self.assertEquals(context['project_id'], self.project.pk)
+        messages = list(context['messages'])
+        self.assertEqual(str(messages[0]), PROJECT_SUCCESS)
 
     def test_user_gets_error_if_invalid_information(self):
         self.client.force_login(self.user)
