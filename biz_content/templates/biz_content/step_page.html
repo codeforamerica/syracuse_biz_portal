@@ -72,7 +72,7 @@
                 <h4>Checklist</h4>
               </div>
               <div class="panel-body">
-                <form action="/update-checkbox/{{ checklist.step_page.id }}/{{ checklist.project.id }}">
+                <form class="checklist-form" method="POST" action="/update-checkbox/{{ checklist.step_page.id }}/{{ checklist.project.id }}/">
                 {% csrf_token %}
                 {% for item in checklist.checklist %}
                   {{ item.checklist_id }}
@@ -104,5 +104,15 @@
       </div>
     </div><!-- /.container -->
 
+    <!-- Submit project form on check -->
+    {% block extra_js %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('.checklist-form').click(function(){
+          $(this).submit();
+        });
+      });
+    </script>
+    {% endblock extra_js %}
 
 {% endblock %}
