@@ -42,4 +42,4 @@ def update_checkbox(request, steppage_id, project_id):
     else:
         raise SuspiciousOperation(str(form.POST))
     checked_items = list(checked_items.values_list('pk', flat=True))
-    return redirect(request.META['HTTP_REFERER'])
+    return redirect(request.META['HTTP_REFERER'], checked_items=checked_items)
