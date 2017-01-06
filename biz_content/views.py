@@ -23,6 +23,7 @@ from . import forms, models
 PROJECT_SUCCESS = 'Your project has saved.'
 PROJECT_FAILURE = 'Your project could not be saved.'
 
+
 @login_required
 def profile(request):
     project_id = int(request.user.projects.all().order_by('name').first().id)

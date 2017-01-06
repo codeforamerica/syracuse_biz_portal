@@ -44,7 +44,8 @@ class ProfileViewTestCase(TestCase):
         self.steppage.save()
         self.project = self.user.projects.first()
         self.project.checklists.add(self.steppage)
-        self.project_default_data = {'business_type':'llc','dba_name':'bakery'}
+        self.project_default_data = {
+            'business_type': 'llc', 'dba_name': 'bakery'}
         self.project.__dict__.update(self.project_default_data)
         self.project.save()
 
@@ -68,13 +69,14 @@ class ProfileViewTestCase(TestCase):
         self.client.force_login(self.user)
         res = self.client.get(reverse('profile'))
 
-        for k,v in self.project_default_data.items():
+        for k, v in self.project_default_data.items():
             self.assertContains(res, html.conditional_escape(v))
 
     def test_can_user_update_project_information(self):
         self.client.force_login(self.user)
-        project_updated_data = {'dba_name':'pizzeria', 'id':self.project.id}
-        res = self.client.post(reverse('profile'), project_updated_data, follow=True)
+        project_updated_data = {'dba_name': 'pizzeria', 'id': self.project.id}
+        res = self.client.post(
+            reverse('profile'), project_updated_data, follow=True)
         self.assertEquals(res.status_code, 200)
         self.assertContains(res, 'pizzeria')
         self.assertContains(res, html.conditional_escape(PROJECT_SUCCESS))
@@ -83,21 +85,22 @@ class ProfileViewTestCase(TestCase):
     def test_user_gets_error_if_invalid_information(self):
         self.client.force_login(self.user)
         bad_data_variable = 'this'*200
-        project_updated_data = {'dba_name':bad_data_variable, 'id':self.project.id}
-        res = self.client.post(reverse('profile'), project_updated_data, follow=True)
+        project_updated_data = {
+            'dba_name': bad_data_variable, 'id': self.project.id}
+        res = self.client.post(
+            reverse('profile'), project_updated_data, follow=True)
         self.assertEquals(res.status_code, 200)
         self.assertContains(res, 'bakery')
         self.assertContains(res, html.conditional_escape(PROJECT_FAILURE))
 
-
-    # def test_project_checklists(self):
-    #     """Test project checklist.
-    #     """
-    #     self.client.force_login(self.user)
-    #     res = self.client.get(reverse('profile'))
-    #     import pdb; pdb.set_trace()
-    #     checklists = res.context['checklists']
-    #     self.assertEquals(checklists[0], self.steppage)
+# def test_project_checklists(self):
+#     """Test project checklist.
+#     """
+#     self.client.force_login(self.user)
+#     res = self.client.get(reverse('profile'))
+#     import pdb; pdb.set_trace()
+#     checklists = res.context['checklists']
+#     self.assertEquals(checklists[0], self.steppage)
 
 
 class DashboardViewTestCase(TestCase):
