@@ -72,7 +72,7 @@
                 <h4>Checklist</h4>
               </div>
               <div class="panel-body">
-                <form class="checklist-form" method="POST" action="/update-checkbox/{{ checklist.step_page.id }}/{{ checklist.project.id }}/">
+                <form class="checklist-form" method="POST" action="/update-checkbox/{{ checklist.step_page.id }}/{{ checklist.project.id|default:"0" }}/">
                 {% csrf_token %}
                 {% for item in checklist.checklist %}
                   {{ item.checklist_id }}
@@ -102,6 +102,6 @@
           </nav>
         </div>
       </div>
-    </div><!-- /.container -->  
+    </div><!-- /.container -->
 
 {% endblock %}
