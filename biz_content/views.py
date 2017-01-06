@@ -1,5 +1,8 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+import requests
+from django.shortcuts import render, get_object_or_404
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import JsonResponse
+from django.core.exceptions import SuspiciousOperation
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -9,9 +12,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from registration.backends.simple.views import RegistrationView
 from django.core.urlresolvers import reverse
 from django.views.generic.base import TemplateView
-from . import forms
-import requests
-import pdb
+from . import forms, models
 
 SYRACUSE_PERMIT_URL = 'http://24.97.110.146:8081/api/permits/'
 
@@ -61,3 +62,21 @@ class PermitStatusView(TemplateView):
                       self.template_name,
                       {'form': form,
                        'permit_data': permit_data})
+
+@login_required
+def update_checkbox(request, steppage_id, project_id):
+    if not request.POST:
+        raise SuspiciousOperation("Invalid request")
+    steppage = get_object_or_404(models.StepPage, pk=steppage_id)
+    project = request.user.projects.get(pk=project_id)
+    if not project:
+        raise Http404("Project does not exist")
+    form = forms.ChecklistForm(steppage, request.POST, project=project)
+    if form.is_valid():
+        checked_items = form.save()
+    else:
+        raise SuspiciousOperation(str(form.POST))
+    return JsonResponse({
+        'checked_items': list(checked_items.values_list('pk', flat=True)),
+    })
+  

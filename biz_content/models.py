@@ -150,21 +150,31 @@ class StepPage(Page):
         related_name='+'
     )
 
-    link_page = models.ForeignKey(
+    next_step = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         on_delete=models.SET_NULL,
         blank=True,
         related_name='+',
-        help_text=('Choose an existing page if you want the link ',
-                   'to point somewhere inside the CMS.')
+        help_text=('Choose the next step to link to at the bottom of the page')
+    )
+
+    previous_step = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        on_delete=models.SET_NULL,
+        blank=True,
+        related_name='+',
+        help_text=('Choose the previous step to link to ',
+                   'at the bottom of the page.')
     )
 
     content_panels = Page.content_panels + [
         FieldPanel('description'),
         ImageChooserPanel('header_img'),
         StreamFieldPanel('page_content'),
-        FieldPanel('link_page'),
+        FieldPanel('next_step'),
+        FieldPanel('previous_step'),
         InlinePanel('checklist_items', label="Checklist Items"),
     ]
 
@@ -208,13 +218,33 @@ post_save.connect(create_users_first_project, sender='auth.User')
 
 @register_setting
 class FooterSettings(BaseSetting):
+    first_link = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        on_delete=models.SET_NULL,
+        blank=True,
+        related_name='+',
+        help_text=('Choose a page to display in the 1st column of the footer')
+    )
+    second_link = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        on_delete=models.SET_NULL,
+        blank=True,
+        related_name='+',
+        help_text=('Choose a page to display in the 2nd column of the footer')
+    )
+    third_link = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        on_delete=models.SET_NULL,
+        blank=True,
+        related_name='+',
+        help_text=('Choose a page to display in the 3rd column of the footer')
+    )
     department_name = models.CharField(
         max_length=255,
         help_text="The name of the department.",
-        null=True)
-    phone = models.CharField(
-        max_length=255,
-        help_text="The departnment's phone number",
         null=True)
     street_address = models.CharField(
         max_length=255,
@@ -224,7 +254,7 @@ class FooterSettings(BaseSetting):
         max_length=255,
         help_text="E.g. Syracuse, NY 13202.",
         null=True)
-    footer_description = models.CharField(
+    phone = models.CharField(
         max_length=255,
-        help_text="E.g. Syracuse, NY 13202.",
+        help_text="The departnment's phone number",
         null=True)
