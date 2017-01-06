@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.core.exceptions import SuspiciousOperation
@@ -41,6 +41,5 @@ def update_checkbox(request, steppage_id, project_id):
         checked_items = form.save()
     else:
         raise SuspiciousOperation(str(form.POST))
-    return JsonResponse({
-        'checked_items': list(checked_items.values_list('pk', flat=True)),
-    })
+    checked_items = list(checked_items.values_list('pk', flat=True))
+    return redirect(request.META['HTTP_REFERER'])
