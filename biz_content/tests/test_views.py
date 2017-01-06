@@ -91,8 +91,11 @@ class ProfileViewTestCase(TestCase):
         res = self.client.post(
             reverse('profile'), project_updated_data, follow=True)
         self.assertEquals(res.status_code, 200)
-        self.assertContains(res, 'bakery')
-        self.assertContains(res, html.conditional_escape(PROJECT_FAILURE))
+        context = res.context
+        self.assertEquals(context['projects'][0].dba_name, 'bakery')
+        self.assertEquals(context['project_id'], self.project.pk)
+        messages = list(context['messages'])
+        self.assertEqual(str(messages[0]), PROJECT_FAILURE)
 
 
 class DashboardViewTestCase(TestCase):
