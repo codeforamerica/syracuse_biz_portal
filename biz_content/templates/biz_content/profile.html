@@ -1,19 +1,93 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n widget_tweaks %}
 {% block body_class %}template-blogpage{% endblock %}
 
 {% block content %}
 
+
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h1>{{ user.username }} Profile</h1>
-      <p>This page is a placeholder template for the profile page.</p>
-      <p>{{ user.username }}</p>
-      <p>{{ user.email }}</p>
-      <p>{{ user.first_name }}</p>
-      <p>{{ user.last_name }}</p>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div style='background:lightgray;' class="panel-heading">
+            <h1>My Projects</h1>
+          </div>
+          <br>
+          <br>
+          <div id="project-tabs">
+            <ul class="nav nav-tabs" role="tablist">
+              {% for project in projects %}
+                <li role="presentation" {% if project.id == project_id %}class="active"{% endif %}>
+                  <a href='#{{ project.id }}' aria-controls='{{ project.id }}' role="tab" data-toggle="tab">
+                    {{ project.name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+            <div class="tab-content">
+              {% for project in projects %}
+                <div class="tab-pane fade {% if project.id == project_id %}active in{% endif %}" role="tabpanel" id="{{ project.id }}">
+                  <legend><h3>{{ project.name }} Notebook</h3></legend>
+
+                {% if messages and project.id == project_id %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">  <!-- singular -->
+                            <a class="close" data-dismiss="alert">×</a>
+                            <p style="color:black;font-size:12px;">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+
+                  <form id=project_{{project.id}} name="project-notebook" method="post" action="/profile/">
+                    <div class="row">
+                    {% csrf_token %}
+                    {% for field in project.notebook_form %}
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          {% for e in field.errors %}
+                            <p style="color:red;">{{e}}</p>
+                          {% endfor %}
+                           {% if not field.label == 'Id' %}
+                              <label>{{ field.label }}</label>
+                            {% endif %}
+
+                          {% render_field field class+="form-control" %}
+                        </div>
+                      </div>
+                      {% if forloop.counter|divisibleby:3 %}
+                      </div>
+                      <div class="row">
+                      {% endif %}
+                    {% endfor %}
+                      <div class="col-xs-12">
+                        <input type="submit" class="btn btn-lg btn-primary" value="{% trans 'Save' %}" />
+                      </div>
+                    </div>
+                  </form>
+
+                  <br>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+    $('.project-checklist input[name="checklist"]').on('change',function(){
+      $('form[name="project-checklist"]').submit();
+    });
+
+  })
+</script>
 {% endblock %}
