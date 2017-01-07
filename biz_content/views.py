@@ -1,25 +1,53 @@
 import requests
+from biz_content.models import Project, ChecklistItem
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import TemplateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.core.exceptions import SuspiciousOperation
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.admin.views.decorators import staff_member_required
 from registration.backends.simple.views import RegistrationView
 from django.core.urlresolvers import reverse
-from django.views.generic.base import TemplateView
 from . import forms, models
+from .model_forms import ProjectNotebookForm
 
 SYRACUSE_PERMIT_URL = 'http://24.97.110.146:8081/api/permits/'
-
+PROJECT_SUCCESS = 'Your project has saved.'
+PROJECT_FAILURE = 'Your project could not be saved.'
 
 @login_required
 def profile(request):
-    return render(request, 'biz_content/profile.html', {})
+    project_id = int(request.user.projects.all().order_by('name').first().id)
+
+    if request.method == 'POST':
+        project_id = int(request.POST['id'])
+        instance = get_object_or_404(Project, id=project_id)
+        form = ProjectNotebookForm(request.POST, instance=instance)
+        # import pdb;pdb.set_trace()
+        if form.is_valid():
+            form.save()
+            messages.success(request, PROJECT_SUCCESS)
+        else:
+            messages.error(request, PROJECT_FAILURE)
+
+    projects = request.user.projects.all().order_by('name')
+    # projects in projects
+    for p in projects:
+        initial = p.__dict__
+        p.notebook_form = ProjectNotebookForm(initial)
+
+    return render(
+        request,
+        'biz_content/profile.html', {
+            'projects': projects,
+            'project_id': project_id
+        })
 
 
 def dashboard(request):

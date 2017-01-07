@@ -3,6 +3,8 @@ from biz_content import models, forms
 from django.test import TestCase, TransactionTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
+from django.utils import html
+from biz_content.views import PROJECT_SUCCESS, PROJECT_FAILURE
 
 
 class UpdateCheckboxTestCase(TestCase):
@@ -37,6 +39,14 @@ class ProfileViewTestCase(TestCase):
         Set up user with permissions to access admin."""
         self.user = factories.UserFactory()
         self.user.save()
+        self.steppage = factories.StepPageFactory()
+        self.steppage.save()
+        self.project = self.user.projects.first()
+        self.project.checklists.add(self.steppage)
+        self.project_default_data = {
+            'business_type': 'llc', 'dba_name': 'bakery'}
+        self.project.__dict__.update(self.project_default_data)
+        self.project.save()
 
     def test_view_redirects_to_login(self):
         """Profile redirect to login if not logged in.
@@ -53,6 +63,39 @@ class ProfileViewTestCase(TestCase):
         self.client.force_login(self.user)
         res = self.client.get(reverse('profile'))
         self.assertEquals(res.status_code, 200)
+
+    def test_user_can_view_project_information(self):
+        self.client.force_login(self.user)
+        res = self.client.get(reverse('profile'))
+
+        for k, v in self.project_default_data.items():
+            self.assertContains(res, html.conditional_escape(v))
+
+    def test_can_user_update_project_information(self):
+        self.client.force_login(self.user)
+        project_updated_data = {'dba_name': 'pizzeria', 'id': self.project.id}
+        res = self.client.post(
+            reverse('profile'), project_updated_data, follow=True)
+        self.assertEquals(res.status_code, 200)
+        context = res.context
+        self.assertEquals(context['projects'][0], self.project)
+        self.assertEquals(context['project_id'], self.project.pk)
+        messages = list(context['messages'])
+        self.assertEqual(str(messages[0]), PROJECT_SUCCESS)
+
+    def test_user_gets_error_if_invalid_information(self):
+        self.client.force_login(self.user)
+        bad_data_variable = 'this'*200
+        project_updated_data = {
+            'dba_name': bad_data_variable, 'id': self.project.id}
+        res = self.client.post(
+            reverse('profile'), project_updated_data, follow=True)
+        self.assertEquals(res.status_code, 200)
+        context = res.context
+        self.assertEquals(context['projects'][0].dba_name, 'bakery')
+        self.assertEquals(context['project_id'], self.project.pk)
+        messages = list(context['messages'])
+        self.assertEqual(str(messages[0]), PROJECT_FAILURE)
 
 
 class DashboardViewTestCase(TestCase):
