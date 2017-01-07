@@ -1,20 +1,54 @@
+import requests
+from biz_content.models import Project, ChecklistItem
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import TemplateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.core.exceptions import SuspiciousOperation
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.admin.views.decorators import staff_member_required
 from registration.backends.simple.views import RegistrationView
 from django.core.urlresolvers import reverse
 from . import forms, models
+from .model_forms import ProjectNotebookForm
+
+SYRACUSE_PERMIT_URL = 'http://24.97.110.146:8081/api/permits/'
+PROJECT_SUCCESS = 'Your project has saved.'
+PROJECT_FAILURE = 'Your project could not be saved.'
 
 
 @login_required
 def profile(request):
-    return render(request, 'biz_content/profile.html', {})
+    project_id = int(request.user.projects.all().order_by('name').first().id)
+
+    if request.method == 'POST':
+        project_id = int(request.POST['id'])
+        instance = get_object_or_404(Project, id=project_id)
+        form = ProjectNotebookForm(request.POST, instance=instance)
+        # import pdb;pdb.set_trace()
+        if form.is_valid():
+            form.save()
+            messages.success(request, PROJECT_SUCCESS)
+        else:
+            messages.error(request, PROJECT_FAILURE)
+
+    projects = request.user.projects.all().order_by('name')
+    # projects in projects
+    for p in projects:
+        initial = p.__dict__
+        p.notebook_form = ProjectNotebookForm(initial)
+
+    return render(
+        request,
+        'biz_content/profile.html', {
+            'projects': projects,
+            'project_id': project_id
+        })
 
 
 def dashboard(request):
@@ -26,6 +60,37 @@ class UserRegistrationView(RegistrationView):
 
     def get_success_url(self, user):
         return reverse('profile')
+
+
+class PermitStatusView(TemplateView):
+    template_name = "biz_content/permit_status.html"
+    form_class = forms.PermitStatusForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        permit_data = None
+
+        if form.is_valid():
+            form_data = form.cleaned_data
+            permit_id = form_data['permit_id']
+            try:
+                r = requests.get(SYRACUSE_PERMIT_URL + permit_id)
+            except:
+                pass
+            else:
+                permit_data = r.json()
+            if not permit_data:
+                messages.error(
+                    request,
+                    "Your permit could not be found. Please contact the NBD.")
+        return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'permit_data': permit_data})
 
 
 @login_required
