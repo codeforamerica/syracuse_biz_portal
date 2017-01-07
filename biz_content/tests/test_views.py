@@ -85,7 +85,7 @@ class ProfileViewTestCase(TestCase):
 
     def test_user_gets_error_if_invalid_information(self):
         self.client.force_login(self.user)
-        bad_data_variable = 'this'*200
+        bad_data_variable = 'this' * 200
         project_updated_data = {
             'dba_name': bad_data_variable, 'id': self.project.id}
         res = self.client.post(

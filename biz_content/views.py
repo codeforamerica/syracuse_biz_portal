@@ -21,6 +21,7 @@ SYRACUSE_PERMIT_URL = 'http://24.97.110.146:8081/api/permits/'
 PROJECT_SUCCESS = 'Your project has saved.'
 PROJECT_FAILURE = 'Your project could not be saved.'
 
+
 @login_required
 def profile(request):
     project_id = int(request.user.projects.all().order_by('name').first().id)
@@ -91,6 +92,7 @@ class PermitStatusView(TemplateView):
                       {'form': form,
                        'permit_data': permit_data})
 
+
 @login_required
 def update_checkbox(request, steppage_id, project_id):
     if not request.POST:
@@ -107,4 +109,3 @@ def update_checkbox(request, steppage_id, project_id):
     return JsonResponse({
         'checked_items': list(checked_items.values_list('pk', flat=True)),
     })
-  
