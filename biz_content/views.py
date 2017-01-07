@@ -1,25 +1,23 @@
+import requests
 from biz_content.models import Project, ChecklistItem
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
-
+from django.views.generic.edit import CreateView, UpdateView
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core.exceptions import SuspiciousOperation
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.admin.views.decorators import staff_member_required
 from registration.backends.simple.views import RegistrationView
 from django.core.urlresolvers import reverse
-from django.views.generic.edit import CreateView, UpdateView
-from django.contrib import messages
-
-
-from .models import StepPage
-from .model_forms import ProjectNotebookForm
 from . import forms, models
+from .model_forms import ProjectNotebookForm
 
+SYRACUSE_PERMIT_URL = 'http://24.97.110.146:8081/api/permits/'
 PROJECT_SUCCESS = 'Your project has saved.'
 PROJECT_FAILURE = 'Your project could not be saved.'
 
@@ -62,6 +60,37 @@ class UserRegistrationView(RegistrationView):
 
     def get_success_url(self, user):
         return reverse('profile')
+
+
+class PermitStatusView(TemplateView):
+    template_name = "biz_content/permit_status.html"
+    form_class = forms.PermitStatusForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        permit_data = None
+
+        if form.is_valid():
+            form_data = form.cleaned_data
+            permit_id = form_data['permit_id']
+            try:
+                r = requests.get(SYRACUSE_PERMIT_URL + permit_id)
+            except:
+                pass
+            else:
+                permit_data = r.json()
+            if not permit_data:
+                messages.error(
+                    request,
+                    "Your permit could not be found. Please contact the NBD.")
+        return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'permit_data': permit_data})
 
 
 @login_required
