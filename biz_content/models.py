@@ -157,20 +157,10 @@ class StepPage(Page):
         InlinePanel('checklist_items', label="Checklist Items"),
     ]
 
-    def previous_step(self):
-        if self.get_prev_sibling():
-            return sefl.get_prev_sibling().url
-        else:
-            return self.get_siblings().last().url
-
-    def next_step(self):
-        if self.get_next_sibling():
-            return self.get_next_sibling().url
-        else:
-            return self.get_siblings().first().url
-
     def get_context(self, request):
         context = super().get_context(request)
+
+        # Return checklists
         projects = []
         checklists = []
         if request.user.is_authenticated():
@@ -181,6 +171,18 @@ class StepPage(Page):
         else:
             checklists.append(forms.ChecklistForm(self))
         context['checklists'] = checklists
+
+        # Determine previous and next step pages
+        if self.get_prev_sibling():
+            context['previous_step'] = self.get_prev_sibling().url
+        else:
+            context['previous_step'] = self.get_siblings().last().url
+
+        if self.get_next_sibling():
+            context['next_step'] = self.get_next_sibling().url
+        else:
+            context['next_step'] = self.get_siblings().first().url
+
         return context
 
 
