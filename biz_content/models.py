@@ -150,36 +150,17 @@ class StepPage(Page):
         related_name='+'
     )
 
-    next_step = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        on_delete=models.SET_NULL,
-        blank=True,
-        related_name='+',
-        help_text=('Choose the next step to link to at the bottom of the page')
-    )
-
-    previous_step = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        on_delete=models.SET_NULL,
-        blank=True,
-        related_name='+',
-        help_text=('Choose the previous step to link to ',
-                   'at the bottom of the page.')
-    )
-
     content_panels = Page.content_panels + [
         FieldPanel('description'),
         ImageChooserPanel('header_img'),
         StreamFieldPanel('page_content'),
-        FieldPanel('next_step'),
-        FieldPanel('previous_step'),
         InlinePanel('checklist_items', label="Checklist Items"),
     ]
 
     def get_context(self, request):
         context = super().get_context(request)
+
+        # Return checklists
         projects = []
         checklists = []
         if request.user.is_authenticated():
@@ -190,6 +171,18 @@ class StepPage(Page):
         else:
             checklists.append(forms.ChecklistForm(self))
         context['checklists'] = checklists
+
+        # Determine previous and next step pages
+        if self.get_prev_sibling():
+            context['previous_step'] = self.get_prev_sibling().url
+        else:
+            context['previous_step'] = self.get_siblings().last().url
+
+        if self.get_next_sibling():
+            context['next_step'] = self.get_next_sibling().url
+        else:
+            context['next_step'] = self.get_siblings().first().url
+
         return context
 
 
