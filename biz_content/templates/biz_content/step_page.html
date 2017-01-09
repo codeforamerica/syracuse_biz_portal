@@ -64,43 +64,48 @@
         </div>
 
         {% if checklists %}
+
         <div class="col-sm-5 blog-sidebar">
-            <div class="panel panel-default sidebar-checklist">
+            <div class="panel panel-default">
               {% for checklist in checklists %}
               <div class="panel-heading">
-                <h4>Checklist</h4>
+                <h4>
+                  Checklist
+                  <span id="checklist-saving" class="checklist-status" style="display: none"><i class="fa fa-refresh" alt="checklist updating"></i></span>
+                  <span id="checklist-updated" class="checklist-status" style="display: none"><i class="fa fa-check-circle"></i> <small>(Saved)</small></span>
+                  <span id="checklist-failed" class="checklist-status" style="display: none"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> <small>(Problem Saving)</small></span>
+                </h4>
               </div>
               <div class="panel-body">
-                <form action="">
+                <form class="checklist-form" method="POST" action="/update-checkbox/{{ checklist.step_page.id }}/{{ checklist.project.id|default:"0" }}/">
                 {% csrf_token %}
                 {% for item in checklist.checklist %}
+                  {{ item.checklist_id }}
                   <div class="checkbox">{{ item }}</div>
                 {% endfor %}
                 </form>
               </div>
               {% endfor %}
+              <div id="checklist-login-prompt" class="panel-footer" style="display: none">
+                <span>You need to log in to save your checklist. It takes just a few seconds and helps you track tasks to set up your business.<span>
+                  <hr>
+                <a href="{% url 'auth_login' %}" class="btn btn-default btn-block">Login</a>
+                <a href="{% url 'registration_register' %}" class="btn btn-default btn-block">Create Account</a>
+              </div>
             </div>
         </div><!-- /.blog-sidebar -->
         {% endif %}
 
       </div><!-- /.row -->
-      <div class="row">
-        <div class="col-sm-7">
-          <nav>
-          {% if page.previous_step %}
-            <a class="pull-left btn btn-primary btn-lg" href="{{ page.previous_step.url }}">
-              <strong><i class="fa fa-arrow-left"></i> Previous Step:</strong> {{ page.previous_step }}
-            </a>
-          {% endif %}
-          {% if page.next_step %}
-            <a class="pull-right btn btn-primary btn-lg" href="{{ page.next_step.url }}">
-              <strong>Next Step:</strong> {{ page.next_step }} <i class="fa fa-arrow-right"></i>
-            </a>
-          {% endif %}
-          </nav>
-        </div>
+      {% if page.link_page %}
+      <div class="col-sm-7">
+        <nav>
+          <a class="pull-right btn btn-default btn-lg" href="{{ page.link_page.url }}">
+            <strong>Next Step:</strong> {{ page.link_page }}
+          </a>
+        </nav>
       </div>
+      {% endif %}
     </div><!-- /.container -->
-
 
 {% endblock %}

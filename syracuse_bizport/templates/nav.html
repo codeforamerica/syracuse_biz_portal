@@ -26,7 +26,7 @@
                 </li>
                 {% if user.is_authenticated %}
                   <li>
-                      <a href="#">Profile</a>
+                      <a href="{% url 'profile'  %}">Profile</a>
                   </li>
                   <li>
                       <a href="{% url 'auth_logout' %}">Log out</a>
