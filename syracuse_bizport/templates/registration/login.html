@@ -17,7 +17,13 @@
 
             <div class="form-group">
               <p style="color:red;">{{field.errors}}</p>
-              <label>{{ field.label }}</label>
+              <label>
+              {% if field.label == 'username' %}
+                Email
+              {% else %}
+                {{ field.label }}
+              {% endif %}
+              </label>
               {% render_field field class+="form-control" %}
             </div>
           {% endfor %}
