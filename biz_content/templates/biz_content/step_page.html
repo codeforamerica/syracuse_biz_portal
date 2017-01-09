@@ -97,15 +97,18 @@
         {% endif %}
 
       </div><!-- /.row -->
-      {% if page.link_page %}
-      <div class="col-sm-7">
-        <nav>
-          <a class="pull-right btn btn-default btn-lg" href="{{ page.link_page.url }}">
-            <strong>Next Step:</strong> {{ page.link_page }}
-          </a>
-        </nav>
+      <div class="row">
+        <div class="col-sm-7">
+          <nav>
+            <a class="pull-left btn btn-default btn-lg" href="{{ previous_step }}">
+              <strong><i class="fa fa-arrow-left"></i> Previous Step</strong>
+            </a>
+            <a class="pull-right btn btn-default btn-lg" href="{{ next_step }}">
+              <strong>Next Step <i class="fa fa-arrow-right"></i></strong>
+            </a>
+          </nav>
+        </div>
       </div>
-      {% endif %}
     </div><!-- /.container -->
 
 {% endblock %}
