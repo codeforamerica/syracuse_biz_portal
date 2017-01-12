@@ -1,11 +1,11 @@
 {% load wagtailcore_tags %}
-
+{% load biz_content_tags %}
 <a href="tel:+1{{ value }}" class="resource-block phone-number-block">
   <div class="panel panel-default">
     <div class="panel-body">
       <h3>
         <i class="fa fa-phone fa-2x" style=" vertical-align: middle;"></i>
-        {{ value }}
+        {{ value|format_10_digit_phone  }}
       </h3>
     </div>
   </div>
