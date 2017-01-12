@@ -10,14 +10,65 @@ from modelcluster.models import ClusterableModel
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.blocks import CharBlock, RichTextBlock, IntegerBlock
-from wagtail.wagtailcore.blocks import URLBlock, EmailBlock
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 
 from biz_content import forms
+
+
+class CustomCleanRegexBlock(blocks.RegexBlock):
+    """
+    Makes it easy to clean up Regex fields before saved.
+    """
+
+    def __init__(self, *args, **kwargs):
+        self.custom_clean = kwargs.pop('custom_clean')
+        super().__init__(*args, **kwargs)
+
+    def clean(self, value):
+        value = super().clean(value)
+        return self.custom_clean(value)
+
+
+def clean_phone_number(value):
+    return int("".join(_ for _ in value if _ in "1234567890"))
+
+
+class ContentBlock(blocks.StreamBlock):
+    heading = blocks.CharBlock(classname="full title", icon="title")
+    paragraph = blocks.RichTextBlock()
+    email = blocks.EmailBlock(
+        classname="email",
+        label="Email",
+        help_text="Add an email",
+        template="biz_content/content_blocks/email_block.html")
+    phone_number = CustomCleanRegexBlock(
+        regex=r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$',
+        custom_clean=clean_phone_number,
+        error_messages={
+            "invalid": "Please enter a full phone number, including area code",
+        },
+        classname="phone_number",
+        label="Phone Number",
+        help_text="Add a Phone Number",
+        template="biz_content/content_blocks/phone_block.html")
+    alert_text = blocks.CharBlock(
+        max_length=2000,
+        classname="alert_text",
+        label="Alert Text",
+        help_text="Add Alert Text",
+        template="biz_content/content_blocks/alert_text.html")
+    link = blocks.StructBlock(
+        [
+            ('link_text', blocks.CharBlock()),
+            ('link_url', blocks.URLBlock())
+        ],
+        classname="text",
+        label="Resource Link",
+        help_text="Add resource link",
+        template="biz_content/content_blocks/url_block.html")
 
 
 class CollectionPage(Page):
@@ -40,44 +91,7 @@ class CollectionPage(Page):
         related_name='+'
     )
     description = models.CharField(max_length=2000, null=True)
-    page_content = StreamField([
-        ('heading', blocks.CharBlock(classname="full title", icon="title")),
-        ('paragraph', blocks.RichTextBlock()),
-        ('email', blocks.EmailBlock(
-            null=True,
-            classname="email",
-            label="Email",
-            help_text="Add an email",
-            template="biz_content/content_blocks/email_block.html"
-        )),
-        ('phone_number', blocks.IntegerBlock(
-            max_length=255,
-            null=True,
-            classname="phone_number",
-            label="Phone Number",
-            help_text="Add a Phone Number",
-            template="biz_content/content_blocks/phone_block.html"
-        )),
-        ('alert_text', blocks.CharBlock(
-            max_length=2000,
-            null=True,
-            classname="alert_text",
-            label="Alert Text",
-            help_text="Add Alert Text",
-            template="biz_content/content_blocks/alert_text.html"
-        )),
-        ('link', blocks.StructBlock(
-            [
-                ('link_text', blocks.CharBlock()),
-                ('link_url', blocks.URLBlock())
-            ],
-            null=True,
-            classname="text",
-            label="Resource Link",
-            help_text="Add resource link",
-            template="biz_content/content_blocks/url_block.html"
-        ))
-    ], null=True, blank=True)
+    page_content = StreamField(ContentBlock(), null=True, blank=True)
 
     start_link = models.ForeignKey(
         'wagtailcore.Page',
@@ -102,46 +116,7 @@ class CollectionPage(Page):
 
 class StepPage(Page):
     description = models.CharField(max_length=2000, null=True)
-
-    page_content = StreamField([
-        ('heading', blocks.CharBlock(classname="full title", icon="title")),
-        ('paragraph', blocks.RichTextBlock()),
-        ('email', blocks.EmailBlock(
-            null=True,
-            classname="email",
-            label="Email",
-            help_text="Add an email",
-            template="biz_content/content_blocks/email_block.html"
-        )),
-        ('phone_number', blocks.IntegerBlock(
-            max_length=255,
-            null=True,
-            classname="phone_number",
-            label="Phone Number",
-            help_text="Add a Phone Number",
-            template="biz_content/content_blocks/phone_block.html"
-        )),
-        ('alert_text', blocks.CharBlock(
-            max_length=2000,
-            null=True,
-            classname="alert_text",
-            label="Alert Text",
-            help_text="Add Alert Text",
-            template="biz_content/content_blocks/alert_text.html"
-        )),
-        ('link', blocks.StructBlock(
-            [
-                ('link_text', blocks.CharBlock()),
-                ('link_url', blocks.URLBlock())
-            ],
-            null=True,
-            classname="text",
-            label="Resource Link",
-            help_text="Add resource link",
-            template="biz_content/content_blocks/url_block.html"
-        ))
-    ], null=True, blank=True)
-
+    page_content = StreamField(ContentBlock(), null=True, blank=True)
     header_img = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
