@@ -45,7 +45,7 @@ class ContentBlock(blocks.StreamBlock):
         help_text="Add an email",
         template="biz_content/content_blocks/email_block.html")
     phone_number = CustomCleanRegexBlock(
-        regex=r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$',
+        regex=r'^\D*[2-9]\D*(\d\D*){9}$',
         custom_clean=clean_phone_number,
         error_messages={
             "invalid": "Please enter a full phone number, including area code",
