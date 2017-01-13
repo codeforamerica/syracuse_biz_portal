@@ -47,6 +47,7 @@ class ContentBlock(blocks.StreamBlock):
     phone_number = CustomCleanRegexBlock(
         regex=r'^\D*[2-9]\D*(\d\D*){9}$',
         custom_clean=clean_phone_number,
+        icon='fa-phone',
         error_messages={
             "invalid": "Please enter a full phone number, including area code",
         },
