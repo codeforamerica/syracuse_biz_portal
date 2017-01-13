@@ -6,6 +6,7 @@ django-widget-tweaks==1.4.1
 psycopg2==2.6.2
 requests==2.12.4
 wagtail==1.7.0
+wagtailfontawesome-1.0.6
 
 #will move to pypi at first major version
 -e git+git://github.com/codeforamerica/wealthmap#egg=django-wealthmap
