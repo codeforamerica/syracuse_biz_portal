@@ -36,6 +36,24 @@ def clean_phone_number(value):
     return int("".join(_ for _ in value if _ in "1234567890"))
 
 
+class PhoneBlock(blocks.StructBlock):
+    phone_number = CustomCleanRegexBlock(
+        regex=r'^\D*[2-9]\D*(\d\D*){9}$',
+        custom_clean=clean_phone_number,
+        error_messages={
+            "invalid": "Please enter a full phone number, including area code",
+        },
+        classname="phone_number",
+        label="Phone Number",
+        help_text="Add a Phone Number")
+    ext = blocks.IntegerBlock(
+        required=False,
+        min_value=1,
+        classname="ext",
+        label="Ext.",
+        help_text="Add optional extension")
+
+
 class ContentBlock(blocks.StreamBlock):
     heading = blocks.CharBlock(classname="full title", icon="title")
     paragraph = blocks.RichTextBlock()
@@ -44,23 +62,11 @@ class ContentBlock(blocks.StreamBlock):
         label="Email",
         help_text="Add an email",
         template="biz_content/content_blocks/email_block.html")
-    phone_number = CustomCleanRegexBlock(
-        regex=r'^\D*[2-9]\D*(\d\D*){9}$',
-        custom_clean=clean_phone_number,
-        icon='fa-phone',
-        error_messages={
-            "invalid": "Please enter a full phone number, including area code",
-        },
+    phone_number = PhoneBlock(
         classname="phone_number",
         label="Phone Number",
         help_text="Add a Phone Number",
         template="biz_content/content_blocks/phone_block.html")
-    alert_text = blocks.CharBlock(
-        max_length=2000,
-        classname="alert_text",
-        label="Alert Text",
-        help_text="Add Alert Text",
-        template="biz_content/content_blocks/alert_text.html")
     link = blocks.StructBlock(
         [
             ('link_text', blocks.CharBlock()),
@@ -70,6 +76,12 @@ class ContentBlock(blocks.StreamBlock):
         label="Resource Link",
         help_text="Add resource link",
         template="biz_content/content_blocks/url_block.html")
+    alert_text = blocks.CharBlock(
+        max_length=2000,
+        classname="alert_text",
+        label="Alert Text",
+        help_text="Add Alert Text",
+        template="biz_content/content_blocks/alert_text.html")
 
 
 class CollectionPage(Page):
