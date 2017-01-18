@@ -1,11 +1,14 @@
 {% load wagtailcore_tags %}
 {% load biz_content_tags %}
-<a href="tel:+1{{ value }}" class="resource-block phone-number-block">
+<a href="tel:+1{{ value.phone_number }}{% if value.ext %},{{ value.ext }}{% endif %}" class="resource-block phone-number-block">
   <div class="panel panel-default">
     <div class="panel-body">
       <h3>
         <i class="fa fa-phone fa-2x" style=" vertical-align: middle;"></i>
-        {{ value|format_10_digit_phone  }}
+        {{ value.phone_number|format_10_digit_phone  }}
+        {% if value.ext %}
+          ext. {{ value.ext  }}
+        {% endif %}
       </h3>
     </div>
   </div>

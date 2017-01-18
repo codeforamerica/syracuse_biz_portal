@@ -53,6 +53,10 @@ class PhoneBlock(blocks.StructBlock):
         label="Ext.",
         help_text="Add optional extension")
 
+    class Meta:
+        icon = 'fa-phone'
+        template = "biz_content/content_blocks/phone_block.html"
+
 
 class ContentBlock(blocks.StreamBlock):
     heading = blocks.CharBlock(classname="full title", icon="title")
@@ -65,8 +69,7 @@ class ContentBlock(blocks.StreamBlock):
     phone_number = PhoneBlock(
         classname="phone_number",
         label="Phone Number",
-        help_text="Add a Phone Number",
-        template="biz_content/content_blocks/phone_block.html")
+        help_text="Add a Phone Number")
     link = blocks.StructBlock(
         [
             ('link_text', blocks.CharBlock()),
