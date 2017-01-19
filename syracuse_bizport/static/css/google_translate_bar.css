@@ -1,5 +1,8 @@
 .translate-bar {
-  background-color: #f2f3f3;
+  display: inline-block;
+  float: right;
+  margin-left: 10px;
+  background-color: transparent;
 }
 .translate-bar .dismiss-gt-link {
   float: right;

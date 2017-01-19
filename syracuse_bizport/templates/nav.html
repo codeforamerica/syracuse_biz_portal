@@ -1,9 +1,9 @@
 {% load staticfiles %}
  <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-    {% include 'translation_bar.html' %}
-
-
+    <div class="beta-notification">
+      <small> This site is currently under active development. Have feedback? <a href="#" onclick="$zopim(function() { $zopim.livechat.window.toggle();});">Chat with us.</a> </small>
+    </div>
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -37,6 +37,9 @@
                   </li>
                   <li>
                       <a href="{% url 'registration_register' %}">Sign up</a>
+                  </li>
+                  <li>
+                    {% include 'translation_bar.html' %}
                   </li>
                 {% endif %}
 

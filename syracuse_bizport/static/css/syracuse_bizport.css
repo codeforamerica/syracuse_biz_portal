@@ -6,12 +6,25 @@
 
 /* Padding top to avoid navbar */
 body {
-	padding-top: 95px;
+	padding-top: 75px;
 	background-color: #FAFAF9;
 }
 
 h1, h2, h3, h4, h5, h6 {
 	color: #555;
+}
+
+.beta-notification {
+	background-color: rgba(30, 63, 171, 1);
+	color: #fff;
+	padding: 3px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.beta-notification a {
+	color: #fff;
+	text-decoration: underline;
 }
 
 header.step{
