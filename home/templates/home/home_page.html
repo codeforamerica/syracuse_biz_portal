@@ -17,10 +17,6 @@
                   <div class="col-lg-6">
                     <div class="intro-text">
                       <h1 class="hero-tagline">Build your business in Syracuse</h1>
-                      <p>The official business portal for the City of Syracuse. Find out how to plan, open, and grow your business here.</p>
-                      <div class="btn-group inline pull-left">
-                        <button class="btn btn-default btn-lg">Get Started: Plan Your Business <i class="fa fa-arrow-right"></i></i></button>
-                      </div>
                     </div>
                   </div>
                   <div class="col-lg-offset-2 col-lg-4">
@@ -84,15 +80,18 @@
             <ul class="list-unstyled">
               {% for selected_page in self.selected_pages.all %}
                 <li>
-                    <h4>
-                      <a href="{% pageurl selected_page.step_pages %}">
-                        {{ selected_page.step_pages.title }}
-                      </a>
-                    </h4>
+                    <a href="{% pageurl selected_page.step_pages %}">
+                      {{ selected_page.step_pages.title }}
+                    </a>
                 </li>
               {%endfor%}
             </ul>
           </div>
+          <div class="col-sm-4">
+            <legend><h3>Why Syracuse?</h3></legend>
+            <p>Find out why Syracuse is a great city for business. <a href="">Read more &rarr;</a></p>
+          </div>
+
         </div>
       </div>
     </section>
