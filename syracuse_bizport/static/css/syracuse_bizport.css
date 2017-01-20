@@ -106,6 +106,10 @@ header.step{
 	color: white;
 }
 
+.blog-main h3 {
+	font-weight: bold;
+}
+
 .blog-main li {
 	font-size: 20px;
 }
