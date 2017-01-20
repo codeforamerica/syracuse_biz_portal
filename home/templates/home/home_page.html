@@ -29,17 +29,20 @@
     <section>
       <div class="container">
         <div class="row">
-          {% for collection_page in collection_pages %}
-          <a href={{collection_page.slug}} class="portfolio-link">
-              <div class="col-sm-4">
-                <div class="panel panel-default portfolio-item">
-                  <div class="panel-body">
-                        <div class="collection-page-icon">
-                              {% if collection_page.icon %}
-                                {% image collection_page.icon width-80 %}
-                              {% endif %}
-                        </div>
-                    <h2 class="text-center">{{collection_page.title}}</h2>
+          <div class="col-sm-8">
+            {% for collection_page in collection_pages %}
+            <a href={{collection_page.slug}} class="portfolio-link">
+              <div class="panel panel-default portfolio-item">
+                <div class="panel-body">
+                  <div class="col-xs-3 col-sm-2">
+                      <div class="collection-page-icon">
+                            {% if collection_page.icon %}
+                              {% image collection_page.icon width-80 %}
+                            {% endif %}
+                      </div>
+                  </div>
+                  <div class="col-xs-9 col-sm-10">
+                    <h2>{{collection_page.title}}</h2>
                     <p>{{collection_page.description}}</p>
                   </div>
                 </div>
@@ -47,15 +50,7 @@
             </a>
             {%endfor%}
           </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="row">
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-4 google-custom-search">
             <script>
               (function() {
                 var cx = '015206489618795500048:r3rfaau61ho';
@@ -69,7 +64,7 @@
             </script>
             <gcse:search></gcse:search>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <legend><h3><i class="fa fa-star" aria-hidden="true"></i> Popular Pages</h3></legend>
             <ul class="list-unstyled">
               {% for selected_page in self.selected_pages.all %}

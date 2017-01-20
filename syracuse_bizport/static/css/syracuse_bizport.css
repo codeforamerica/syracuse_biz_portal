@@ -88,7 +88,6 @@ header.step{
 
 .collection-page-icon {
 	text-align: center;
-	padding: 1.5em;
 }
 
 .breadcrumb {
@@ -106,8 +105,14 @@ header.step{
 	color: white;
 }
 
-.blog-main h3 {
+.blog-main h3, .blog-main h4 {
+	margin-top: 20px;
 	font-weight: bold;
+	color: #333;
+}
+
+.blog-main h4 {
+	font-size: 20px;
 }
 
 .blog-main li {
@@ -598,4 +603,21 @@ a .panel-body h3 .fa-2x{
 
 .alert-text-block .alert-icon h4 {
 	color: #fff;
+}
+
+input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:focus {
+  -webkit-box-shadow: none;
+  -moz-box-sizing: content-box;
+  box-shadow: none;
+}
+
+.gsc-control-cse {
+	padding: 0px !important;
+	border-color: transparent !important;
+	background-color: transparent !important;
+}
+
+input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
+  box-sizing: content-box;
+  line-height: normal;
 }
