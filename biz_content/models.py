@@ -76,14 +76,16 @@ class ContentBlock(blocks.StreamBlock):
             ('link_url', blocks.URLBlock())
         ],
         classname="text",
-        label="Resource Link",
+        label="Link",
         help_text="Add resource link",
+        icon="fa-link",
         template="biz_content/content_blocks/url_block.html")
     alert_text = blocks.CharBlock(
         max_length=2000,
         classname="alert_text",
         label="Alert Text",
         help_text="Add Alert Text",
+        icon="fa-alert",
         template="biz_content/content_blocks/alert_text.html")
 
 
