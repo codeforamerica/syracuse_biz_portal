@@ -4,8 +4,7 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <h3>
-        <i class="fa fa-phone fa-2x" style=" vertical-align: middle;"></i>
-        {{ value.phone_number|format_10_digit_phone  }}
+        <i class="fa fa-phone fa-2x" style=" vertical-align: middle;"></i>{{ value.phone_number|format_10_digit_phone  }}
         {% if value.ext %}
           ext. {{ value.ext  }}
         {% endif %}

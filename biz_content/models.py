@@ -50,7 +50,7 @@ class PhoneBlock(blocks.StructBlock):
         required=False,
         min_value=1,
         classname="ext",
-        label="Ext.",
+        label="Extension",
         help_text="Add optional extension")
 
     class Meta:
