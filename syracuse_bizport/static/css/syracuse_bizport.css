@@ -52,12 +52,15 @@ header.step{
 
 .jumbotron.hero-shade {
 	background: #1ad6fd; /* Old browsers */
-	background: -moz-linear-gradient(-45deg, rgba(30, 63, 171, 1) 0%, rgba(30, 63, 171, 0.6) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(-45deg, rgba(30, 63, 171, 1) 0%,rgba(30, 63, 171, 0.6) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(135deg, rgba(30, 63, 171, 1) 0%,rgba(30, 63, 171, 0.6) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(30, 63, 171, 0.6)', endColorstr='rgba(30, 63, 171, 1)',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background: -moz-linear-gradient(-45deg, rgba(30, 63, 171, 1) 0%, rgba(30, 63, 171, 0.8) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg, rgba(30, 63, 171, 1) 0%,rgba(30, 63, 171, 0.8) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, rgba(30, 63, 171, 1) 0%,rgba(30, 63, 171, 0.8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(30, 63, 171, 0.8)', endColorstr='rgba(30, 63, 171, 1)',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
+.jumbotron h1 {
+	font-size: 36px;
+}
 .jumbotron h2 {
 	color: white;
 	margin-bottom: 0;
