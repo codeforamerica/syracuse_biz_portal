@@ -576,3 +576,7 @@ a .panel-body h3 .fa-2x{
 .input-group-btn {
 	z-index: 2000;
 }
+
+.alert-text-block {
+	background-color: red;
+}
