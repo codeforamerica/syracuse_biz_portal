@@ -52,3 +52,8 @@ class PermitStatusForm(forms.Form):
     permit_id = forms.CharField(required=True,
                                 label="Permit ID",
                                 help_text="Enter your Permit Application ID")
+
+class BizLicenseStatusForm(forms.Form):
+    cu_id = forms.CharField(required=True,
+                                label="Certificate of Use ID",
+                                help_text="Enter your Certificate of Use ID")

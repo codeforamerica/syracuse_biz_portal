@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load i18n widget_tweaks %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+
+<!--
+ -->
+ <!-- Navigation -->
+
+    <header>
+      {% image self.header_img width-1200 as header_img %}
+      <div class="hero-background" style="background-image: url({{ header_img.url }})">
+        <div class="jumbotron hero-shade">
+          <div class="container">
+            <div class="row text-center">
+              <div class="col-sm-12">
+                {% if page.icon %}
+                  {% image page.icon width-120 %}
+                {% endif %}
+              </div>
+              <div class="col-sm-10 col-sm-offset-0">
+                <h1 class="blog-title">Track Your Business License</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-sm-7 blog-main">
+              <h2>Check the Status of Your Business License</h2>
+              <br>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">  <!-- singular -->
+                        <a class="close" data-dismiss="alert">×</a>
+                        <p style="color:red;font-size:12px;">{{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if biz_license_data %}
+            {{biz_license_data}}
+                {% for d in data %}
+
+                {% endfor %}
+
+            {% else %}
+              <form action="" method="post">
+                  {% csrf_token %}
+                  {% for field in form %}
+                  {{ form.title }}
+                  <div class="form-group">
+                    <label>{{ field.errors }}</label>
+
+                    <label>{{ field.label }}</label>
+                    {% render_field field class+="form-control" %}
+                  </div>
+                  {% endfor %}
+
+                <input type="submit" class="btn btn-primary" value="{% trans 'View my Status' %}" />
+              </form>
+            {% endif %}
+
+              <br>
+              <br>
+        </div>
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+
+{% endblock %}
