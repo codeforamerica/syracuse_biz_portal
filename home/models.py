@@ -6,6 +6,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, PageChooserPanel
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from biz_content.forms import BizLicenseStatusForm
 
 
 class SelectablePages(models.Model):
@@ -53,5 +54,6 @@ class HomePage(Page):
         context = super(HomePage, self).get_context(request)
         context['collection_pages'] = CollectionPage.objects.all()
         context['step_pages'] = StepPage.objects.all()
+        context['form'] = BizLicenseStatusForm()
 
         return context

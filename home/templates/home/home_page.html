@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
+{% load i18n widget_tweaks %}
 
 {% block body_class %}template-homepage{% endblock %}
 
@@ -22,12 +23,18 @@
                   <div class="col-lg-offset-2 col-lg-4">
                     <h2>Status Check</h2>
                     <p>Track your permit or business license.</p>
-                    <form>
-                      <div class="form-group">
-                        <label for="status-check-input">Enter a permit or business license number:</label>
-                        <input type="email" class="form-control" id="status-check-input" placeholder="Example: PC-1234-13">
-                      </div>
-                      <button type="submit" class="btn btn-default">Submit</button>
+                    <form action="biz-license-status/" method="post">
+                      {% csrf_token %}
+                      {% for field in form %}
+                      {{ form.title }}
+                    <div class="form-group">
+                    <label>{{ field.errors }}</label>
+                    <label>{{ field.label }}</label>
+                    {% render_field field class+="form-control" %}
+                    </div>
+                      {% endfor %}
+
+                    <button type="submit" class="btn btn-default">Submit</button>
                     </form>
                   </div>
               </div>
