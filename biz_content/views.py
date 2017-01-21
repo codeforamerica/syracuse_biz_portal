@@ -92,6 +92,7 @@ class PermitStatusView(TemplateView):
                       {'form': form,
                        'permit_data': permit_data})
 
+
 class BizLicenseStatusView(TemplateView):
     template_name = "biz_content/biz_license_status.html"
     form_class = forms.BizLicenseStatusForm

@@ -36,7 +36,6 @@
       <div class="row">
 
         <div class="col-sm-7 blog-main">
-              <h2>Check the Status of Your Business License</h2>
               <br>
             {% if messages %}
                 {% for message in messages %}
@@ -48,12 +47,23 @@
             {% endif %}
 
             {% if biz_license_data %}
-            {{biz_license_data}}
-                {% for d in data %}
+                <h1>Certificate of Use {{biz_license_data.application_data.0.complaint_number}}</h1><hr>
 
+                <h2>Status Log</h2>
+                {% for d in biz_license_data.application_data %}
+                  <div style="background-color:yellow;padding:10px;margin:5px;border-radius:5px;" class="card">
+                    <div class="card-block">
+                      <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
+                      <h6 class="card-subtitle mb-2 text-muted">Open Date: {{d.open_date}}</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Close Date: {{d.close_date}}</h6>
+
+                    </div>
+                  </div>
                 {% endfor %}
 
             {% else %}
+              <h2>Check the Status of Your Business License</h2>
+
               <form action="" method="post">
                   {% csrf_token %}
                   {% for field in form %}
@@ -65,8 +75,8 @@
                     {% render_field field class+="form-control" %}
                   </div>
                   {% endfor %}
+                    <button type="submit" class="btn btn-default">Submit</button>
 
-                <input type="submit" class="btn btn-primary" value="{% trans 'View my Status' %}" />
               </form>
             {% endif %}
 
