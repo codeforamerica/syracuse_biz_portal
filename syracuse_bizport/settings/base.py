@@ -157,5 +157,3 @@ LOGIN_REDIRECT_URL = 'profile'
 LOGIN_URL = 'auth_login'
 
 SYRACUSE_IPS_URL = 'http://24.97.110.146:8081/api/'
-
-
