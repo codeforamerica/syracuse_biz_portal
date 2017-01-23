@@ -84,7 +84,7 @@ class ContentBlock(blocks.StreamBlock):
         classname="alert_text",
         label="Alert Text",
         help_text="Add Alert Text",
-        icon="fa-alert",
+        icon="fa-exclamation",
         template="biz_content/content_blocks/alert_text.html")
 
 
