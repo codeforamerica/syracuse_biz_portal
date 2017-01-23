@@ -28,6 +28,12 @@ h1, h2, h3, h4, h5, h6 {
 	text-decoration: underline;
 }
 
+@media (max-width: 767px) {
+  a.navbar-brand {
+    font-size: 14px;
+  }
+}
+
 header.step{
 	text-align:left;
 	margin-bottom:30px;
@@ -50,6 +56,11 @@ header.step{
 	transition: height 0.3s ease;
 }
 
+.jumbotron{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
 .jumbotron.hero-shade {
 	background: #1ad6fd; /* Old browsers */
 	background: -moz-linear-gradient(-45deg, rgba(30, 63, 171, 1) 0%, rgba(30, 63, 171, 0.8) 100%); /* FF3.6-15 */
@@ -59,11 +70,12 @@ header.step{
 }
 
 .jumbotron h1 {
-	font-size: 36px;
+	margin-top: 0;
 }
 .jumbotron h2 {
 	color: white;
 	margin-bottom: 0;
+  margin-top: 0;
 	font-weight: normal;
 }
 
@@ -130,7 +142,7 @@ header.step{
 body {
   overflow-x: hidden;
 }
-p {
+p,li {
   font-size: 20px;
 }
 p.small {
@@ -208,9 +220,6 @@ section.success {
   color: white;
 }
 @media (max-width: 767px) {
-  section {
-    padding: 75px 0;
-  }
   section.first {
     padding-top: 75px;
   }
