@@ -44,8 +44,8 @@ class PhoneBlock(blocks.StructBlock):
             "invalid": "Add a ten digit phone number not starting with 1",
         },
         classname="phone_number",
-        label="Phone Number",
-        help_text="Add a ten digit phone number, including area code ")
+        label="Phone Number (10 digits)",
+        help_text="Add a 10 digit phone number, including area code")
     ext = blocks.IntegerBlock(
         required=False,
         min_value=1,
@@ -68,8 +68,7 @@ class ContentBlock(blocks.StreamBlock):
         template="biz_content/content_blocks/email_block.html")
     phone_number = PhoneBlock(
         classname="phone_number",
-        label="Phone Number",
-        help_text="Add a Phone Number")
+        label="Phone Number",)
     link = blocks.StructBlock(
         [
             ('link_text', blocks.CharBlock()),
