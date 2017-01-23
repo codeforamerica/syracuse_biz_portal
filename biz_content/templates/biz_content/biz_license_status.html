@@ -51,11 +51,38 @@
 
                 <h2>Status Log</h2>
                 {% for d in biz_license_data.application_data %}
-                  <div style="background-color:yellow;padding:10px;margin:5px;border-radius:5px;" class="card">
+                  <div style="background-color:lightblue;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
                     <div class="card-block">
                       <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
                       <h6 class="card-subtitle mb-2 text-muted">Open Date: {{d.open_date}}</h6>
                       <h6 class="card-subtitle mb-2 text-muted">Close Date: {{d.close_date}}</h6>
+                    </div>
+                  </div>
+                {% endfor %}
+
+                <h2>Payment Log</h2>
+                {% for d in biz_license_data.payment_data %}
+                  <div style="background-color:lightgreen;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
+                    <div class="card-block">
+                      <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
+                      <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date}}</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Payment Details Date: {{d.payment_details}}</h6>
+                    </div>
+                  </div>
+                {% endfor %}
+
+                <h2>Inspection Log</h2>
+                {% for d in biz_license_data.inspection_data %}
+                  <div style="background-color:lightpink;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
+                    <div class="card-block">
+                      <h4 class="card-title">Inspection Start Date: {{d.inspect_date}}</h4>
+                      <h4 class="card-title">Inspection End Date: {{d.inspect_date}}</h4>
+                      <h6 class="card-subtitle mb-2 text-muted">Inspection Type: {{d.inspection_type_id}}</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Department: {{d.department_id}}</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Status: {{d.status_enum}}</h6>
+
+                      <h6 class="card-subtitle mb-2 text-muted">Address: {{d.nature_of_complaint}}</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Notes: {{d.user_note}}</h6>
 
                     </div>
                   </div>
