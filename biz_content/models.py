@@ -41,16 +41,16 @@ class PhoneBlock(blocks.StructBlock):
         regex=r'^\D*[2-9]\D*(\d\D*){9}$',
         custom_clean=clean_phone_number,
         error_messages={
-            "invalid": "Please enter a full phone number, including area code",
+            "invalid": "Add a ten digit phone number not starting with 1",
         },
         classname="phone_number",
-        label="Phone Number",
-        help_text="Add a Phone Number")
+        label="Phone Number (10 digits)",
+        help_text="Add a 10 digit phone number, including area code")
     ext = blocks.IntegerBlock(
         required=False,
         min_value=1,
         classname="ext",
-        label="Ext.",
+        label="Extension",
         help_text="Add optional extension")
 
     class Meta:
@@ -68,22 +68,23 @@ class ContentBlock(blocks.StreamBlock):
         template="biz_content/content_blocks/email_block.html")
     phone_number = PhoneBlock(
         classname="phone_number",
-        label="Phone Number",
-        help_text="Add a Phone Number")
+        label="Phone Number",)
     link = blocks.StructBlock(
         [
             ('link_text', blocks.CharBlock()),
             ('link_url', blocks.URLBlock())
         ],
         classname="text",
-        label="Resource Link",
+        label="Link",
         help_text="Add resource link",
+        icon="fa-link",
         template="biz_content/content_blocks/url_block.html")
     alert_text = blocks.CharBlock(
         max_length=2000,
         classname="alert_text",
         label="Alert Text",
         help_text="Add Alert Text",
+        icon="fa-exclamation",
         template="biz_content/content_blocks/alert_text.html")
 
 
