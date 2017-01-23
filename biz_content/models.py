@@ -57,7 +57,6 @@ class PhoneBlock(blocks.StructBlock):
         icon = 'fa-phone'
         template = "biz_content/content_blocks/phone_block.html"
 
-
 class ContentBlock(blocks.StreamBlock):
     heading = blocks.CharBlock(classname="full title", icon="title")
     paragraph = blocks.RichTextBlock()
@@ -86,6 +85,10 @@ class ContentBlock(blocks.StreamBlock):
         help_text="Add Alert Text",
         icon="fa-exclamation",
         template="biz_content/content_blocks/alert_text.html")
+    embed_block = blocks.RawHTMLBlock(
+        icon="fa-code",
+        help_text="Copy and paste a map or video embed directly here."
+    )
 
 
 class CollectionPage(Page):
