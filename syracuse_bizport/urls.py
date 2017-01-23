@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^accounts/register/', views.UserRegistrationView.as_view(),
         name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
-    url(r'', include(urls, namespace='biz_content')),
+    url(r'', include(urls)),
     url(r'', include(wagtail_urls))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
