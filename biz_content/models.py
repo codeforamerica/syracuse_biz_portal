@@ -41,11 +41,11 @@ class PhoneBlock(blocks.StructBlock):
         regex=r'^\D*[2-9]\D*(\d\D*){9}$',
         custom_clean=clean_phone_number,
         error_messages={
-            "invalid": "Please enter a full phone number, including area code",
+            "invalid": "Add a ten digit phone number not starting with 1",
         },
         classname="phone_number",
         label="Phone Number",
-        help_text="Add a Phone Number")
+        help_text="Add a ten digit phone number, including area code ")
     ext = blocks.IntegerBlock(
         required=False,
         min_value=1,
