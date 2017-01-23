@@ -51,10 +51,8 @@
 
                   {% if block.block_type == 'heading' %}
                     <h3>{{ block }}</h3>
-                    <br>
                   {% elif block.block_type == 'paragraph' %}
                     <p>{{ block }}</p>
-                    <br>
                   {% else %}
                       {% include_block block %}
                   {% endif %}
