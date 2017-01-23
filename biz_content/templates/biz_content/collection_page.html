@@ -53,28 +53,27 @@
       <div class="row">
 
         <div class="col-sm-7 blog-main">
-          <article>
-            {% for block in page.page_content %}
-              {% if block.block_type == 'heading' %}
-                <h3>{{ block }}</h3>
-              {% elif block.block_type == 'paragraph' %}
-                <p>{{ block }}</p>
-              {% else %}
-                  {% include_block block %}
-              {% endif %}
-            {% endfor %}
-          </article>
-        </div>
-
-        <div class="col-sm-5">
-            {% if page.get_children %}
-            <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> Section Content</h2>
+          {% if page.get_children %}
             <ol class="list-group">
             {% for page in page.get_children %}
               <li class="list-group-item"><a href="{{ page.slug }}">{{ page.title }}</a></li>
             {% endfor %}
             </ol>
-            {% endif %}
+          {% endif %}
+        </div>
+
+        <div class="col-sm-5">
+          <article>
+            {% for block in page.page_content %}
+              {% if block.block_type == 'heading' %}
+                <h3>{{ block }}</h3>
+                {% elif block.block_type == 'paragraph' %}
+                <p>{{ block }}</p>
+                {% else %}
+                {% include_block block %}
+              {% endif %}
+            {% endfor %}
+          </article>
         </div>
 
       </div><!-- /.row -->
