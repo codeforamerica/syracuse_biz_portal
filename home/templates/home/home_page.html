@@ -14,11 +14,21 @@
         <div class="jumbotron hero-shade">
           <div class="container">
               <div class="row">
-                  <div class="col-lg-8">
+                  <div class="col-lg-6">
                     <div class="intro-text">
-                        <h1 class="hero-tagline">Build your business in Syracuse</h1>
-                        <button class="btn btn-default btn-lg">Learn Why <i class="fa fa-arrow-right"></i></button>
+                      <h1 class="hero-tagline">Build your business in Syracuse</h1>
+                    </div>
+                  </div>
+                  <div class="col-lg-offset-2 col-lg-4">
+                    <h2>Status Check</h2>
+                    <p>Track your permit or business license.</p>
+                    <form>
+                      <div class="form-group">
+                        <label for="status-check-input">Enter a permit or business license number:</label>
+                        <input type="email" class="form-control" id="status-check-input" placeholder="Example: PC-1234-13">
                       </div>
+                      <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
                   </div>
               </div>
           </div>
@@ -30,17 +40,20 @@
     <section>
       <div class="container">
         <div class="row">
-          {% for collection_page in collection_pages %}
-          <a href={{collection_page.slug}} class="portfolio-link">
-              <div class="col-sm-4">
-                <div class="panel panel-default portfolio-item">
-                  <div class="panel-body">
-                        <div class="collection-page-icon">
-                              {% if collection_page.icon %}
-                                {% image collection_page.icon width-80 %}
-                              {% endif %}
-                        </div>
-                    <h2 class="text-center">{{collection_page.title}}</h2>
+          <div class="col-sm-8">
+            {% for collection_page in collection_pages %}
+            <a href={{collection_page.slug}} class="portfolio-link">
+              <div class="panel panel-default portfolio-item">
+                <div class="panel-body">
+                  <div class="col-xs-3 col-sm-2">
+                    <div class="collection-page-icon">
+                          {% if collection_page.icon %}
+                            {% image collection_page.icon width-80 %}
+                          {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-xs-9 col-sm-10">
+                    <h2>{{collection_page.title}}</h2>
                     <p>{{collection_page.description}}</p>
                   </div>
                 </div>
@@ -48,37 +61,37 @@
             </a>
             {%endfor%}
           </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="row">
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <legend><h3><i class="fa fa-search" aria-hidden="true"></i> Search</h3></legend>
-            <div class="input-group input-group-lg">
-              <input type="text" class="form-control" placeholder="Search for...">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Search</button>
-              </span>
-            </div><!-- /input-group -->
+          <div class="col-sm-4 google-custom-search">
+            <script>
+              (function() {
+                var cx = '015206489618795500048:r3rfaau61ho';
+                var gcse = document.createElement('script');
+                gcse.type = 'text/javascript';
+                gcse.async = true;
+                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(gcse, s);
+              })();
+            </script>
+            <gcse:search></gcse:search>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <legend><h3><i class="fa fa-star" aria-hidden="true"></i> Popular Pages</h3></legend>
             <ul class="list-unstyled">
               {% for selected_page in self.selected_pages.all %}
                 <li>
-                    <h4>
-                      <a href="{% pageurl selected_page.step_pages %}">
-                        {{ selected_page.step_pages.title }}
-                      </a>
-                    </h4>
+                    <a href="{% pageurl selected_page.step_pages %}">
+                      {{ selected_page.step_pages.title }}
+                    </a>
                 </li>
               {%endfor%}
             </ul>
           </div>
+          <div class="col-sm-4">
+            <legend><h3>Why Syracuse?</h3></legend>
+            <p>Find out why Syracuse is a great city for business. <a href="">Read more &rarr;</a></p>
+          </div>
+
         </div>
       </div>
     </section>
