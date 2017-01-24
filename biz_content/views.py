@@ -18,6 +18,8 @@ from django.core.urlresolvers import reverse
 from . import forms, models
 from .model_forms import ProjectNotebookForm
 from .ips_api import IPSAPIClient
+from urllib.parse import urljoin
+
 
 
 PROJECT_SUCCESS = 'Your project has saved.'
@@ -78,7 +80,7 @@ class PermitStatusView(TemplateView):
             form_data = form.cleaned_data
             permit_id = form_data['permit_id']
             try:
-                r = requests.get(settings.SYRACUSE_IPS_URL + permit_id)
+                r = requests.get(urljoin(settings.SYRACUSE_IPS_URL,permit_id))
             except:
                 pass
             else:
@@ -104,6 +106,7 @@ class BizLicenseStatusView(TemplateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         permit_data = None
+        biz_license_data = None
 
         if form.is_valid():
             form_data = form.cleaned_data
@@ -114,9 +117,9 @@ class BizLicenseStatusView(TemplateView):
                     request,
                     "Your permit could not be found. Please contact the NBD.")
         return render(request,
-                      self.template_name,
-                      {'form': form,
-                       'biz_license_data': biz_license_data})
+                          self.template_name,
+                          {'form': form,
+                           'biz_license_data': biz_license_data})
 
 
 @login_required

@@ -96,7 +96,9 @@
                   {% for field in form %}
                   {{ form.title }}
                   <div class="form-group">
-                    <label>{{ field.errors }}</label>
+                      <div class="form-group has-error">
+                        <span style="text-decoration-style:none;font-size:8px;color:red;">{{ field.errors }}</span>
+                      </div>
 
                     <label>{{ field.label }}</label>
                     {% render_field field class+="form-control" %}
