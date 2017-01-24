@@ -88,8 +88,7 @@ class ContentBlock(blocks.StreamBlock):
         template="biz_content/content_blocks/alert_text.html")
     embed_block = blocks.RawHTMLBlock(
         icon="fa-code",
-        help_text="Copy and paste a map or video embed directly here."
-    )
+        help_text="Copy and paste a map or video embed directly here.")
 
 
 class CollectionPage(Page):
