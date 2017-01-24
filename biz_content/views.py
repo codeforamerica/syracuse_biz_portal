@@ -21,7 +21,6 @@ from .ips_api import IPSAPIClient
 from urllib.parse import urljoin
 
 
-
 PROJECT_SUCCESS = 'Your project has saved.'
 PROJECT_FAILURE = 'Your project could not be saved.'
 
@@ -80,7 +79,7 @@ class PermitStatusView(TemplateView):
             form_data = form.cleaned_data
             permit_id = form_data['permit_id']
             try:
-                r = requests.get(urljoin(settings.SYRACUSE_IPS_URL,permit_id))
+                r = requests.get(urljoin(settings.SYRACUSE_IPS_URL, permit_id))
             except:
                 pass
             else:
@@ -117,9 +116,9 @@ class BizLicenseStatusView(TemplateView):
                     request,
                     "Your permit could not be found. Please contact the NBD.")
         return render(request,
-                          self.template_name,
-                          {'form': form,
-                           'biz_license_data': biz_license_data})
+                      self.template_name,
+                      {'form': form,
+                       'biz_license_data': biz_license_data})
 
 
 @login_required
