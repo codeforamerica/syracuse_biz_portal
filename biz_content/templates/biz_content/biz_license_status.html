@@ -49,27 +49,31 @@
             {% if biz_license_data %}
                 <h1>Certificate of Use {{biz_license_data.application_data.0.complaint_number}}</h1><hr>
 
-                <h2>Status Log</h2>
+                <h2>Certificate of Use Status</h2>
+                <div style="background-color:lightblue;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
+                  <div class="card-block">
+                        <h4 class="card-title">{{biz_license_data.application_data.0.action_date}}: {{biz_license_data.application_data.0.user_defined_action_type_name}}</h4>
+                  </div>
+                </div>
+
+
+                <h2>Status History</h2>
                 {% for d in biz_license_data.application_data %}
                   <div style="background-color:lightblue;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
                     <div class="card-block">
                       <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
-                      <h6 class="card-subtitle mb-2 text-muted">Open Date: {{d.open_date}}</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Close Date: {{d.close_date}}</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Date Last Updated: {{d.action_date}}</h6>
                     </div>
                   </div>
                 {% endfor %}
 
-                <h2>Payment Log</h2>
-                {% for d in biz_license_data.payment_data %}
-                  <div style="background-color:lightgreen;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
+
+                <h2>Department Log</h2>
+                  <div style="background-color:lightblue;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
                     <div class="card-block">
-                      <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
-                      <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date}}</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Payment Details Date: {{d.payment_details}}</h6>
+                      <h4 class="card-title">Explanation</h4>
                     </div>
                   </div>
-                {% endfor %}
 
                 <h2>Inspection Log</h2>
                 {% for d in biz_license_data.inspection_data %}
@@ -84,6 +88,18 @@
                       <h6 class="card-subtitle mb-2 text-muted">Address: {{d.nature_of_complaint}}</h6>
                       <h6 class="card-subtitle mb-2 text-muted">Notes: {{d.user_note}}</h6>
 
+                    </div>
+                  </div>
+                {% endfor %}
+
+
+                <h2>Payment Log</h2>
+                {% for d in biz_license_data.payment_data %}
+                  <div style="background-color:lightgreen;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
+                    <div class="card-block">
+                      <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
+                      <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date}}</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Payment Details Date: {{d.payment_details}}</h6>
                     </div>
                   </div>
                 {% endfor %}
