@@ -57,6 +57,7 @@ class PhoneBlock(blocks.StructBlock):
         icon = 'fa-phone'
         template = "biz_content/content_blocks/phone_block.html"
 
+
 class ContentBlock(blocks.StreamBlock):
     heading = blocks.CharBlock(classname="full title", icon="title")
     paragraph = blocks.RichTextBlock()
