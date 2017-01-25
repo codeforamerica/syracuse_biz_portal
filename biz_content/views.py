@@ -101,10 +101,13 @@ class PermitStatusView(TemplateView):
 class IPSAPIException(Exception):
     pass
 
+def build_business_license_url(content_type, license_id):
+    relative_url = '/'.join(['business_license', content_type, license_id])
+    full_url =urljoin(settings.SYRACUSE_IPS_URL, relative_url)
+    return full_url
+
 def retrieve_business_license_data(content_type, license_id):
-    base_url = urljoin(settings.SYRACUSE_IPS_URL, "business_license/")
-    url_query = content_type + '/' + license_id
-    url = urljoin(base_url, url_query)
+    url = build_business_license_url(content_type, license_id)
 
     response = requests.get(url=url)
     try:
@@ -124,7 +127,7 @@ class BizLicenseStatusView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        biz_license_data, application_data,inspection_data, payment_data = None,None,None,None
+        biz_license_data = None
 
         if form.is_valid():
             form_data = form.cleaned_data

@@ -1,7 +1,7 @@
 import requests_mock
 import json
 from . import factories
-from biz_content import models, forms
+from biz_content import models, forms, views
 from django.test import TestCase, TransactionTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
@@ -139,54 +139,63 @@ class BusinessLicenseViewTestCase(TestCase):
     def setUp(self):
         pass
 
+    def test_build_business_license_url(self):
+        content_type = 'application_data'
+        license_id = 'CU12354'
+        url = views.build_business_license_url(content_type, license_id)
+        business_license_url = '%sbusiness_license/%s/%s' % (
+            settings.SYRACUSE_IPS_URL,
+            content_type,
+            license_id
+        )
+        self.assertEquals(url, business_license_url)
+
     @requests_mock.Mocker()
     def test_200_with_business_licenses(self, m):
-        __location__ = os.path.realpath(
+        location = os.path.realpath(
             os.path.join(os.getcwd(), os.path.dirname(__file__)))
         application_data = open(
-            os.path.join(__location__, 'application_data.json'), 'r')
+            os.path.join(location, 'application_data.json'), 'r').read()
         inspection_data = open(
-            os.path.join(__location__, 'inspection_data.json'), 'r')
+            os.path.join(location, 'inspection_data.json'), 'r').read()
         payment_data = open(
-            os.path.join(__location__, 'payment_data.json'), 'r')
+            os.path.join(location, 'payment_data.json'), 'r').read()
         license_id = 'CU2014-0050'
         mock_urls = {"application_data": application_data,
                         "inspection_data": inspection_data,
                         "payment_data": payment_data}
 
         for url, data in mock_urls.items():
-            relative_url = urljoin(url + '/', license_id)
-            full_url = urljoin(
-                settings.SYRACUSE_IPS_URL + '/business_license/', relative_url)
-            m.get(full_url, text=str(data))
+            full_url = views.build_business_license_url(url, license_id)
+            m.get(full_url, json=str(data))
 
         res = self.client.post(reverse('biz_license_status'), {'cu_id': license_id})
         self.assertEquals(res.status_code, 200)
         context = res.context
 
-        self.assertEquals(context['biz_license_data']['application_data'], json.dumps(application_data))
+        self.assertEquals(context['biz_license_data']['application_data'], json.loads(str(application_data)))
         # self.assertEquals(context['biz_license_data']['inspection_data'], inspection_data)
         # self.assertEquals(context['biz_license_data']['payment_data'], payment_data)
 
     @requests_mock.Mocker()
     def test_no_business_licenses(self, m):
         license_id = 'CU2014-005089403'
-        mock_urls = {"application_data": [],
-                        "inspection_data": [],
-                        "payment_data": []}
+        mock_urls = {"application_data": '[]',
+                        "inspection_data": '[]',
+                        "payment_data": '[]'}
 
         for url, data in mock_urls.items():
-            relative_url = urljoin(url + '/', license_id)
-            full_url = urljoin(
-                settings.SYRACUSE_IPS_URL + '/business_license/', relative_url)
-            m.get(full_url, text=data)
+            full_url = views.build_business_license_url(url, license_id)
+            m.get(full_url, json=str(data))
 
-        data = {'cu_id': 'CU123-234'}
+        data = {'cu_id': license_id}
         res = self.client.post(reverse('biz_license_status'), data)
-        self.assertEquals(res.status_code, 200)
 
         context = res.context
+        import pdb; pdb.set_trace()
         messages = list(context['messages'])
+
+        self.assertEquals(res.status_code, 302)
         self.assertEquals(
             str(messages[0]), 'Your permit could not be found. Please contact the NBD.')
 
