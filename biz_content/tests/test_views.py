@@ -133,6 +133,7 @@ class DashboardViewTestCase(TestCase):
         res = self.client.get(reverse('wagalytics_dashboard'))
         self.assertEquals(res.status_code, 200)
 
+
 class BusinessLicenseViewTestCase(TestCase):
 
     def setUp(self):
@@ -140,43 +141,54 @@ class BusinessLicenseViewTestCase(TestCase):
 
     @requests_mock.Mocker()
     def test_200_with_business_licenses(self, m):
-        __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-        application_data = open(os.path.join(__location__, 'application_data.json'), 'r')
-        inspection_data = open(os.path.join(__location__,'inspection_data.json'), 'r')
-        payment_data = open(os.path.join(__location__,'payment_data.json'), 'r')
+        __location__ = os.path.realpath(
+            os.path.join(os.getcwd(), os.path.dirname(__file__)))
+        application_data = open(
+            os.path.join(__location__, 'application_data.json'), 'r')
+        inspection_data = open(
+            os.path.join(__location__, 'inspection_data.json'), 'r')
+        payment_data = open(
+            os.path.join(__location__, 'payment_data.json'), 'r')
         license_id = 'CU2014-0050'
-        mock_urls = {"application_data":application_data,
-                        "inspection_data":inspection_data,
-                        "payment_data":payment_data}
+        mock_urls = {"application_data": application_data,
+                        "inspection_data": inspection_data,
+                        "payment_data": payment_data}
 
         for url, data in mock_urls.items():
-            relative_url = urljoin(url, license_id)
-            full_url =urljoin(settings.SYRACUSE_IPS_URL, relative_url)
+            relative_url = urljoin(url + '/', license_id)
+            full_url = urljoin(
+                settings.SYRACUSE_IPS_URL + '/business_license/', relative_url)
             m.get(full_url, text=str(data))
 
-        res = self.client.get(reverse('biz_license_status'))
+        res = self.client.post(reverse('biz_license_status'), {'cu_id': license_id})
         self.assertEquals(res.status_code, 200)
         context = res.context
 
-        self.assertEquals(context['application_data'], application_data)
-        self.assertEquals(context['inspection_data'], inspection_data)
-        self.assertEquals(context['payment_data'], payment_data)
+        self.assertEquals(context['biz_license_data']['application_data'], application_data)
+        self.assertEquals(context['biz_license_data']['inspection_data'], inspection_data)
+        self.assertEquals(context['biz_license_data']['payment_data'], payment_data)
 
     @requests_mock.Mocker()
     def test_no_business_licenses(self, m):
         license_id = 'CU2014-005089403'
-        mock_urls = {"application_data":[],
-                        "inspection_data":[],
-                        "payment_data":[]}
+        mock_urls = {"application_data": [],
+                        "inspection_data": [],
+                        "payment_data": []}
 
         for url, data in mock_urls.items():
-            relative_url = urljoin(url, license_id)
-            m.get(urljoin(settings.SYRACUSE_IPS_URL, relative_url) , text=str(data))
+            relative_url = urljoin(url + '/', license_id)
+            full_url = urljoin(
+                settings.SYRACUSE_IPS_URL + '/business_license/', relative_url)
+            m.get(full_url, text=str(data))
 
-        res = self.client.get(reverse('biz_license_status'))
+        data = {'cu_id': 'CU123-234'}
+        res = self.client.post(reverse('biz_license_status'), data)
         self.assertEquals(res.status_code, 200)
+
         context = res.context
-        self.assertEquals(context['messages'].value, 'Your permit could not be found. Please contact the NBD.')
+        messages = list(context['messages'])
+        self.assertEquals(
+            str(messages[0]), 'Your permit could not be found. Please contact the NBD.')
 
 
 

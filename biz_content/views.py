@@ -124,7 +124,6 @@ class BizLicenseStatusView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        permit_data = None
         biz_license_data, application_data,inspection_data, payment_data = None,None,None,None
 
         if form.is_valid():
@@ -137,7 +136,6 @@ class BizLicenseStatusView(TemplateView):
                 messages.error(
                     request,
                     "Your permit could not be found. Please contact the NBD.")
-                biz_license_data = None
 
                 return redirect('biz_license_status')
             else:
