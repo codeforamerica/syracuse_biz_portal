@@ -151,7 +151,8 @@ class BusinessLicenseViewTestCase(TestCase):
 
         for url, data in mock_urls.items():
             relative_url = urljoin(url, license_id)
-            m.get(urljoin(settings.SYRACUSE_IPS_URL, relative_url) , text=str(data))
+            full_url =urljoin(settings.SYRACUSE_IPS_URL, relative_url)
+            m.get(full_url, text=str(data))
 
         res = self.client.get(reverse('biz_license_status'))
         self.assertEquals(res.status_code, 200)
