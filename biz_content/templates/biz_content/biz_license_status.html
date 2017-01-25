@@ -103,51 +103,79 @@
                 </div>
 
 
-                {% for d in biz_license_data.application_data %}
-                  <div style="background-color:lightblue;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
-                    <div class="card-block">
-                      <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
-                      <h6 class="card-subtitle mb-2 text-muted"></h6>
-                    </div>
-                  </div>
-                {% endfor %}
+                <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <h2 style="color:black;">Departmental Review Status</h2>
 
+                        <hr>
+                        <h4 class="card-title" style="text-align:center;">What Departments Review Your Business License?</h4>
+                        <hr>
 
-                <h2>Department Log</h2>
-                  <div style="background-color:lightblue;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
-                    <div class="card-block">
-                      <h4 class="card-title">Explanation</h4>
-                    </div>
-                  </div>
+                      <p>After the license has been submitted, it goes to 5 departments for approval. These departments check for previous criminal activity and financial indebtedness to the city.</p>
 
-                <h2>Inspection Log</h2>
-                {% for d in biz_license_data.inspection_data %}
-                  <div style="background-color:lightpink;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
-                    <div class="card-block">
-                      <h4 class="card-title">Inspection Start Date: {{d.inspect_date}}</h4>
-                      <h4 class="card-title">Inspection End Date: {{d.inspect_date}}</h4>
-                      <h6 class="card-subtitle mb-2 text-muted">Inspection Type: {{d.inspection_type_id}}</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Department: {{d.department_id}}</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Status: {{d.status_enum}}</h6>
+                      <ul>
+                        <li>The Police Department - conducts and reviewes for specific types of felony and misdemeanor convictions</li>
+                        <li>The Department of Water - searches for delinquent water bills</li>
+                        <li>Parking Violations Bureau - searches for unpaid parking tickets</li>
+                        <li>The Department of Housing - searches for housing judgements.</li>
+                        <li>The Department of Treasury - searches for outstanding taxes.</li>
+                      </ul>
+                      <br>
+                      <p>If your permit is "In Review" and your status does not indicate that the city is ready to conduct a site inspection, that means that one or more of the departments listed above have not issued an approval regarding your business license.</p>
+                    </li>
+                  </ul>
+                </div>
 
-                      <h6 class="card-subtitle mb-2 text-muted">Address: {{d.nature_of_complaint}}</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Notes: {{d.user_note}}</h6>
+                 <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <h2 style="color:black;">Inspection History</h2>
+                        <hr>
+                        <br>
+                        <p><strong>2016</strong></p>
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:"Arial">Status</strong></th>
+                            </tr>
+                            <tr>
+                              <th>Department</th>
+                              <th>Type</th>
+                              <th>Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Codes</td>
+                              <td>Electricial Inspection</td>
+                              <td>9/6/2016</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <hr>
 
-                    </div>
-                  </div>
-                {% endfor %}
+                    </li>
+                  </ul>
+                </div>
 
+                <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <h2 style="color:black;">Payment Log</h2>
+                        <hr>
+                        <p>Payment Data goes here</p>
+                        {% for d in biz_license_data.payment_data %}
 
-                <h2>Payment Log</h2>
-                {% for d in biz_license_data.payment_data %}
-                  <div style="background-color:lightgreen;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
-                    <div class="card-block">
-                      <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
-                      <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date}}</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Payment Details Date: {{d.payment_details}}</h6>
-                    </div>
-                  </div>
-                {% endfor %}
+                              <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
+                              <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date}}</h6>
+                              <h6 class="card-subtitle mb-2 text-muted">Payment Details Date: {{d.payment_details}}</h6>
+
+                        {% endfor %}
+
+                    </li>
+                  </ul>
+                </div>
 
             {% else %}
               <h2>Check the Status of Your Business License</h2>

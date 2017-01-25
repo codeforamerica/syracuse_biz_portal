@@ -136,17 +136,17 @@ class BizLicenseStatusView(TemplateView):
         if form.is_valid():
             form_data = form.cleaned_data
             cu_id = form_data['cu_id']
-            # application_data = retrieve_business_license_data("application_data", cu_id)
-            # inspection_data = retrieve_business_license_data("inspection_data", cu_id)
-            # payment_data = retrieve_business_license_data("payment_data", cu_id)
-            location = os.path.realpath(
-            os.path.join(os.getcwd(), os.path.dirname(__file__)))
-            application_data = open(
-                                os.path.join(location + '/tests', 'application_data.json'), 'r').read()
-            inspection_data = open(
-                                os.path.join(location + '/tests', 'inspection_data.json'), 'r').read()
-            payment_data = open(
-                            os.path.join(location + '/tests', 'payment_data.json'), 'r').read()
+            application_data = retrieve_business_license_data("application_data", cu_id)
+            inspection_data = retrieve_business_license_data("inspection_data", cu_id)
+            payment_data = retrieve_business_license_data("payment_data", cu_id)
+            # location = os.path.realpath(
+            # os.path.join(os.getcwd(), os.path.dirname(__file__)))
+            # application_data = open(
+            #                     os.path.join(location + '/tests', 'application_data.json'), 'r').read()
+            # inspection_data = open(
+            #                     os.path.join(location + '/tests', 'inspection_data.json'), 'r').read()
+            # payment_data = open(
+            #                 os.path.join(location + '/tests', 'payment_data.json'), 'r').read()
 
             if not application_data:
                 messages.error(
@@ -155,9 +155,9 @@ class BizLicenseStatusView(TemplateView):
 
                 return redirect('biz_license_status')
             else:
-                biz_license_data = {"application_data": json.loads(application_data),
-                                    "inspection_data": json.loads(inspection_data),
-                                    "payment_data": json.loads(payment_data)}
+                biz_license_data = {"application_data": application_data,
+                                    "inspection_data": inspection_data,
+                                    "payment_data": payment_data}
         return render(request,
                       self.template_name,
                       {'form': form,
