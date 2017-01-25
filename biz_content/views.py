@@ -5,8 +5,10 @@ from django.conf import settings
 from django.contrib import messages
 from . import forms, models
 
+
 def dashboard(request):
     return render(request, 'biz_content/dashboard.html', {})
+
 
 class PermitStatusView(TemplateView):
     template_name = "biz_content/permit_status.html"

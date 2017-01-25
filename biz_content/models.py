@@ -15,8 +15,6 @@ from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 
-from biz_content import forms
-
 
 class CustomCleanRegexBlock(blocks.RegexBlock):
     """
@@ -154,12 +152,6 @@ class StepPage(Page):
 
     def get_context(self, request):
         context = super().get_context(request)
-
-        # Return checklists
-        checklists = []
-
-        checklists.append(forms.ChecklistForm(self))
-        context['checklists'] = checklists
 
         # Determine previous and next step pages
         if self.get_prev_sibling():

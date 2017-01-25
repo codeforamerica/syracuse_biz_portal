@@ -61,24 +61,20 @@
           </article>
         </div>
 
-        {% if checklists %}
-
+        {% if self.checklist_items.all %}
         <div class="col-sm-5 blog-sidebar">
-            <div class="panel panel-default">
-              {% for checklist in checklists %}
-              <div class="panel-heading">
-                <h4>
-                  Checklist
-                </h4>
-              </div>
-              <div class="panel-body">
-                {% for item in checklist.checklist %}
-                  {{ item.checklist_id }}
-                  <div class="checkbox">{{ item }}</div>
-                {% endfor %}
-              </div>
-              {% endfor %}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4>
+                Checklist
+              </h4>
             </div>
+            <div class="panel-body"><ul>
+              {% for item in self.checklist_items.all %}
+                <li>{{ item.text }}</li>
+              {% endfor %}
+            </ul></div>
+          </div>
         </div><!-- /.blog-sidebar -->
         {% endif %}
 
