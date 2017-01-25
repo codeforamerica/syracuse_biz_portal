@@ -1,15 +1,26 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load i18n widget_tweaks %}
 
+{% block extra_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/timeline.css' %}">
+{% endblock %}
+
 {% block body_class %}template-blogpage{% endblock %}
+
 
 {% block content %}
 
 <!--
  -->
  <!-- Navigation -->
+ <style>
+
+
+
+ </style>
 
     <header>
       {% image self.header_img width-1200 as header_img %}
@@ -30,6 +41,8 @@
         </div>
       </div>
     </header>
+
+
 
     <div class="container">
 
@@ -59,19 +72,90 @@
                   </ul>
                 </div>
 
+
+
                 <div class="card">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
+                      <div class="container">
+
                       <h2 style="color:black;">Status Timeline</h2>
+<div class="container">
+    <ul class="timeline">
+        <li>
+          <div class="timeline-badge info"><i class="fa fa-smile-o"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Title</h4>
+            </div>
+            <div class="timeline-body">
+              <p>Description...</p>
+            </div>
+          </div>
+        </li>
 
-                        <hr>
-                        <h4 class="card-title" style="text-align:center;">{{biz_license_data.application_data.0.action_date}}: {{biz_license_data.application_data.0.user_defined_action_type_name}}</h4>
-                        <hr>
+        <li>
+          <div class="timeline-badge primary"><i class="fa fa-star-o"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Title</h4>
+            </div>
+            <div class="timeline-body">
+              <p>Description...</p>
+            </div>
+          </div>
+        </li>
 
-                      <p>This reflects the up-to-date status of your Certificate of Use.</p>
-                      <p>There are 3 types of business licenses in Syracuse - an entertainment license, an amusement license and a certificate of use license.</p>
+        <li>
+          <div class="timeline-badge warning"><i class="fa fa-sun-o"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Title</h4>
+            </div>
+            <div class="timeline-body">
+              <p>Description...</p>
+            </div>
+          </div>
+        </li>
 
-                      <p>If you are a bar, restaurant, smoking establishment, or drug store, you need a Certificate of Use Business License. A business license needs to be renewed every 2 years.</p>
+        <li>
+          <div class="timeline-badge danger"><i class="fa fa-times-circle-o"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Title</h4>
+            </div>
+            <div class="timeline-body">
+              <p>Description...</p>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="timeline-badge success"><i class="fa fa-check-circle-o"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Title</h4>
+            </div>
+            <div class="timeline-body">
+              <p>Description...</p>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="timeline-badge default"><i class="fa fa-frown-o"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Title</h4>
+            </div>
+            <div class="timeline-body">
+              <p>Description...</p>
+            </div>
+          </div>
+        </li>
+    </ul>
+</div>
+
 
                     </li>
                   </ul>

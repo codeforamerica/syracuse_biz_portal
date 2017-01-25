@@ -23,6 +23,7 @@ from requests.exceptions import RequestException
 from django.conf import settings
 import json
 from urllib.parse import urljoin
+import os
 
 
 PROJECT_SUCCESS = 'Your project has saved.'
@@ -132,9 +133,17 @@ class BizLicenseStatusView(TemplateView):
         if form.is_valid():
             form_data = form.cleaned_data
             cu_id = form_data['cu_id']
-            application_data = retrieve_business_license_data("application_data", cu_id)
-            inspection_data = retrieve_business_license_data("inspection_data", cu_id)
-            payment_data = retrieve_business_license_data("payment_data", cu_id)
+            # application_data = retrieve_business_license_data("application_data", cu_id)
+            # inspection_data = retrieve_business_license_data("inspection_data", cu_id)
+            # payment_data = retrieve_business_license_data("payment_data", cu_id)
+            location = os.path.realpath(
+            os.path.join(os.getcwd(), os.path.dirname(__file__)))
+            application_data = open(
+                                os.path.join(location, 'application_data.json'), 'r').read()
+            inspection_data = open(
+                                os.path.join(location, 'inspection_data.json'), 'r').read()
+            payment_data = open(
+                            os.path.join(location, 'payment_data.json'), 'r').read()
             if not application_data:
                 messages.error(
                     request,
