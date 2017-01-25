@@ -125,7 +125,7 @@ class BizLicenseStatusView(TemplateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         permit_data = None
-        biz_license_data = None
+        biz_license_data, application_data,inspection_data, payment_data = None,None,None,None
 
         if form.is_valid():
             form_data = form.cleaned_data
@@ -133,15 +133,23 @@ class BizLicenseStatusView(TemplateView):
             application_data = retrieve_business_license_data("application_data", cu_id)
             inspection_data = retrieve_business_license_data("inspection_data", cu_id)
             payment_data = retrieve_business_license_data("payment_data", cu_id)
+            if not application_data:
+                messages.error(
+                    request,
+                    "Your permit could not be found. Please contact the NBD.")
+                biz_license_data = None
+                raise
 
-            biz_license_data = {"application_data":application_data,
-                        "inspection_data":inspection_data,
-                        "payment_data":payment_data}
-
+                return redirect('biz_license_status')
+            else:
+                biz_license_data = {"application_data":application_data,
+                            "inspection_data":inspection_data,
+                            "payment_data":payment_data}
         return render(request,
                       self.template_name,
                       {'form': form,
                        'biz_license_data': biz_license_data})
+
 
 
 @login_required

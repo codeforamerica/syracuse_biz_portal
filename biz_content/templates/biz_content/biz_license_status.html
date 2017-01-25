@@ -37,14 +37,6 @@
 
         <div class="col-sm-7 blog-main">
               <br>
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">  <!-- singular -->
-                        <a class="close" data-dismiss="alert">×</a>
-                        <p style="color:red;font-size:12px;">{{ message }}</p>
-                    </div>
-                {% endfor %}
-            {% endif %}
 
             {% if biz_license_data %}
                 <h1>Certificate of Use {{biz_license_data.application_data.0.complaint_number}}</h1><hr>
@@ -106,15 +98,28 @@
 
             {% else %}
               <h2>Check the Status of Your Business License</h2>
+              {% if messages %}
+                  {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }}">  <!-- singular -->
+                          <a class="close" data-dismiss="alert">×</a>
+                          <p style="color:red;font-size:12px;">{{ message }}</p>
+                      </div>
+                  {% endfor %}
+              {% endif %}
 
               <form action="" method="post">
                   {% csrf_token %}
                   {% for field in form %}
                   {{ form.title }}
                   <div class="form-group">
-                      <div class="form-group has-error">
-                        <span style="text-decoration-style:none;font-size:8px;color:red;">{{ field.errors }}</span>
-                      </div>
+
+                  {%if field.errors%}
+                    <div class="alert alert-error">  <!-- singular -->
+                        <a class="close" data-dismiss="alert">×</a>
+                        <p style="color:red;font-size:12px;">{{ field.errors }}</p>
+                    </div>
+                  {% endif %}
+
 
                     <label>{{ field.label }}</label>
                     {% render_field field class+="form-control" %}

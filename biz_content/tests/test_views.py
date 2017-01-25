@@ -9,6 +9,7 @@ from django.utils import html
 from django.conf import settings
 from biz_content.views import PROJECT_SUCCESS, PROJECT_FAILURE
 import os
+from urllib.parse import urljoin
 
 
 class UpdateCheckboxTestCase(TestCase):
@@ -139,30 +140,43 @@ class BusinessLicenseViewTestCase(TestCase):
 
     @requests_mock.Mocker()
     def test_200_with_business_licenses(self, m):
-        current_dir = os.getcwd
-        application_path = os.path.join(current_dir, '/responses/application_data.json')
-        application_data = open(application_path, 'r')
-        inspection_data = open('../tests/responses/inspection_data.json', 'r')
-        payment_data = open(os.path.join(settings.PROJECT_ROOT,'biz_content/tests/responses/payment_data.json'), 'r')
+        __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+        application_data = open(os.path.join(__location__, 'application_data.json'), 'r')
+        inspection_data = open(os.path.join(__location__,'inspection_data.json'), 'r')
+        payment_data = open(os.path.join(__location__,'payment_data.json'), 'r')
         license_id = 'CU2014-0050'
-
-        os.path.join(setting.PROJECT_DIR)
-
         mock_urls = {"application_data":application_data,
                         "inspection_data":inspection_data,
                         "payment_data":payment_data}
 
         for url, data in mock_urls.items():
             relative_url = urljoin(url, license_id)
-            m.get(urljoin(settings.SYRACUSE_IPS_URL, relative_url) , text=data)
+            m.get(urljoin(settings.SYRACUSE_IPS_URL, relative_url) , text=str(data))
 
         res = self.client.get(reverse('biz_license_status'))
         self.assertEquals(res.status_code, 200)
         context = res.context
-        self.assertEquals(context['cu_id'], license_id)
-        self.assertEquals(context['application_data'], json.dumps(application_data))
-        self.assertEquals(context['inspection_data'], json.dumps(inspection_data))
-        self.assertEquals(context['payment_data'], json.dumps(payment_data))
+
+        self.assertEquals(context['application_data'], application_data)
+        self.assertEquals(context['inspection_data'], inspection_data)
+        self.assertEquals(context['payment_data'], payment_data)
+
+    @requests_mock.Mocker()
+    def test_no_business_licenses(self, m):
+        license_id = 'CU2014-005089403'
+        mock_urls = {"application_data":[],
+                        "inspection_data":[],
+                        "payment_data":[]}
+
+        for url, data in mock_urls.items():
+            relative_url = urljoin(url, license_id)
+            m.get(urljoin(settings.SYRACUSE_IPS_URL, relative_url) , text=str(data))
+
+        res = self.client.get(reverse('biz_license_status'))
+        self.assertEquals(res.status_code, 200)
+        context = res.context
+        self.assertEquals(context['messages'].value, 'Your permit could not be found. Please contact the NBD.')
+
 
 
 

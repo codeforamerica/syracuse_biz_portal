@@ -93,9 +93,26 @@ class UserFormTestCase(TestCase):
         u = User.objects.get(email=self.email)
         self.assertEqual(u.username, self.email)
 
-# class BizLicenseFormTestCase(TestCase):
+class BizLicenseFormTestCase(TestCase):
 
-    # def setUp(self):
-    #     self.email = 'test@gmail.com'
-    #     self.password = 'knew1for!'
+    def setUp(self):
+        self.cu_id = 'CU-123-234'
+        self.bad_cu_id = '123-234'
+
+    def test_form_validates_cu(self):
+        """Checkbox items and form items should match"""
+        initial_data = {'cu_id': self.cu_id}
+        form = forms.BizLicenseStatusForm(initial_data)
+        self.assertTrue(form.is_valid())
+
+    def test_form_raises_error_without_cu(self):
+        initial_data = {'cu_id': self.bad_cu_id}
+        form = forms.BizLicenseStatusForm(initial_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['cu_id'][0], "Your business license identifier must start with CU")
+
+
+
+
+
 
