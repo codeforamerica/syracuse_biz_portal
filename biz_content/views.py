@@ -101,10 +101,12 @@ class PermitStatusView(TemplateView):
 class IPSAPIException(Exception):
     pass
 
+
 def build_business_license_url(content_type, license_id):
     relative_url = '/'.join(['business_license', content_type, license_id])
-    full_url =urljoin(settings.SYRACUSE_IPS_URL, relative_url)
+    full_url = urljoin(settings.SYRACUSE_IPS_URL, relative_url)
     return full_url
+
 
 def retrieve_business_license_data(content_type, license_id):
     url = build_business_license_url(content_type, license_id)
@@ -116,6 +118,7 @@ def retrieve_business_license_data(content_type, license_id):
         raise IPSAPIException(
             "Error from IPS API: {}".format(ex.message, sys.exc_info()[2]))
     return response.json()
+
 
 class BizLicenseStatusView(TemplateView):
     template_name = "biz_content/biz_license_status.html"
@@ -132,9 +135,12 @@ class BizLicenseStatusView(TemplateView):
         if form.is_valid():
             form_data = form.cleaned_data
             cu_id = form_data['cu_id']
-            application_data = retrieve_business_license_data("application_data", cu_id)
-            inspection_data = retrieve_business_license_data("inspection_data", cu_id)
-            payment_data = retrieve_business_license_data("payment_data", cu_id)
+            application_data = retrieve_business_license_data(
+                "application_data", cu_id)
+            inspection_data = retrieve_business_license_data(
+                "inspection_data", cu_id)
+            payment_data = retrieve_business_license_data(
+                "payment_data", cu_id)
             if not application_data:
                 messages.error(
                     request,
@@ -142,14 +148,13 @@ class BizLicenseStatusView(TemplateView):
 
                 return redirect('biz_license_status')
             else:
-                biz_license_data = {"application_data":application_data,
-                            "inspection_data":inspection_data,
-                            "payment_data":payment_data}
+                biz_license_data = {"application_data": application_data,
+                                    "inspection_data": inspection_data,
+                                    "payment_data": payment_data}
         return render(request,
                       self.template_name,
                       {'form': form,
                        'biz_license_data': biz_license_data})
-
 
 
 @login_required
