@@ -222,10 +222,7 @@ section.success {
 
 .collection-page-icon {
   text-align: center;
-}
-
-.portfolio-item .panel-body {
-  padding:0 15px 0 0;
+  padding: 15px;
 }
 
 a.portfolio-link h2 {
@@ -234,6 +231,7 @@ a.portfolio-link h2 {
 
 a.portfolio-link p {
   color: #555;
+  margin-bottom: 0px;
 }
 
 .portfolio-item .icon-container {
@@ -260,6 +258,11 @@ a.portfolio-link p {
   margin: 0 0 15px;
   right: 0;
 }
+
+.portfolio-item .panel-body {
+  padding-left: 0;
+}
+
 #portfolio .portfolio-item .portfolio-link {
   display: block;
   position: relative;
