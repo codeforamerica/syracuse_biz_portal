@@ -88,7 +88,8 @@ class ContentBlock(blocks.StreamBlock):
         template="biz_content/content_blocks/alert_text.html")
     embed_block = blocks.RawHTMLBlock(
         icon="fa-code",
-        help_text="Copy and paste a map or video embed directly here.")
+        help_text="Copy and paste a map or video embed directly here."
+    )
 
 
 class CollectionPage(Page):
@@ -156,7 +157,9 @@ class StepPage(Page):
         context = super().get_context(request)
 
         # Return checklists
-        checklists = forms.ChecklistForm(self)
+        checklists = []
+
+        checklists.append(forms.ChecklistForm(self))
         context['checklists'] = checklists
 
         # Determine previous and next step pages
@@ -179,29 +182,6 @@ class ChecklistItem(Orderable):
 
     def __str__(self):
         return self.text
-
-
-class Project(models.Model):
-    name = models.CharField(max_length=255, default="New Project")
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-                              related_name='projects')
-
-    checklists = models.ManyToManyField(StepPage)
-    checked_items = models.ManyToManyField(ChecklistItem)
-
-    def get_checklists(self):
-        for checklist in self.checklists.all():
-            yield forms.ChecklistForm(checklist)
-
-    def __str__(self):
-        return self.name
-
-
-def create_users_first_project(sender, instance, created, **kwargs):
-    if created:
-        Project.objects.create(owner=instance)
-
-post_save.connect(create_users_first_project, sender='auth.User')
 
 
 @register_setting
