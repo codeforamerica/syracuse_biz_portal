@@ -9,26 +9,11 @@ class ChecklistForm(forms.Form):
 
     def __init__(self, steppage, *args, **kwargs):
         self.step_page = steppage
-        self.project = kwargs.pop('project', None)
         super().__init__(*args, **kwargs)
         items = self.step_page.checklist_items
         self.fields['checklist'] = forms.ModelMultipleChoiceField(
             queryset=items, required=False,
             widget=forms.CheckboxSelectMultiple)
-        if self.project:
-            pks = set(items.values_list('pk', flat=True))
-            checked_items = self.project.checked_items
-            checked_pks = set(checked_items.values_list('pk', flat=True))
-            project_checked_pks = checked_pks.intersection(pks)
-            self.fields['checklist'].initial = project_checked_pks
-
-    def save(self):
-        try:
-            self.project.checklists.get(pk=self.step_page.pk)
-        except ObjectDoesNotExist:
-            self.project.checklists.add(self.step_page)
-        self.project.checked_items.set(self.cleaned_data['checklist'])
-        return self.project.checked_items
 
 
 class CustomUserCreationForm(UserCreationForm):
