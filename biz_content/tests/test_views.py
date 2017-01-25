@@ -1,10 +1,14 @@
+import requests_mock
+import json
 from . import factories
 from biz_content import models, forms
 from django.test import TestCase, TransactionTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
 from django.utils import html
+from django.conf import settings
 from biz_content.views import PROJECT_SUCCESS, PROJECT_FAILURE
+import os
 
 
 class UpdateCheckboxTestCase(TestCase):
@@ -127,3 +131,48 @@ class DashboardViewTestCase(TestCase):
         self.client.force_login(self.user)
         res = self.client.get(reverse('wagalytics_dashboard'))
         self.assertEquals(res.status_code, 200)
+
+class BusinessLicenseViewTestCase(TestCase):
+
+    def setUp(self):
+        pass
+
+    @requests_mock.Mocker()
+    def test_200_with_business_licenses(self, m):
+        current_dir = os.getcwd
+        application_path = os.path.join(current_dir, '/responses/application_data.json')
+        application_data = open(application_path, 'r')
+        inspection_data = open('../tests/responses/inspection_data.json', 'r')
+        payment_data = open(os.path.join(settings.PROJECT_ROOT,'biz_content/tests/responses/payment_data.json'), 'r')
+        license_id = 'CU2014-0050'
+
+        os.path.join(setting.PROJECT_DIR)
+
+        mock_urls = {"application_data":application_data,
+                        "inspection_data":inspection_data,
+                        "payment_data":payment_data}
+
+        for url, data in mock_urls.items():
+            relative_url = urljoin(url, license_id)
+            m.get(urljoin(settings.SYRACUSE_IPS_URL, relative_url) , text=data)
+
+        res = self.client.get(reverse('biz_license_status'))
+        self.assertEquals(res.status_code, 200)
+        context = res.context
+        self.assertEquals(context['cu_id'], license_id)
+        self.assertEquals(context['application_data'], json.dumps(application_data))
+        self.assertEquals(context['inspection_data'], json.dumps(inspection_data))
+        self.assertEquals(context['payment_data'], json.dumps(payment_data))
+
+
+
+
+
+
+
+
+
+
+
+
+

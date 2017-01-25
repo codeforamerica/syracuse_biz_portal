@@ -17,7 +17,11 @@ from registration.backends.simple.views import RegistrationView
 from django.core.urlresolvers import reverse
 from . import forms, models
 from .model_forms import ProjectNotebookForm
-from .ips_api import IPSAPIClient
+from urllib.parse import urljoin
+import requests
+from requests.exceptions import RequestException
+from django.conf import settings
+import json
 from urllib.parse import urljoin
 
 
@@ -94,6 +98,22 @@ class PermitStatusView(TemplateView):
                        'permit_data': permit_data})
 
 
+class IPSAPIException(Exception):
+    pass
+
+def retrieve_business_license_data(content_type, license_id):
+    base_url = urljoin(settings.SYRACUSE_IPS_URL, "business_license/")
+    url_query = content_type + '/' + license_id
+    url = urljoin(base_url, url_query)
+
+    response = requests.get(url=url)
+    try:
+        response.raise_for_status()
+    except RequestException as ex:
+        raise IPSAPIException(
+            "Error from IPS API: {}".format(ex.message, sys.exc_info()[2]))
+    return response.json()
+
 class BizLicenseStatusView(TemplateView):
     template_name = "biz_content/biz_license_status.html"
     form_class = forms.BizLicenseStatusForm
@@ -110,11 +130,14 @@ class BizLicenseStatusView(TemplateView):
         if form.is_valid():
             form_data = form.cleaned_data
             cu_id = form_data['cu_id']
-            biz_license_data = IPSAPIClient(cu_id)
-            if not biz_license_data:
-                messages.error(
-                    request,
-                    "Your permit could not be found. Please contact the NBD.")
+            application_data = retrieve_business_license_data("application_data", cu_id)
+            inspection_data = retrieve_business_license_data("inspection_data", cu_id)
+            payment_data = retrieve_business_license_data("payment_data", cu_id)
+
+            biz_license_data = {"application_data":application_data,
+                        "inspection_data":inspection_data,
+                        "payment_data":payment_data}
+
         return render(request,
                       self.template_name,
                       {'form': form,

@@ -92,3 +92,10 @@ class UserFormTestCase(TestCase):
         form.save()
         u = User.objects.get(email=self.email)
         self.assertEqual(u.username, self.email)
+
+# class BizLicenseFormTestCase(TestCase):
+
+    # def setUp(self):
+    #     self.email = 'test@gmail.com'
+    #     self.password = 'knew1for!'
+
