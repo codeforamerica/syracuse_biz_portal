@@ -138,7 +138,6 @@ class BizLicenseStatusView(TemplateView):
                     request,
                     "Your permit could not be found. Please contact the NBD.")
                 biz_license_data = None
-                raise
 
                 return redirect('biz_license_status')
             else:
