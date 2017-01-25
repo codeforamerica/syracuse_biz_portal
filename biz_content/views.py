@@ -136,24 +136,18 @@ class BizLicenseStatusView(TemplateView):
         if form.is_valid():
             form_data = form.cleaned_data
             cu_id = form_data['cu_id']
-            application_data = retrieve_business_license_data("application_data", cu_id)
-            inspection_data = retrieve_business_license_data("inspection_data", cu_id)
-            payment_data = retrieve_business_license_data("payment_data", cu_id)
-            # location = os.path.realpath(
-            # os.path.join(os.getcwd(), os.path.dirname(__file__)))
-            # application_data = open(
-            #                     os.path.join(location + '/tests', 'application_data.json'), 'r').read()
-            # inspection_data = open(
-            #                     os.path.join(location + '/tests', 'inspection_data.json'), 'r').read()
-            # payment_data = open(
-            #                 os.path.join(location + '/tests', 'payment_data.json'), 'r').read()
+            application_data = retrieve_business_license_data(
+                "application_data", cu_id)
+            inspection_data = retrieve_business_license_data(
+                "inspection_data", cu_id)
+            payment_data = retrieve_business_license_data(
+                "payment_data", cu_id)
 
             if not application_data:
                 messages.error(
                     request,
                     "Your permit could not be found. Please contact the NBD.")
 
-                return redirect('biz_license_status')
             else:
                 biz_license_data = {"application_data": application_data,
                                     "inspection_data": inspection_data,

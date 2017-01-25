@@ -202,11 +202,12 @@ class BusinessLicenseViewTestCase(TestCase):
 
         data = {'cu_id': license_id}
         res = self.client.post(reverse('biz_license_status'), data)
-        self.assertEquals(res.status_code, 302)
+        self.assertEquals(res.status_code, 200)
 
         context = res.context
         self.assertTrue('messages' in context)
-        messages = list(context['messages'])
 
+        messages = list(context['messages'])
+        err = 'Your permit could not be found. Please contact the NBD.'
         self.assertEquals(
-            str(messages[0]), 'Your permit could not be found. Please contact the NBD.')
+            str(messages[0]), err)
