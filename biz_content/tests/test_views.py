@@ -1,4 +1,4 @@
-import requests_mock
+import responses
 import json
 from . import factories
 from biz_content import models, forms, views
@@ -150,8 +150,8 @@ class BusinessLicenseViewTestCase(TestCase):
         )
         self.assertEquals(url, business_license_url)
 
-    @requests_mock.Mocker()
-    def test_200_with_business_licenses(self, m):
+    @responses.activate
+    def test_200_with_business_licenses(self):
         location = os.path.realpath(
             os.path.join(os.getcwd(), os.path.dirname(__file__)))
         application_data = open(
@@ -162,53 +162,51 @@ class BusinessLicenseViewTestCase(TestCase):
             os.path.join(location, 'payment_data.json'), 'r').read()
         license_id = 'CU2014-0050'
         mock_urls = {"application_data": application_data,
-                        "inspection_data": inspection_data,
-                        "payment_data": payment_data}
+                     "inspection_data": inspection_data,
+                     "payment_data": payment_data}
 
         for url, data in mock_urls.items():
             full_url = views.build_business_license_url(url, license_id)
-            m.get(full_url, json=str(data))
+            responses.add(
+                responses.GET, full_url,
+                body=data, status=200, content_type='application/json')
 
-        res = self.client.post(reverse('biz_license_status'), {'cu_id': license_id})
+        res = self.client.post(
+            reverse('biz_license_status'), {
+                'cu_id': license_id})
         self.assertEquals(res.status_code, 200)
         context = res.context
 
-        self.assertEquals(context['biz_license_data']['application_data'], json.loads(str(application_data)))
-        # self.assertEquals(context['biz_license_data']['inspection_data'], inspection_data)
-        # self.assertEquals(context['biz_license_data']['payment_data'], payment_data)
+        self.assertEquals(
+            context['biz_license_data']['application_data'],
+            json.loads(str(application_data)))
+        self.assertEquals(
+            context['biz_license_data']['inspection_data'],
+            json.loads(str(inspection_data)))
+        self.assertEquals(
+            context['biz_license_data']['payment_data'],
+            json.loads(str(payment_data)))
 
-    @requests_mock.Mocker()
-    def test_no_business_licenses(self, m):
+    @responses.activate
+    def test_no_business_licenses(self):
         license_id = 'CU2014-005089403'
         mock_urls = {"application_data": '[]',
-                        "inspection_data": '[]',
-                        "payment_data": '[]'}
+                     "inspection_data": '[]',
+                     "payment_data": '[]'}
 
         for url, data in mock_urls.items():
             full_url = views.build_business_license_url(url, license_id)
-            m.get(full_url, json=str(data))
+            responses.add(
+                responses.GET, full_url,
+                body=data, status=200, content_type='application/json')
 
         data = {'cu_id': license_id}
         res = self.client.post(reverse('biz_license_status'), data)
+        self.assertEquals(res.status_code, 302)
 
         context = res.context
-        import pdb; pdb.set_trace()
+        self.assertTrue('messages' in context)
         messages = list(context['messages'])
 
-        self.assertEquals(res.status_code, 302)
         self.assertEquals(
             str(messages[0]), 'Your permit could not be found. Please contact the NBD.')
-
-
-
-
-
-
-
-
-
-
-
-
-
-

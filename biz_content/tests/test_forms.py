@@ -93,6 +93,7 @@ class UserFormTestCase(TestCase):
         u = User.objects.get(email=self.email)
         self.assertEqual(u.username, self.email)
 
+
 class BizLicenseFormTestCase(TestCase):
 
     def setUp(self):
@@ -109,10 +110,6 @@ class BizLicenseFormTestCase(TestCase):
         initial_data = {'cu_id': self.bad_cu_id}
         form = forms.BizLicenseStatusForm(initial_data)
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['cu_id'][0], "Your business license identifier must start with CU")
-
-
-
-
-
-
+        self.assertEqual(
+            form.errors['cu_id'][0],
+            "Your business license identifier must start with CU")

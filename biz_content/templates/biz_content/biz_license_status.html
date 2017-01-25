@@ -80,83 +80,24 @@
                       <div class="container">
 
                       <h2 style="color:black;">Status Timeline</h2>
-<div class="container">
-    <ul class="timeline">
-        <li>
-          <div class="timeline-badge info"><i class="fa fa-smile-o"></i></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">Title</h4>
-            </div>
-            <div class="timeline-body">
-              <p>Description...</p>
-            </div>
-          </div>
-        </li>
+                        <div class="container">
+                            <ul class="timeline">
+                              {% for d in biz_license_data.application_data %}
 
-        <li>
-          <div class="timeline-badge primary"><i class="fa fa-star-o"></i></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">Title</h4>
-            </div>
-            <div class="timeline-body">
-              <p>Description...</p>
-            </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="timeline-badge warning"><i class="fa fa-sun-o"></i></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">Title</h4>
-            </div>
-            <div class="timeline-body">
-              <p>Description...</p>
-            </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="timeline-badge danger"><i class="fa fa-times-circle-o"></i></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">Title</h4>
-            </div>
-            <div class="timeline-body">
-              <p>Description...</p>
-            </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="timeline-badge success"><i class="fa fa-check-circle-o"></i></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">Title</h4>
-            </div>
-            <div class="timeline-body">
-              <p>Description...</p>
-            </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="timeline-badge default"><i class="fa fa-frown-o"></i></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">Title</h4>
-            </div>
-            <div class="timeline-body">
-              <p>Description...</p>
-            </div>
-          </div>
-        </li>
-    </ul>
-</div>
-
-
+                                <li>
+                                  <div class="timeline-badge primary"></i></div>
+                                  <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                      <h4 class="timeline-title">{{d.user_defined_action_type_name}}</h4>
+                                    </div>
+                                    <div class="timeline-body">
+                                      <p>Date Last Updated: {{d.action_date}}</p>
+                                    </div>
+                                  </div>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                        </div>
                     </li>
                   </ul>
                 </div>
@@ -166,7 +107,7 @@
                   <div style="background-color:lightblue;padding:10px;margin:5px;border-radius:5px;border:2px solid black;" class="card">
                     <div class="card-block">
                       <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
-                      <h6 class="card-subtitle mb-2 text-muted">Date Last Updated: {{d.action_date}}</h6>
+                      <h6 class="card-subtitle mb-2 text-muted"></h6>
                     </div>
                   </div>
                 {% endfor %}

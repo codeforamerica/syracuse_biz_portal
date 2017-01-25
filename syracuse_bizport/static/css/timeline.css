@@ -31,7 +31,8 @@
 }
 
 .timeline > li > .timeline-panel {
-  width: calc( 80% - 75px; );
+  margin-left:7%;
+  width: calc( -20% + 50% );
   float: left;
   border: 1px solid #d4d4d4;
   border-radius: 2px;
@@ -85,7 +86,7 @@
 }
 
 .timeline-badge.primary {
-  background-color: #2e6da4 !important;
+  background-color: #B5E2BD !important;
 }
 
 .timeline-badge.success {
