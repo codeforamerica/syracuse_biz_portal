@@ -9,6 +9,8 @@ from django.utils import html
 from django.conf import settings
 import os
 from urllib.parse import urljoin
+import datetime
+import ast
 
 
 class DashboardViewTestCase(TestCase):
@@ -53,6 +55,8 @@ class BusinessLicenseViewTestCase(TestCase):
             os.path.join(self.location, 'inspection_data.json'), 'r').read()
         self.payment_data = open(
             os.path.join(self.location, 'payment_data.json'), 'r').read()
+        self.cleaned_inspection_data = open(
+            os.path.join(self.location, 'cleaned_inspection_data.json'), 'r').read()
         self.mock_urls = {"application_data": self.application_data,
                      "inspection_data": self.inspection_data,
                      "payment_data": self.payment_data}
@@ -71,12 +75,16 @@ class BusinessLicenseViewTestCase(TestCase):
         )
         self.assertEquals(url, business_license_url)
 
-    # def test_format_business_license_inspection_data(self):
-    #     location = os.path.realpath(
-    #         os.path.join(os.getcwd(), os.path.dirname(__file__)))
-    #     inspection_data = open(
-    #         os.path.join(location, 'inspection_data.json'), 'r').read()
+    def test_create_datetime_object(self):
+        d = '2014-09-15T13:00:25'
+        date = views.create_datetime_object(d)
+        datetime_object = datetime.datetime.strptime('2014-09-15', "%Y-%m-%d")
+        self.assertEquals(date, datetime_object)
 
+    def test_format_business_license_inspection_data(self):
+        json_inspection_data = json.loads(self.inspection_data)
+        cleaned_data = views.format_business_license_inspection_data(json_inspection_data)
+        self.assertEquals(list(cleaned_data.keys()), [2016,2014])
 
     @responses.activate
     def test_200_with_business_licenses(self):

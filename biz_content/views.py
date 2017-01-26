@@ -11,6 +11,7 @@ from django.conf import settings
 import json
 from urllib.parse import urljoin
 import os
+import datetime
 
 
 def dashboard(request):
@@ -57,8 +58,21 @@ def build_business_license_url(content_type, license_id):
     full_url = urljoin(settings.SYRACUSE_IPS_URL, relative_url)
     return full_url
 
+def create_datetime_object(date):
+    string_date = date[0:][:10]
+    d = datetime.datetime.strptime(string_date, "%Y-%m-%d")
+    return d
+
 def format_business_license_inspection_data(inspection_data):
-    pass
+    inspection_dates = [create_datetime_object(d['inspect_date']) for d in inspection_data]
+    formatted_inspection_data = {}
+    years = set([d.year for d in inspection_dates])
+    for y in years:
+        formatted_inspection_data[y] = []
+    for inspection in inspection_data:
+        inspect_date = create_datetime_object(inspection['inspect_date'])
+        formatted_inspection_data[inspect_date.year].append(inspection)
+    return formatted_inspection_data
 
 
 def retrieve_business_license_data(content_type, license_id):
