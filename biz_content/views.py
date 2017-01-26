@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.conf import settings
 from django.contrib import messages
 from . import forms, models
-from .model_forms import ProjectNotebookForm
 from urllib.parse import urljoin
 import requests
 from requests.exceptions import RequestException
