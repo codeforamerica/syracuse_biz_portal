@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
 from django.utils import html
 from django.conf import settings
-from biz_content.views import PROJECT_SUCCESS, PROJECT_FAILURE
 import os
 from urllib.parse import urljoin
 
