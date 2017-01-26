@@ -24,21 +24,6 @@
                 <li class="hidden">
                     <a href="#page-top"></a>
                 </li>
-                {% if user.is_authenticated %}
-                  <li>
-                      <a href="{% url 'profile'  %}">Profile</a>
-                  </li>
-                  <li>
-                      <a href="{% url 'auth_logout' %}">Log out</a>
-                  </li>
-                {% else %}
-                  <li>
-                      <a href="{% url 'auth_login' %}">Login</a>
-                  </li>
-                  <li>
-                      <a href="{% url 'registration_register' %}">Sign up</a>
-                  </li>
-                {% endif %}
                 <li>
                   {% include 'translation_bar.html' %}
                 </li>

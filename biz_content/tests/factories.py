@@ -17,14 +17,6 @@ class UserFactory(dfactory.DjangoModelFactory):
     last_name = factory.Sequence(lambda n: "%03d" % n)
 
 
-class ProjectFactory(dfactory.DjangoModelFactory):
-
-    class Meta:
-        model = 'biz_content.Project'
-
-    name = 'Name'
-
-
 class ChecklistItemFactory(dfactory.DjangoModelFactory):
 
     class Meta:

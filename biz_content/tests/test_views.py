@@ -6,6 +6,7 @@ from django.test import TestCase, TransactionTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
 from django.utils import html
+<<<<<<< HEAD
 from django.conf import settings
 from biz_content.views import PROJECT_SUCCESS, PROJECT_FAILURE
 import os
@@ -101,6 +102,8 @@ class ProfileViewTestCase(TestCase):
         self.assertEquals(context['project_id'], self.project.pk)
         messages = list(context['messages'])
         self.assertEqual(str(messages[0]), PROJECT_FAILURE)
+=======
+>>>>>>> master
 
 
 class DashboardViewTestCase(TestCase):

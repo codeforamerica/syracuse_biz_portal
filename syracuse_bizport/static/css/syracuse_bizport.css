@@ -632,3 +632,7 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
   line-height: normal;
 }
 
+.help-line{
+  padding:5px;
+  color:white;
+}

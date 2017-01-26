@@ -40,7 +40,7 @@
                 {% endif %}
 
 
-                  <form id=project_{{project.id}} name="project-notebook" method="post" action="/profile/">
+                  <form id=project_{{project.id}} name="project-notebook" method="post" action="#">
                     <div class="row">
                     {% csrf_token %}
                     {% for field in project.notebook_form %}
