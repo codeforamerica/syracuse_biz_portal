@@ -137,7 +137,7 @@
                         <table class="table table-bordered">
                           <thead>
                             <tr>
-                              <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:"Arial">Status</strong></th>
+                              <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status</strong></th>
                             </tr>
                             <tr>
                               <th>Department</th>
@@ -181,9 +181,9 @@
               <h2>Check the Status of Your Business License</h2>
               {% if messages %}
                   {% for message in messages %}
-                      <div class="alert alert-{{ message.tags }}">  <!-- singular -->
+                      <div class="alert alert-info">
                           <a class="close" data-dismiss="alert">×</a>
-                          <p style="color:red;font-size:12px;">{{ message }}</p>
+                          <p>{{ message }}</p>
                       </div>
                   {% endfor %}
               {% endif %}
@@ -195,7 +195,7 @@
                   <div class="form-group">
 
                   {%if field.errors%}
-                    <div class="alert alert-error">  <!-- singular -->
+                    <div class="alert alert-danger">  <!-- singular -->
                         <a class="close" data-dismiss="alert">×</a>
                         <p style="color:red;font-size:12px;">{{ field.errors }}</p>
                     </div>
@@ -203,7 +203,7 @@
 
 
                     <label>{{ field.label }}</label>
-                    {% render_field field class+="form-control" %}
+                    {% render_field field class+="form-control" placeholder="Example: CU2000-1234" %}
                   </div>
                   {% endfor %}
                     <button type="submit" class="btn btn-default">Submit</button>
