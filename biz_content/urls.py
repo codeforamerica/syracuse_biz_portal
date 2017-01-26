@@ -7,5 +7,7 @@ from .import views
 
 urlpatterns = [
     url(r'^permit-status/$', views.PermitStatusView.as_view(),
-        name="permit-status"),
+        name="permit_status"),
+    url(r'^biz-license-status/$', views.BizLicenseStatusView.as_view(),
+        name="biz_license_status"),
 ]
