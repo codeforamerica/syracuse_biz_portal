@@ -57,6 +57,9 @@ def build_business_license_url(content_type, license_id):
     full_url = urljoin(settings.SYRACUSE_IPS_URL, relative_url)
     return full_url
 
+def format_business_license_inspection_data(inspection_data):
+    pass
+
 
 def retrieve_business_license_data(content_type, license_id):
     url = build_business_license_url(content_type, license_id)
@@ -101,6 +104,7 @@ class BizLicenseStatusView(TemplateView):
                 biz_license_data = {"application_data": application_data,
                                     "inspection_data": inspection_data,
                                     "payment_data": payment_data}
+
         return render(request,
                       self.template_name,
                       {'form': form,

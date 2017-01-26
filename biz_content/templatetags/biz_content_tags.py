@@ -10,3 +10,8 @@ register = template.Library()
 def format_10_digit_phone(digits):
     phone_tuple = (digits[0:3], digits[3:6], digits[6:])
     return '%s-%s-%s' % phone_tuple
+
+@register.filter
+@stringfilter
+def format_business_license_date(date):
+	return date[0:][:10]

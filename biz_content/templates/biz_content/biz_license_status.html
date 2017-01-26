@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load biz_content_tags %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load i18n widget_tweaks %}
@@ -52,7 +53,7 @@
               <br>
 
             {% if biz_license_data %}
-                <h1>Certificate of Use {{biz_license_data.application_data.0.complaint_number}}</h1><hr>
+                <h1>Certificate of Use {{ biz_license_data.application_data.0.complaint_number}}</h1><hr>
 
                 <div class="card">
                   <ul class="list-group list-group-flush">
@@ -60,7 +61,7 @@
                       <h2 style="color:black;">Certificate of Use - Current Status</h2>
 
                         <hr>
-                        <h4 class="card-title" style="text-align:center;">{{biz_license_data.application_data.0.action_date}}: {{biz_license_data.application_data.0.user_defined_action_type_name}}</h4>
+                        <h4 class="card-title" style="text-align:center;">{{biz_license_data.application_data.0.action_date| format_business_license_date}} - {{biz_license_data.application_data.0.user_defined_action_type_name}}</h4>
                         <hr>
 
                       <p>This reflects the up-to-date status of your Certificate of Use.</p>
@@ -91,7 +92,7 @@
                                       <h4 class="timeline-title">{{d.user_defined_action_type_name}}</h4>
                                     </div>
                                     <div class="timeline-body">
-                                      <p>Date Last Updated: {{d.action_date}}</p>
+                                      <p>Date Last Updated: {{d.action_date| format_business_license_date}}</p>
                                     </div>
                                   </div>
                                 </li>
