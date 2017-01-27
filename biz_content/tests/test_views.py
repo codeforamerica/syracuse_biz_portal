@@ -9,6 +9,8 @@ from django.utils import html
 from django.conf import settings
 import os
 from urllib.parse import urljoin
+import datetime
+import ast
 
 
 class DashboardViewTestCase(TestCase):
@@ -45,7 +47,20 @@ class DashboardViewTestCase(TestCase):
 class BusinessLicenseViewTestCase(TestCase):
 
     def setUp(self):
-        pass
+        self.location = os.path.realpath(
+            os.path.join(os.getcwd(), os.path.dirname(__file__)))
+        self.application_data = open(
+            os.path.join(self.location, 'application_data.json'), 'r').read()
+        self.inspection_data = open(
+            os.path.join(self.location, 'inspection_data.json'), 'r').read()
+        self.payment_data = open(
+            os.path.join(self.location, 'payment_data.json'), 'r').read()
+        self.mock_urls = {"application_data": self.application_data,
+                          "inspection_data": self.inspection_data,
+                          "payment_data": self.payment_data}
+        self.empty_mock_urls = {"application_data": '[]',
+                                "inspection_data": '[]',
+                                "payment_data": '[]'}
 
     def test_build_business_license_url(self):
         content_type = 'application_data'
@@ -58,22 +73,23 @@ class BusinessLicenseViewTestCase(TestCase):
         )
         self.assertEquals(url, business_license_url)
 
+    def test_create_datetime_object(self):
+        d = '2014-09-15T13:00:25'
+        date = views.create_datetime_object(d)
+        datetime_object = datetime.datetime.strptime('2014-09-15', "%Y-%m-%d")
+        self.assertEquals(date, datetime_object)
+
+    def test_format_business_license_inspection_data(self):
+        json_inspection_data = json.loads(self.inspection_data)
+        cleaned_data = views.format_business_license_inspection_data(
+            json_inspection_data)
+        self.assertEquals(list(cleaned_data.keys()), [2016, 2014])
+
     @responses.activate
     def test_200_with_business_licenses(self):
-        location = os.path.realpath(
-            os.path.join(os.getcwd(), os.path.dirname(__file__)))
-        application_data = open(
-            os.path.join(location, 'application_data.json'), 'r').read()
-        inspection_data = open(
-            os.path.join(location, 'inspection_data.json'), 'r').read()
-        payment_data = open(
-            os.path.join(location, 'payment_data.json'), 'r').read()
         license_id = 'CU2014-0050'
-        mock_urls = {"application_data": application_data,
-                     "inspection_data": inspection_data,
-                     "payment_data": payment_data}
 
-        for url, data in mock_urls.items():
+        for url, data in self.mock_urls.items():
             full_url = views.build_business_license_url(url, license_id)
             responses.add(
                 responses.GET, full_url,
@@ -87,22 +103,19 @@ class BusinessLicenseViewTestCase(TestCase):
 
         self.assertEquals(
             context['biz_license_data']['application_data'],
-            json.loads(str(application_data)))
+            json.loads(str(self.application_data)))
         self.assertEquals(
             context['biz_license_data']['inspection_data'],
-            json.loads(str(inspection_data)))
+            json.loads(str(self.inspection_data)))
         self.assertEquals(
             context['biz_license_data']['payment_data'],
-            json.loads(str(payment_data)))
+            json.loads(str(self.payment_data)))
 
     @responses.activate
     def test_no_business_licenses(self):
         license_id = 'CU2014-005089403'
-        mock_urls = {"application_data": '[]',
-                     "inspection_data": '[]',
-                     "payment_data": '[]'}
 
-        for url, data in mock_urls.items():
+        for url, data in self.empty_mock_urls.items():
             full_url = views.build_business_license_url(url, license_id)
             responses.add(
                 responses.GET, full_url,

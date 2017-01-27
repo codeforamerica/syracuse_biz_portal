@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load biz_content_tags %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load i18n widget_tweaks %}
@@ -27,21 +28,20 @@
       <div class="hero-background" style="background-image: url({{ header_img.url }})">
         <div class="jumbotron hero-shade">
           <div class="container">
-            <div class="row text-center">
+            <div class="row">
               <div class="col-sm-12">
                 {% if page.icon %}
                   {% image page.icon width-120 %}
                 {% endif %}
               </div>
               <div class="col-sm-10 col-sm-offset-0">
-                <h1 class="blog-title">Track Your Business License</h1>
+                <h1 class="blog-title">Track Your Status</h1>
               </div>
             </div>
           </div>
         </div>
       </div>
     </header>
-
 
 
     <div class="container">
@@ -52,21 +52,37 @@
               <br>
 
             {% if biz_license_data %}
-                <h1>Certificate of Use {{biz_license_data.application_data.0.complaint_number}}</h1><hr>
+                <h1>Certificate of Use Business License </h1><hr>
 
                 <div class="card">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                      <h2 style="color:black;">Certificate of Use - Current Status</h2>
+                      <h2 style="color:black;">Certificate of Use Business License</h2>
 
                         <hr>
-                        <h4 class="card-title" style="text-align:center;">{{biz_license_data.application_data.0.action_date}}: {{biz_license_data.application_data.0.user_defined_action_type_name}}</h4>
+                        <h4 class="card-title" style="text-align:center;"> Certificate Status</h4>
                         <hr>
 
-                      <p>This reflects the up-to-date status of your Certificate of Use.</p>
-                      <p>There are 3 types of business licenses in Syracuse - an entertainment license, an amusement license and a certificate of use license.</p>
-
-                      <p>If you are a bar, restaurant, smoking establishment, or drug store, you need a Certificate of Use Business License. A business license needs to be renewed every 2 years.</p>
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th style="background-color:#FFF56F;" colspan="1"><div style="vertical-align:middle;text-align:center;margin-top:-40%;"><i class="fa fa-clock-o fa-3x"></div></th>
+                              <th colspan="2"><h3>Certificate Status</h3>
+                              <p>{{biz_license_data.application_data.0.user_defined_action_type_name}}</p>
+                              <p><i>{{biz_license_data.application_data.0.action_date| format_business_license_date}}</i></p></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th>Number</th>
+                              <td>{{biz_license_data.application_data.0.complaint_number}}</td>
+                            </tr>
+                            <tr>
+                              <th>Expires</th>
+                              <td>Calculate this</td>
+                            </tr>
+                          </tbody>
+                        </table>
 
                     </li>
                   </ul>
@@ -91,7 +107,7 @@
                                       <h4 class="timeline-title">{{d.user_defined_action_type_name}}</h4>
                                     </div>
                                     <div class="timeline-body">
-                                      <p>Date Last Updated: {{d.action_date}}</p>
+                                      <p>Date Last Updated: {{d.action_date| format_business_license_date}}</p>
                                     </div>
                                   </div>
                                 </li>
@@ -188,7 +204,7 @@
                   {% endfor %}
               {% endif %}
 
-              <form action="" method="post">
+              <form class="form-inline" action="" method="post">
                   {% csrf_token %}
                   {% for field in form %}
                   {{ form.title }}
@@ -203,16 +219,18 @@
 
 
                     <label>{{ field.label }}</label>
-                    {% render_field field class+="form-control" placeholder="Example: CU2000-1234" %}
+                    <br>
+                    {% render_field field class+="form-control" %}
+                    <button type="submit" class="btn btn-default">Search</button>
+                    {% if field.help_text %}
+                      <span id="helpBlock" class="help-block">{{field.help_text}}</span>
+                    {% endif %}
                   </div>
                   {% endfor %}
-                    <button type="submit" class="btn btn-default">Submit</button>
+
 
               </form>
             {% endif %}
-
-              <br>
-              <br>
         </div>
 
       </div><!-- /.row -->

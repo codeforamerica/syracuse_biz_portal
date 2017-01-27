@@ -10,7 +10,7 @@ class PermitStatusForm(forms.Form):
 class BizLicenseStatusForm(forms.Form):
     cu_id = forms.CharField(required=True,
                             label="Certificate of Use ID",
-                            help_text="Enter your Certificate of Use ID")
+                            help_text="Example: CU2000-1234")
 
     def clean_cu_id(self):
         cu_id = self.cleaned_data['cu_id']
