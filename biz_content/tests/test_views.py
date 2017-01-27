@@ -47,7 +47,6 @@ class DashboardViewTestCase(TestCase):
 class BusinessLicenseViewTestCase(TestCase):
 
     def setUp(self):
-        c_inspect_data = 'cleaned_inspection_data.json'
         self.location = os.path.realpath(
             os.path.join(os.getcwd(), os.path.dirname(__file__)))
         self.application_data = open(
@@ -56,8 +55,6 @@ class BusinessLicenseViewTestCase(TestCase):
             os.path.join(self.location, 'inspection_data.json'), 'r').read()
         self.payment_data = open(
             os.path.join(self.location, 'payment_data.json'), 'r').read()
-        self.cleaned_inspection_data = open(
-            os.path.join(self.location, c_inspect_data), 'r').read()
         self.mock_urls = {"application_data": self.application_data,
                           "inspection_data": self.inspection_data,
                           "payment_data": self.payment_data}
