@@ -69,6 +69,24 @@ header.step{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(30, 63, 171, 0.8)', endColorstr='rgba(30, 63, 171, 1)',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
+.collection-shade {
+  background: #5C802C; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, rgba(92, 128, 44, 1) 0%, rgba(125, 161, 33, 1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, rgba(92, 128, 44, 1) 0%,rgba(125, 161, 33, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, rgba(92, 128, 44, 1) 0%,rgba(125, 161, 33, 1) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(125, 161, 33, 1)', endColorstr='rgba(92, 128, 44, 1)',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.collection-shade h1 img {
+  height: 60px;
+  width: auto;
+}
+@media (max-width: 768px) {
+  .collection-shade h1 img {
+  height: 36px;
+  width: auto;
+}
+}
+
 .jumbotron h1 {
 	margin-top: 0;
 }

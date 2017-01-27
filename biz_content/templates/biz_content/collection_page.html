@@ -13,16 +13,9 @@
     <header>
       {% image self.header_img width-1200 as header_img %}
       <div class="hero-background" style="background-image: url({{ header_img.url }})">
-        <div class="jumbotron hero-shade">
+        <div class="jumbotron collection-shade">
           <div class="container">
             <div class="row">
-              <!--
-              <div class="col-sm-12">
-                {% if page.icon %}
-                  {% image page.icon width-120 %}
-                {% endif %}
-              </div>
-            -->
               <div class="col-sm-6">
                 {% if self.get_ancestors|length > 1 %}
                   <ol class="breadcrumb">
@@ -37,7 +30,12 @@
 
                   </ol>
                 {% endif %}
-                <h1 class="blog-title">{{ page.title }}</h1>
+                <h1 class="blog-title">
+                  {% if page.icon %}
+                    {% image page.icon width-120 %}
+                  {% endif %}
+                  {{ page.title }}
+                </h1>
                 {% if page.description %}
                   <h2 class="lead blog-description">{{page.description}}</h2>
                 {% endif %}
