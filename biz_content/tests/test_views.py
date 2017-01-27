@@ -47,6 +47,7 @@ class DashboardViewTestCase(TestCase):
 class BusinessLicenseViewTestCase(TestCase):
 
     def setUp(self):
+        c_inspect_data = 'cleaned_inspection_data.json'
         self.location = os.path.realpath(
             os.path.join(os.getcwd(), os.path.dirname(__file__)))
         self.application_data = open(
@@ -56,13 +57,13 @@ class BusinessLicenseViewTestCase(TestCase):
         self.payment_data = open(
             os.path.join(self.location, 'payment_data.json'), 'r').read()
         self.cleaned_inspection_data = open(
-            os.path.join(self.location, 'cleaned_inspection_data.json'), 'r').read()
+            os.path.join(self.location, c_inspect_data), 'r').read()
         self.mock_urls = {"application_data": self.application_data,
-                     "inspection_data": self.inspection_data,
-                     "payment_data": self.payment_data}
+                          "inspection_data": self.inspection_data,
+                          "payment_data": self.payment_data}
         self.empty_mock_urls = {"application_data": '[]',
-                     "inspection_data": '[]',
-                     "payment_data": '[]'}
+                                "inspection_data": '[]',
+                                "payment_data": '[]'}
 
     def test_build_business_license_url(self):
         content_type = 'application_data'
@@ -83,8 +84,9 @@ class BusinessLicenseViewTestCase(TestCase):
 
     def test_format_business_license_inspection_data(self):
         json_inspection_data = json.loads(self.inspection_data)
-        cleaned_data = views.format_business_license_inspection_data(json_inspection_data)
-        self.assertEquals(list(cleaned_data.keys()), [2016,2014])
+        cleaned_data = views.format_business_license_inspection_data(
+            json_inspection_data)
+        self.assertEquals(list(cleaned_data.keys()), [2016, 2014])
 
     @responses.activate
     def test_200_with_business_licenses(self):
