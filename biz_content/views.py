@@ -58,13 +58,16 @@ def build_business_license_url(content_type, license_id):
     full_url = urljoin(settings.SYRACUSE_IPS_URL, relative_url)
     return full_url
 
+
 def create_datetime_object(date):
     string_date = date[0:][:10]
     d = datetime.datetime.strptime(string_date, "%Y-%m-%d")
     return d
 
+
 def format_business_license_inspection_data(inspection_data):
-    inspection_dates = [create_datetime_object(d['inspect_date']) for d in inspection_data]
+    inspection_dates = [
+        create_datetime_object(d['inspect_date']) for d in inspection_data]
     formatted_inspection_data = {}
     years = set([d.year for d in inspection_dates])
     for y in years:
