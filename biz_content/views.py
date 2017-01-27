@@ -1,64 +1,21 @@
 import requests
-from biz_content.models import Project, ChecklistItem
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView, UpdateView
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from django.core.exceptions import SuspiciousOperation
+from django.shortcuts import render
 from django.conf import settings
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.admin.views.decorators import staff_member_required
-from registration.backends.simple.views import RegistrationView
-from django.core.urlresolvers import reverse
 from . import forms, models
-from .model_forms import ProjectNotebookForm
-
-
-PROJECT_SUCCESS = 'Your project has saved.'
-PROJECT_FAILURE = 'Your project could not be saved.'
-
-
-@login_required
-def profile(request):
-    project_id = int(request.user.projects.all().order_by('name').first().id)
-
-    if request.method == 'POST':
-        project_id = int(request.POST['id'])
-        instance = get_object_or_404(Project, id=project_id)
-        form = ProjectNotebookForm(request.POST, instance=instance)
-        if form.is_valid():
-            form.save()
-            messages.success(request, PROJECT_SUCCESS)
-        else:
-            messages.error(request, PROJECT_FAILURE)
-
-    projects = request.user.projects.all().order_by('name')
-    for p in projects:
-        initial = p.__dict__
-        p.notebook_form = ProjectNotebookForm(initial)
-
-    return render(
-        request,
-        'biz_content/profile.html', {
-            'projects': projects,
-            'project_id': project_id
-        })
+from urllib.parse import urljoin
+import requests
+from requests.exceptions import RequestException
+from django.conf import settings
+import json
+from urllib.parse import urljoin
+import os
+import datetime
 
 
 def dashboard(request):
     return render(request, 'biz_content/dashboard.html', {})
-
-
-class UserRegistrationView(RegistrationView):
-    form_class = forms.CustomUserCreationForm
-
-    def get_success_url(self, user):
-        return reverse('profile')
 
 
 class PermitStatusView(TemplateView):
@@ -77,7 +34,7 @@ class PermitStatusView(TemplateView):
             form_data = form.cleaned_data
             permit_id = form_data['permit_id']
             try:
-                r = requests.get(settings.SYRACUSE_PERMIT_URL + permit_id)
+                r = requests.get(urljoin(settings.SYRACUSE_IPS_URL, permit_id))
             except:
                 pass
             else:
@@ -92,19 +49,80 @@ class PermitStatusView(TemplateView):
                        'permit_data': permit_data})
 
 
-@login_required
-def update_checkbox(request, steppage_id, project_id):
-    if not request.POST:
-        raise SuspiciousOperation("Invalid request")
-    steppage = get_object_or_404(models.StepPage, pk=steppage_id)
-    project = request.user.projects.get(pk=project_id)
-    if not project:
-        raise Http404("Project does not exist")
-    form = forms.ChecklistForm(steppage, request.POST, project=project)
-    if form.is_valid():
-        checked_items = form.save()
-    else:
-        raise SuspiciousOperation(str(form.POST))
-    return JsonResponse({
-        'checked_items': list(checked_items.values_list('pk', flat=True)),
-    })
+class IPSAPIException(Exception):
+    pass
+
+
+def build_business_license_url(content_type, license_id):
+    relative_url = '/'.join(['business_license', content_type, license_id])
+    full_url = urljoin(settings.SYRACUSE_IPS_URL, relative_url)
+    return full_url
+
+
+def create_datetime_object(date):
+    string_date = date[0:][:10]
+    d = datetime.datetime.strptime(string_date, "%Y-%m-%d")
+    return d
+
+
+def format_business_license_inspection_data(inspection_data):
+    inspection_dates = [
+        create_datetime_object(d['inspect_date']) for d in inspection_data]
+    formatted_inspection_data = {}
+    years = set([d.year for d in inspection_dates])
+    for y in years:
+        formatted_inspection_data[y] = []
+    for inspection in inspection_data:
+        inspect_date = create_datetime_object(inspection['inspect_date'])
+        formatted_inspection_data[inspect_date.year].append(inspection)
+    return formatted_inspection_data
+
+
+def retrieve_business_license_data(content_type, license_id):
+    url = build_business_license_url(content_type, license_id)
+
+    response = requests.get(url=url)
+    try:
+        response.raise_for_status()
+    except RequestException as ex:
+        raise IPSAPIException(
+            "Error from IPS API: {}".format(ex.message, sys.exc_info()[2]))
+    return response.json()
+
+
+class BizLicenseStatusView(TemplateView):
+    template_name = "biz_content/biz_license_status.html"
+    form_class = forms.BizLicenseStatusForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        biz_license_data = None
+
+        if form.is_valid():
+            form_data = form.cleaned_data
+            cu_id = form_data['cu_id']
+            application_data = retrieve_business_license_data(
+                "application_data", cu_id)
+            inspection_data = retrieve_business_license_data(
+                "inspection_data", cu_id)
+            payment_data = retrieve_business_license_data(
+                "payment_data", cu_id)
+
+            if not application_data:
+                messages.error(
+                    request,
+                    "Your permit could not be found. Please contact the NBD.")
+
+            else:
+                biz_license_data = {"application_data": application_data,
+                                    "inspection_data": inspection_data,
+                                    "payment_data": payment_data}
+
+        return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'biz_license_data': biz_license_data})

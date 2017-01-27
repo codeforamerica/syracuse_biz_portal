@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% load static %}
+{% load biz_content_tags %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load i18n widget_tweaks %}
+
+{% block extra_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/timeline.css' %}">
+{% endblock %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+
+{% block content %}
+
+<!--
+ -->
+ <!-- Navigation -->
+ <style>
+
+
+
+ </style>
+
+    <header>
+      {% image self.header_img width-1200 as header_img %}
+      <div class="hero-background" style="background-image: url({{ header_img.url }})">
+        <div class="jumbotron hero-shade">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12">
+                {% if page.icon %}
+                  {% image page.icon width-120 %}
+                {% endif %}
+              </div>
+              <div class="col-sm-10 col-sm-offset-0">
+                <h1 class="blog-title">Track Your Status</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-sm-7 blog-main">
+              <br>
+
+            {% if biz_license_data %}
+                <h1>Certificate of Use Business License </h1><hr>
+
+                <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <h2 style="color:black;">Certificate of Use Business License</h2>
+
+                        <hr>
+                        <h4 class="card-title" style="text-align:center;"> Certificate Status</h4>
+                        <hr>
+
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th style="background-color:#FFF56F;" colspan="1"><div style="vertical-align:middle;text-align:center;margin-top:-40%;"><i class="fa fa-clock-o fa-3x"></div></th>
+                              <th colspan="2"><h3>Certificate Status</h3>
+                              <p>{{biz_license_data.application_data.0.user_defined_action_type_name}}</p>
+                              <p><i>{{biz_license_data.application_data.0.action_date| format_business_license_date}}</i></p></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th>Number</th>
+                              <td>{{biz_license_data.application_data.0.complaint_number}}</td>
+                            </tr>
+                            <tr>
+                              <th>Expires</th>
+                              <td>Calculate this</td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                    </li>
+                  </ul>
+                </div>
+
+
+
+                <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <div class="container">
+
+                      <h2 style="color:black;">Status Timeline</h2>
+                        <div class="container">
+                            <ul class="timeline">
+                              {% for d in biz_license_data.application_data %}
+
+                                <li>
+                                  <div class="timeline-badge primary"></i></div>
+                                  <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                      <h4 class="timeline-title">{{d.user_defined_action_type_name}}</h4>
+                                    </div>
+                                    <div class="timeline-body">
+                                      <p>Date Last Updated: {{d.action_date| format_business_license_date}}</p>
+                                    </div>
+                                  </div>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+
+
+                <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <h2 style="color:black;">Departmental Review Status</h2>
+
+                        <hr>
+                        <h4 class="card-title" style="text-align:center;">What Departments Review Your Business License?</h4>
+                        <hr>
+
+                      <p>After the license has been submitted, it goes to 5 departments for approval. These departments check for previous criminal activity and financial indebtedness to the city.</p>
+
+                      <ul>
+                        <li>The Police Department - conducts and reviewes for specific types of felony and misdemeanor convictions</li>
+                        <li>The Department of Water - searches for delinquent water bills</li>
+                        <li>Parking Violations Bureau - searches for unpaid parking tickets</li>
+                        <li>The Department of Housing - searches for housing judgements.</li>
+                        <li>The Department of Treasury - searches for outstanding taxes.</li>
+                      </ul>
+                      <br>
+                      <p>If your permit is "In Review" and your status does not indicate that the city is ready to conduct a site inspection, that means that one or more of the departments listed above have not issued an approval regarding your business license.</p>
+                    </li>
+                  </ul>
+                </div>
+
+                 <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <h2 style="color:black;">Inspection History</h2>
+                        <hr>
+                        <br>
+                        <p><strong>2016</strong></p>
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status</strong></th>
+                            </tr>
+                            <tr>
+                              <th>Department</th>
+                              <th>Type</th>
+                              <th>Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Codes</td>
+                              <td>Electricial Inspection</td>
+                              <td>9/6/2016</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <hr>
+
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <h2 style="color:black;">Payment Log</h2>
+                        <hr>
+                        <p>Payment Data goes here</p>
+                        {% for d in biz_license_data.payment_data %}
+
+                              <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
+                              <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date}}</h6>
+                              <h6 class="card-subtitle mb-2 text-muted">Payment Details Date: {{d.payment_details}}</h6>
+
+                        {% endfor %}
+
+                    </li>
+                  </ul>
+                </div>
+
+            {% else %}
+              <h2>Check the Status of Your Business License</h2>
+              {% if messages %}
+                  {% for message in messages %}
+                      <div class="alert alert-info">
+                          <a class="close" data-dismiss="alert">×</a>
+                          <p>{{ message }}</p>
+                      </div>
+                  {% endfor %}
+              {% endif %}
+
+              <form class="form-inline" action="" method="post">
+                  {% csrf_token %}
+                  {% for field in form %}
+                  {{ form.title }}
+                  <div class="form-group">
+
+                  {%if field.errors%}
+                    <div class="alert alert-danger">  <!-- singular -->
+                        <a class="close" data-dismiss="alert">×</a>
+                        <p style="color:red;font-size:12px;">{{ field.errors }}</p>
+                    </div>
+                  {% endif %}
+
+
+                    <label>{{ field.label }}</label>
+                    <br>
+                    {% render_field field class+="form-control" %}
+                    <button type="submit" class="btn btn-default">Search</button>
+                    {% if field.help_text %}
+                      <span id="helpBlock" class="help-block">{{field.help_text}}</span>
+                    {% endif %}
+                  </div>
+                  {% endfor %}
+
+
+              </form>
+            {% endif %}
+        </div>
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+
+{% endblock %}
