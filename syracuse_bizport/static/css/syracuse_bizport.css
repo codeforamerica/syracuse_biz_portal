@@ -77,12 +77,12 @@ header.step{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(125, 161, 33, 1)', endColorstr='rgba(92, 128, 44, 1)',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 .collection-shade h1 img {
-  height: 60px;
+  height: 55px;
   width: auto;
 }
 @media (max-width: 768px) {
   .collection-shade h1 img {
-  height: 36px;
+  height: 30px;
   width: auto;
 }
 }
