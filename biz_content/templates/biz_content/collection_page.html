@@ -51,16 +51,6 @@
       <div class="row">
 
         <div class="col-sm-7 blog-main">
-          {% if page.get_children %}
-            <ol class="list-group">
-            {% for page in page.get_children %}
-              <li class="list-group-item"><a href="{{ page.slug }}">{{ page.title }}</a></li>
-            {% endfor %}
-            </ol>
-          {% endif %}
-        </div>
-
-        <div class="col-sm-5">
           <article>
             {% for block in page.page_content %}
               {% if block.block_type == 'heading' %}
@@ -72,6 +62,16 @@
               {% endif %}
             {% endfor %}
           </article>
+        </div>
+
+        <div class="col-sm-5">
+          {% if page.get_children %}
+            <ol class="list-group">
+            {% for page in page.get_children %}
+              <li class="list-group-item"><a href="{{ page.slug }}">{{ page.title }}</a></li>
+            {% endfor %}
+            </ol>
+          {% endif %}
         </div>
 
       </div><!-- /.row -->
