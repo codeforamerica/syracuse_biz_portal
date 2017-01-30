@@ -16,9 +16,6 @@ from wagtail.contrib.wagtailsitemaps.views import sitemap
 from biz_content import forms
 from biz_content import views
 
-dcv = """4E02F0B46A697A018A49B4CA4BA27943CA519784
-comodoca.com
-"""
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -27,8 +24,6 @@ urlpatterns = [
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search', include('wealthmap.frontend_urls', namespace='wealthmap')),
     url(r'^sitemap\.xml$', sitemap),
-    url(r'^514F972BD3A865A588E2EEB0C64D4FFB.txt',
-        lambda r: HttpResponse(dcv, content_type="text/plain")),
     url(r'', include(urls)),
     url(r'', include(wagtail_urls))
 
