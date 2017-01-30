@@ -1,5 +1,4 @@
-import os
 from .heroku import *
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['business.syrgov.net']
