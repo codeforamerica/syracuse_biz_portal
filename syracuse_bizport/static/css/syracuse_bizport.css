@@ -78,10 +78,9 @@ header.step{
 	margin-top: 0;
 }
 .jumbotron h2 {
-	color: white;
 	margin-bottom: 0;
   margin-top: 0;
-	font-weight: normal;
+  color: #000;
 }
 
 .hero-background {
@@ -648,7 +647,4 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
   background-color: rgba(255,255,255,0.6);
   color: #000;
   padding: 15px;
-}
-.tracker-promo h2 {
-  color: #000;
 }
