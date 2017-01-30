@@ -51,19 +51,20 @@
             {% for collection_page in collection_pages %}
             <a href={{collection_page.slug}} class="portfolio-link">
               <div class="panel panel-default portfolio-item">
-                <div class="panel-body">
-                  <div class="col-xs-3 col-sm-2">
+
+                  <div class="hidden-xs hidden-sm icon-container">
                     <div class="collection-page-icon">
                           {% if collection_page.icon %}
-                            {% image collection_page.icon width-80 %}
+                            {% image collection_page.icon width-60 %}
                           {% endif %}
                     </div>
                   </div>
-                  <div class="col-xs-9 col-sm-10">
-                    <h2>{{collection_page.title}}</h2>
-                    <p>{{collection_page.description}}</p>
+                  <div class="col-sm-12">
+                    <div class="panel-body">
+                      <h2>{{collection_page.title}}</h2>
+                      <p>{{collection_page.description}}</p>
+                    </div>
                   </div>
-                </div>
               </div>
             </a>
             {%endfor%}
