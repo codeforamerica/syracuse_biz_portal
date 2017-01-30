@@ -6,7 +6,7 @@
 
 /* Padding top to avoid navbar */
 body {
-	padding-top: 75px;
+	padding-top: 81px;
 	background-color: #FAFAF9;
 }
 
@@ -40,20 +40,6 @@ header.step{
 	padding:20px;
 	color:white;
 	background-color:#2C3E50;
-}
-
-#main-logo {
-	height: 70px;
-	display: inline-block;
-	vertical-align: top;
-	transition: height 0.3s ease;
-}
-
-#main-logo.minimized {
-	height: 30px;
-	width: auto;
-	vertical-align: middle;
-	transition: height 0.3s ease;
 }
 
 .jumbotron{
