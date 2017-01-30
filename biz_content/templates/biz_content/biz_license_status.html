@@ -65,7 +65,7 @@
                         <table class="table table-bordered">
                           <thead>
                             <tr>
-                              <th style="background-color:#FFF56F;" colspan="1"><div style="vertical-align:middle;text-align:center;margin-top:-40%;"><i class="fa fa-clock-o fa-3x"></div></th>
+                              <th style="vertical-align:middle;text-align:center;background-color:#FFF56F;width:15%;" colspan="1"><i style="" class="fa fa-clock-o fa-3x"></th>
                               <th colspan="2"><h3>Certificate Status</h3>
                               <p>{{biz_license_data.current_status.user_defined_action_type_name}}</p>
                               <p><i>{{biz_license_data.current_status.action_date| format_business_license_date}}</i></p></th>
@@ -75,6 +75,10 @@
                             <tr>
                               <th>Number</th>
                               <td>{{biz_license_data.application_data.0.complaint_number}}</td>
+                            </tr>
+                            <tr>
+                              <th>Address</th>
+                              <td>{{biz_license_data.application_data.0.nature_of_complaint}}</td>
                             </tr>
                           </tbody>
                         </table>
