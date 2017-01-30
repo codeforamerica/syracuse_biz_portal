@@ -20,22 +20,13 @@
                       <h1 class="hero-tagline">Build your business in Syracuse</h1>
                     </div>
                   </div>
-                  <div class="col-lg-offset-2 col-lg-4">
-                    <h2>Status Check</h2>
-                    <p>Track your permit or business license.</p>
-                    <form action="biz-license-status/" method="post">
-                      {% csrf_token %}
-                      {% for field in form %}
-                      {{ form.title }}
-                    <div class="form-group">
-                    <label>{{ field.errors }}</label>
-                    <label>{{ field.label }}</label>
-                    {% render_field field class+="form-control" placeholder="Example: CU2000-1234" %}
-                    </div>
-                      {% endfor %}
-
-                    <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
+                  <div class="col-lg-offset-2 col-lg-4 tracker-promo">
+                    <h2>Track Your Applications</h2>
+                    <ul>
+                      <li>Certificates of Use</li>
+                      <li>Permits</li>
+                    </ul>
+                    <a href="" class="btn btn-primary btn-lg">Check Your Status</a>
                   </div>
               </div>
           </div>
