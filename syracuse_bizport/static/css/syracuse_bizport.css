@@ -249,12 +249,14 @@ a.portfolio-link p {
   display: table-cell;
   vertical-align: middle;
   padding: 15px;
+	width: 10%;
 }
 
 .portfolio-item {
 	top: 0px;
 	transition: all 0.15s ease;
   display: table;
+	width: 100%;
 }
 .portfolio-item:hover {
 	top: -5px;
