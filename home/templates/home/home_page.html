@@ -22,14 +22,16 @@
                   </div>
                   <div class="col-lg-offset-2 col-lg-4">
                     <h2>Status Check</h2>
-                    <p>Track your permit or business license.</p>
+                    <h3>Track your permit or business license.</h3>
                     <form action="biz-license-status/" method="post">
                       {% csrf_token %}
                       {% for field in form %}
                       {{ form.title }}
                     <div class="form-group">
-                    <label>{{ field.errors }}</label>
-                    <label>{{ field.label }}</label>
+                    {% if field.errors %}
+                      <label>{{ field.errors }}</label>
+                    {% endif %}
+                    <label for="{{ field.name }}">{{ field.label }}</label>
                     {% render_field field class+="form-control" placeholder="Example: CU2000-1234" %}
                     </div>
                       {% endfor %}
@@ -68,20 +70,6 @@
             </a>
             {%endfor%}
           </div>
-          <div class="col-sm-4 google-custom-search">
-            <script>
-              (function() {
-                var cx = '015206489618795500048:r3rfaau61ho';
-                var gcse = document.createElement('script');
-                gcse.type = 'text/javascript';
-                gcse.async = true;
-                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(gcse, s);
-              })();
-            </script>
-            <gcse:search></gcse:search>
-          </div>
           <div class="col-sm-4">
             <legend><h3><i class="fa fa-star" aria-hidden="true"></i> Popular Pages</h3></legend>
             <ul class="list-unstyled">
@@ -96,7 +84,7 @@
           </div>
           <div class="col-sm-4">
             <legend><h3>Why Syracuse?</h3></legend>
-            <p>Find out why Syracuse is a great city for business. <a href="">Read more &rarr;</a></p>
+            <p><a href="">Find out why Syracuse is a great city for business. Read more &rarr;</a></p>
           </div>
 
         </div>
