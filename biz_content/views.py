@@ -64,6 +64,13 @@ def create_datetime_object(date):
     d = datetime.datetime.strptime(string_date, "%Y-%m-%d")
     return d
 
+def get_most_recent_busines_license_status(application_data):
+    application_dates = [
+        create_datetime_object(d['action_date']) for d in application_data]
+    now = datetime.datetime.now()
+    youngest = max(dt for dt in application_dates if dt < now)
+    most_recent_status = [dt for dt in application_data if create_datetime_object(dt['action_date']) == youngest]
+    return most_recent_status[0]
 
 def format_business_license_inspection_data(inspection_data):
     inspection_dates = [
@@ -120,7 +127,8 @@ class BizLicenseStatusView(TemplateView):
             else:
                 biz_license_data = {"application_data": application_data,
                                     "inspection_data": inspection_data,
-                                    "payment_data": payment_data}
+                                    "payment_data": payment_data,
+                                    "current_status": get_most_recent_busines_license_status(application_data)}
 
         return render(request,
                       self.template_name,

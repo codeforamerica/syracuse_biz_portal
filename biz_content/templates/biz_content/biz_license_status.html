@@ -52,7 +52,6 @@
               <br>
 
             {% if biz_license_data %}
-                <h1>Certificate of Use Business License </h1><hr>
 
                 <div class="card">
                   <ul class="list-group list-group-flush">
@@ -68,18 +67,14 @@
                             <tr>
                               <th style="background-color:#FFF56F;" colspan="1"><div style="vertical-align:middle;text-align:center;margin-top:-40%;"><i class="fa fa-clock-o fa-3x"></div></th>
                               <th colspan="2"><h3>Certificate Status</h3>
-                              <p>{{biz_license_data.application_data.0.user_defined_action_type_name}}</p>
-                              <p><i>{{biz_license_data.application_data.0.action_date| format_business_license_date}}</i></p></th>
+                              <p>{{biz_license_data.current_status.user_defined_action_type_name}}</p>
+                              <p><i>{{biz_license_data.current_status.action_date| format_business_license_date}}</i></p></th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <th>Number</th>
                               <td>{{biz_license_data.application_data.0.complaint_number}}</td>
-                            </tr>
-                            <tr>
-                              <th>Expires</th>
-                              <td>Calculate this</td>
                             </tr>
                           </tbody>
                         </table>
