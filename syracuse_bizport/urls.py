@@ -16,8 +16,7 @@ from wagtail.contrib.wagtailsitemaps.views import sitemap
 from biz_content import forms
 from biz_content import views
 
-dcv = """
-4E02F0B46A697A018A49B4CA4BA27943CA519784
+dcv = """4E02F0B46A697A018A49B4CA4BA27943CA519784
 comodoca.com
 """
 
