@@ -5,6 +5,7 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic.edit import CreateView
+from django.http import HttpResponse
 
 from biz_content import urls
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
@@ -22,7 +23,7 @@ urlpatterns = [
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search', include('wealthmap.frontend_urls', namespace='wealthmap')),
-    url('^sitemap\.xml$', sitemap),
+    url(r'^sitemap\.xml$', sitemap),
     url(r'', include(urls)),
     url(r'', include(wagtail_urls))
 
