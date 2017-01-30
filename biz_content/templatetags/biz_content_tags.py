@@ -15,4 +15,10 @@ def format_10_digit_phone(digits):
 @register.filter
 @stringfilter
 def format_business_license_date(date):
-    return date[0:][:10]
+    d = date[0:][:10]
+    date = d.split('-')
+    year = date[0]
+    month = date[1]
+    day = date[2]
+    string = month + '/' + day + '/' + year
+    return string
