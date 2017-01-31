@@ -51,8 +51,7 @@ def display_inspection_type_name(inspection_type):
 
 @register.filter
 @stringfilter
-def display_inspection_department_type
-(inspection_type):
+def display_inspection_department_type(inspection_type):
     return INSPECTION_DEPARTMENT_CHOICES[inspection_type]
 
 
