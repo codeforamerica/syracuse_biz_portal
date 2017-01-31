@@ -6,8 +6,9 @@
 
 /* Padding top to avoid navbar */
 body {
-	padding-top: 75px;
+	padding-top: 81px;
 	background-color: #FAFAF9;
+  font-size: 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -15,7 +16,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .beta-notification {
-	background-color: green;
+	background-color: #A92C70;
 	font-size: 16px;
 	color: #fff;
 	padding: 3px;
@@ -42,33 +43,38 @@ header.step{
 	background-color:#2C3E50;
 }
 
-#main-logo {
-	height: 70px;
-	display: inline-block;
-	vertical-align: top;
-	transition: height 0.3s ease;
-}
-
-#main-logo.minimized {
-	height: 30px;
-	width: auto;
-	vertical-align: middle;
-	transition: height 0.3s ease;
-}
-
 .jumbotron{
   padding-top: 30px;
   padding-bottom: 30px;
 }
-
 .jumbotron.hero-shade {
-	background: #1ad6fd; /* Old browsers */
-	background: -moz-linear-gradient(-45deg, rgba(30, 63, 171, 1) 0%, rgba(30, 63, 171, 0.8) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(-45deg, rgba(30, 63, 171, 1) 0%,rgba(30, 63, 171, 0.8) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(135deg, rgba(30, 63, 171, 1) 0%,rgba(30, 63, 171, 0.8) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(30, 63, 171, 0.8)', endColorstr='rgba(30, 63, 171, 1)',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background: #3F47A1; /* Old browsers */
+	background: -moz-linear-gradient(-45deg, rgba(63, 71, 161, 0.8) 0%, rgba(60, 44, 91, 0.7) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg, rgba(63, 71, 161, 0.8) 0%,rgba(60, 44, 91, 0.7) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, rgba(63, 71, 161, 0.8) 0%,rgba(60, 44, 91, 0.7) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(63, 71, 161, 0.8)', endColorstr='rgba(60, 44, 91, 0.7)',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
+.collection-shade {
+  background: #5C802C;
+}
+.collection-shade h1 img {
+  height: 55px;
+  width: auto;
+}
+@media (max-width: 768px) {
+  .collection-shade h1 img {
+  height: 30px;
+  width: auto;
+}
+}
+.shade-bar {
+  background: #3F47A1; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, rgba(63, 71, 161, 0.8) 0%, rgba(60, 44, 91, 0.7) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, rgba(63, 71, 161, 0.8) 0%,rgba(60, 44, 91, 0.7) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, rgba(63, 71, 161, 0.8) 0%,rgba(60, 44, 91, 0.7) 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(63, 71, 161, 0.8)', endColorstr='rgba(60, 44, 91, 0.7)',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
 .jumbotron h1 {
 	margin-top: 0;
 }
@@ -101,12 +107,8 @@ header.step{
 	right: -10px;
 }
 
-.collection-page-icon {
-	text-align: center;
-}
-
 .breadcrumb {
-	padding: 0;
+	padding:10px 0;
 	background-color: inherit;
 	font-size: 12px;
 }
@@ -118,6 +120,9 @@ header.step{
 
 .breadcrumb .active {
 	color: white;
+}
+ol.breadcrumb {
+  margin-bottom: 0;
 }
 
 .blog-main h3, .blog-main h4 {
@@ -211,7 +216,7 @@ header .intro-text {
 
 section h2 {
   margin: 0;
-  font-size: 3em;
+  font-size: 2.5em;
 }
 section.success {
   background: #18BC9C;
@@ -222,9 +227,36 @@ section.success {
     padding-top: 75px;
   }
 }
+
+.collection-page-icon {
+  text-align: center;
+  padding: 15px;
+}
+
+a.portfolio-link h2 {
+  color: #337ab7;
+}
+
+a.portfolio-link p {
+  color: #555;
+  margin-bottom: 0px;
+}
+
+.portfolio-item .icon-container {
+  background-color: #5C802C;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 15px;
+	width: 10%;
+}
+
 .portfolio-item {
 	top: 0px;
 	transition: all 0.15s ease;
+  display: table;
+	width: 100%;
 }
 .portfolio-item:hover {
 	top: -5px;
@@ -236,6 +268,11 @@ section.success {
   margin: 0 0 15px;
   right: 0;
 }
+
+.portfolio-item .panel-body {
+  padding-left: 0;
+}
+
 #portfolio .portfolio-item .portfolio-link {
   display: block;
   position: relative;
