@@ -190,14 +190,14 @@
                 <div class="card">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                      <h2 style="color:black;">Payment Log</h2>
+                      <h2 style="color:black;">Payments</h2>
                         <hr>
-                        <p>Payment Data goes here</p>
+                        <p>Certificate of Use Application Fee</p>
                         {% for d in biz_license_data.payment_data %}
 
                               <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
-                              <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date}}</h6>
-                              <h6 class="card-subtitle mb-2 text-muted">Payment Details Date: {{d.payment_details}}</h6>
+                              <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date|format_business_license_date}}</h6>
+                              <h5>Payment Details Date: {{d.payment_details|retrieve_payment_details}}</h5>
 
                         {% endfor %}
 

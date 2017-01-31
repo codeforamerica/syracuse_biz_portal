@@ -12,6 +12,7 @@ import json
 from urllib.parse import urljoin
 import os
 import datetime
+import sys
 
 
 def dashboard(request):
@@ -97,7 +98,7 @@ def retrieve_business_license_data(content_type, license_id):
         response.raise_for_status()
     except RequestException as ex:
         raise IPSAPIException(
-            "Error from IPS API: {}".format(ex.message, sys.exc_info()[2]))
+            "Error from IPS API: {}".format(ex, sys.exc_info()[2]))
     return response.json()
 
 

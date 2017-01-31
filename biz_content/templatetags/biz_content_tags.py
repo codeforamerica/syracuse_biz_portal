@@ -1,5 +1,6 @@
 from django import template
 from django.template.defaultfilters import stringfilter
+import xml.etree.ElementTree
 
 
 register = template.Library()
@@ -59,3 +60,14 @@ def display_inspection_department_type(inspection_type):
 @stringfilter
 def display_status_type_name(status):
     return INSPECTION_STATUS_CHOICES[status]
+
+
+@register.filter
+@stringfilter
+def retrieve_payment_details(payment_details):
+    root = xml.etree.ElementTree.fromstring(payment_details)
+    payment = root.find('Payment_Type')
+    payment_info = payment.items()
+    amount = payment_info[1][1]
+    payer = payment_info[0][1]
+    return '%s paid $%s' % (payer, amount)
