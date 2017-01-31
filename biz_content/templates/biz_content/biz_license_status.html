@@ -48,53 +48,40 @@
 
       <div class="row">
 
-        <div class="col-sm-7 blog-main">
-              <br>
-
+        <div class="col-sm-7 blog-main tracker-details">
             {% if biz_license_data %}
 
                 <div class="card">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      <h2 style="color:black;">Certificate of Use Business License</h2>
-
-                        <hr>
-                        <h4 class="card-title" style="text-align:center;"> Certificate Status</h4>
-                        <hr>
-
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th style="vertical-align:middle;text-align:center;background-color:#FFF56F;width:15%;" colspan="1"><i style="" class="fa fa-clock-o fa-3x"></th>
-                              <th colspan="2"><h3>Certificate Status</h3>
-                              <p>{{biz_license_data.current_status.user_defined_action_type_name}}</p>
-                              <p><i>{{biz_license_data.current_status.action_date| format_business_license_date}}</i></p></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th>Number</th>
-                              <td>{{biz_license_data.application_data.0.complaint_number}}</td>
-                            </tr>
-                            <tr>
-                              <th>Address</th>
-                              <td>{{biz_license_data.application_data.0.nature_of_complaint}}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-
-                    </li>
-                  </ul>
+                  <h2>Certificate of Use Business License</h2>
+                    <h3 class="card-title"> Certificate Status</h3>
+                    <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th style="vertical-align:middle;text-align:center;background-color:#FFF56F;width:15%;" colspan="1"><i style="" class="fa fa-clock-o fa-3x"></th>
+                          <th colspan="2">Certificate Status
+                          <p>{{biz_license_data.current_status.user_defined_action_type_name}}</p>
+                          <p><i>{{biz_license_data.current_status.action_date| format_business_license_date}}</i></p></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>Number</th>
+                          <td>{{biz_license_data.application_data.0.complaint_number}}</td>
+                        </tr>
+                        <tr>
+                          <th>Address</th>
+                          <td>{{biz_license_data.application_data.0.nature_of_complaint}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                 </div>
 
 
 
                 <div class="card">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
                       <div class="container">
 
-                      <h2 style="color:black;">Status Timeline</h2>
+                      <h2>Status Timeline</h2>
                         <div class="container">
                             <ul class="timeline">
                               {% for d in biz_license_data.application_data %}
@@ -103,7 +90,7 @@
                                   <div class="timeline-badge primary"></i></div>
                                   <div class="timeline-panel">
                                     <div class="timeline-heading">
-                                      <h4 class="timeline-title">{{d.user_defined_action_type_name}}</h4>
+                                      {{d.user_defined_action_type_name}}
                                     </div>
                                     <div class="timeline-body">
                                       <p>Date Last Updated: {{d.action_date| format_business_license_date}}</p>
@@ -113,41 +100,44 @@
                               {% endfor %}
                             </ul>
                         </div>
-                    </li>
-                  </ul>
                 </div>
 
 
                 <div class="card">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      <h2 style="color:black;">Departmental Review Status</h2>
+                      <h2>Departmental Review Status</h2>
+                      <p>After your license has been submitted, it is sent to the following departments for review:</p>
 
-                        <hr>
-                        <h4 class="card-title" style="text-align:center;">What Departments Review Your Business License?</h4>
-                        <hr>
-
-                      <p>After the license has been submitted, it goes to 5 departments for approval. These departments check for previous criminal activity and financial indebtedness to the city.</p>
-
-                      <ul>
-                        <li>The Police Department - conducts and reviewes for specific types of felony and misdemeanor convictions</li>
-                        <li>The Department of Water - searches for delinquent water bills</li>
-                        <li>Parking Violations Bureau - searches for unpaid parking tickets</li>
-                        <li>The Department of Housing - searches for housing judgements.</li>
-                        <li>The Department of Treasury - searches for outstanding taxes.</li>
+                      <ul class="list-unstyled">
+                        <li>
+                            <strong>Police Department</strong> 
+                            <p>Does the business owner have a criminal background?</p>
+                        </li>
+                        <li>
+                            <strong>Parking Violations Bureau</strong> 
+                            <p>Does the business owner have outstanding parking violations?</p>
+                        </li>
+                        <li>
+                            <strong>Department of Housing</strong> 
+                            <p>Are there housing judgements against the business owner?</p>
+                        </li>
+                        <li>
+                            <strong>Department of Water</strong> 
+                            <p>Does the business owner have delinquent water bills?</p>
+                        </li>
+                        <li>
+                            <strong>Bureau of Treasury</strong> 
+                            <p>Does the property owner have outstanding taxes?</p>
+                        </li>
+                        <li>
+                            <strong>Office of Zoning Administration</strong> 
+                            <p>Is the business zoned properly?</p>
+                        </li>
                       </ul>
-                      <br>
                       <p>If your permit is "In Review" and your status does not indicate that the city is ready to conduct a site inspection, that means that one or more of the departments listed above have not issued an approval regarding your business license.</p>
-                    </li>
-                  </ul>
                 </div>
 
                  <div class="card">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      <h2 style="color:black;">Inspection History</h2>
-                        <hr>
-                        <br>
+                      <h2>Inspection History</h2>
                         <p><strong>2016</strong></p>
                         <table class="table table-bordered">
                           <thead>
@@ -169,27 +159,18 @@
                           </tbody>
                         </table>
                         <hr>
-
-                    </li>
-                  </ul>
                 </div>
 
                 <div class="card">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      <h2 style="color:black;">Payment Log</h2>
-                        <hr>
-                        <p>Payment Data goes here</p>
-                        {% for d in biz_license_data.payment_data %}
+                  <h2 style="color:black;">Payment Log</h2>
+                    <hr>
+                    <p>Payment Data goes here</p>
+                    {% for d in biz_license_data.payment_data %}
 
-                              <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
-                              <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date}}</h6>
-                              <h6 class="card-subtitle mb-2 text-muted">Payment Details Date: {{d.payment_details}}</h6>
-
-                        {% endfor %}
-
-                    </li>
-                  </ul>
+                          <h3 class="card-title">{{d.user_defined_action_type_name}}</h3>
+                          <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date}}</h6>
+                          <h6 class="card-subtitle mb-2 text-muted">Payment Details Date: {{d.payment_details}}</h6>
+                    {% endfor %}
                 </div>
 
             {% else %}
