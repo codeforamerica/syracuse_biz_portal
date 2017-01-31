@@ -19,7 +19,7 @@ INSPECTION_STATUS_CHOICES = {'1': 'Pass',
                              '2': 'Fail',
                              '3': 'N/A',
                              '4': 'In Progress',
-                             '5': 'In Progress',
+                             '5': 'No Progress',
                              '6': 'No Work Started'
                              }
 
