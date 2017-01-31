@@ -31,7 +31,7 @@ EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-ADMINS = ['mikela@codeforamerica.org']
+ADMINS = ['mikela@codeforamerica.org',]
 
 # HTTPS EVERYWHERE
 SECURE_SSL_REDIRECT = True
