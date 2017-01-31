@@ -147,27 +147,40 @@
                     <li class="list-group-item">
                       <h2 style="color:black;">Inspection History</h2>
                         <hr>
-                        <br>
-                        <p><strong>2016</strong></p>
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status</strong></th>
-                            </tr>
-                            <tr>
-                              <th>Department</th>
-                              <th>Type</th>
-                              <th>Date</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Codes</td>
-                              <td>Electricial Inspection</td>
-                              <td>9/6/2016</td>
-                            </tr>
-                          </tbody>
-                        </table>
+
+                          {% for year, inspections in biz_license_data.inspection_data.items %}
+                            <p><strong>{{year}}</strong></p>
+                            <hr>
+
+                            {% for inspection in inspections %}
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status : {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
+                                  </tr>
+                                </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th>Type</th>
+                                      <td>{{inspection.inspection_type_id|display_inspection_type_name}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Department</th>
+                                      <td>address</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Date</th>
+                                      <td>{{inspection.inspect_date|format_business_license_date}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Notes</th>
+                                      <td>{% if inspection.user_note%}{{inspection.user_note}}{%else%} No Notes {%endif%}</td>
+                                    </tr>
+                                  </tbody>
+                              </table>
+                            {% endfor %}
+                          {% endfor %}
+
                         <hr>
 
                     </li>

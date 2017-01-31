@@ -126,7 +126,7 @@ class BizLicenseStatusView(TemplateView):
 
             else:
                 biz_license_data = {"application_data": application_data,
-                                    "inspection_data": inspection_data,
+                                    "inspection_data": format_business_license_inspection_data(inspection_data),
                                     "payment_data": payment_data,
                                     "current_status": get_most_recent_busines_license_status(application_data)}
 
