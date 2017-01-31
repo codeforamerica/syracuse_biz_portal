@@ -11,6 +11,7 @@ from django.conf import settings
 import json
 from urllib.parse import urljoin
 import os
+import sys
 import datetime
 
 
@@ -85,8 +86,11 @@ def retrieve_business_license_data(content_type, license_id):
     try:
         response.raise_for_status()
     except RequestException as ex:
-        raise IPSAPIException(
-            "Error from IPS API: {}".format(ex.message, sys.exc_info()[2]))
+        if not hasattr(ex, 'message'):
+            ex.message = 'The server did not provide an error message'
+        response.messages = "Error from IPS API: {}".format(
+                                                ex.message, sys.exc_info()[2])
+        return response.json()
     return response.json()
 
 
@@ -111,8 +115,8 @@ class BizLicenseStatusView(TemplateView):
                 "inspection_data", cu_id)
             payment_data = retrieve_business_license_data(
                 "payment_data", cu_id)
-
             if not application_data:
+                print('No application data', application_data)
                 messages.error(
                     request,
                     "Your permit could not be found. Please contact the NBD.")
