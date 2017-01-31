@@ -7,18 +7,21 @@ register = template.Library()
 INSPECTION_TYPE_CHOICES = {'85': 'Codes Inspection (Electrical)',
                            '84': 'Codes Inspection (Building)',
                            '83': 'Fire Prevention Inspection',
-                           '82': 'Zoning Inspection'}
+                           '82': 'Zoning Inspection'
+                           }
 
 INSPECTION_DEPARTMENT_CHOICES = {'85': 'Codes',
-                           '84': 'Codes',
-                           '83': 'Fire',}
+                                 '84': 'Codes',
+                                 '83': 'Fire'
+                                 }
 
 INSPECTION_STATUS_CHOICES = {'1': 'Pass',
                              '2': 'Fail',
                              '3': 'N/A',
                              '4': 'In Progress',
                              '5': 'In Progress',
-                             '6': 'No Work Started'}
+                             '6': 'No Work Started'
+                             }
 
 
 @register.filter
@@ -45,9 +48,11 @@ def format_business_license_date(date):
 def display_inspection_type_name(inspection_type):
     return INSPECTION_TYPE_CHOICES[inspection_type]
 
+
 @register.filter
 @stringfilter
-def display_inspection_department_type(inspection_type):
+def display_inspection_department_type
+(inspection_type):
     return INSPECTION_DEPARTMENT_CHOICES[inspection_type]
 
 
