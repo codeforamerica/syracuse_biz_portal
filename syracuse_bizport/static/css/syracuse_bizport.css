@@ -79,10 +79,9 @@ header.step{
 	margin-top: 0;
 }
 .jumbotron h2 {
-	color: white;
 	margin-bottom: 0;
   margin-top: 0;
-	font-weight: normal;
+  color: #000;
 }
 
 .hero-background {
@@ -672,4 +671,17 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
 .help-line{
   padding:5px;
   color:white;
+}
+
+.tracker-promo {
+  background-color: rgba(255,255,255,0.6);
+  color: #000;
+  padding: 15px;
+}
+
+.tracker-details h3 {
+  border-bottom: 1px solid #555;
+}
+.tracker-details table {
+  background-color: #fff;
 }
