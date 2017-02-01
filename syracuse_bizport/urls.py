@@ -20,8 +20,7 @@ robots_txt = """User-agent: *
 Disallow: /cms
 Disallow: /admin
 Disallow: %s
-Disallow: %s
-""" % (settings.MEDIA_URL, settings.STATIC_URL)
+""" % (settings.STATIC_URL,)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
