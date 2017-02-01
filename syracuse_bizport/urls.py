@@ -16,6 +16,12 @@ from wagtail.contrib.wagtailsitemaps.views import sitemap
 from biz_content import forms
 from biz_content import views
 
+robots_txt = """User-agent: *
+Disallow: /cms
+Disallow: /admin
+Disallow: %s
+Disallow: %s
+""" % (settings.MEDIA_URL, settings.STATIC_URL)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -23,6 +29,8 @@ urlpatterns = [
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search', include('wealthmap.frontend_urls', namespace='wealthmap')),
+    url(r'^robots\.txt$', lambda r: HttpResponse(
+                                    robots_txt, content_type='text/plain')),
     url(r'^sitemap\.xml$', sitemap),
     url(r'', include(urls)),
     url(r'', include(wagtail_urls))
