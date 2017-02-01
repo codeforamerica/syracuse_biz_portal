@@ -111,7 +111,8 @@ class BusinessLicenseViewTestCase(TestCase):
             json.loads(str(self.application_data)))
         self.assertEquals(
             context['biz_license_data']['inspection_data'],
-            json.loads(str(self.inspection_data)))
+            views.format_business_license_inspection_data(
+                json.loads(self.inspection_data)))
         self.assertEquals(
             context['biz_license_data']['payment_data'],
             json.loads(str(self.payment_data)))
