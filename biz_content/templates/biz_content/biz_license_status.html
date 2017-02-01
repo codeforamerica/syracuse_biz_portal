@@ -52,7 +52,6 @@
               <br>
 
             {% if biz_license_data %}
-                <h1>Certificate of Use Business License </h1><hr>
 
                 <div class="card">
                   <ul class="list-group list-group-flush">
@@ -66,10 +65,10 @@
                         <table class="table table-bordered">
                           <thead>
                             <tr>
-                              <th style="background-color:#FFF56F;" colspan="1"><div style="vertical-align:middle;text-align:center;margin-top:-40%;"><i class="fa fa-clock-o fa-3x"></div></th>
+                              <th style="vertical-align:middle;text-align:center;background-color:#FFF56F;width:15%;" colspan="1"><i style="" class="fa fa-clock-o fa-3x"></th>
                               <th colspan="2"><h3>Certificate Status</h3>
-                              <p>{{biz_license_data.application_data.0.user_defined_action_type_name}}</p>
-                              <p><i>{{biz_license_data.application_data.0.action_date| format_business_license_date}}</i></p></th>
+                              <p>{{biz_license_data.current_status.user_defined_action_type_name}}</p>
+                              <p><i>{{biz_license_data.current_status.action_date| format_business_license_date}}</i></p></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -78,8 +77,8 @@
                               <td>{{biz_license_data.application_data.0.complaint_number}}</td>
                             </tr>
                             <tr>
-                              <th>Expires</th>
-                              <td>Calculate this</td>
+                              <th>Address</th>
+                              <td>{{biz_license_data.application_data.0.nature_of_complaint}}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -148,27 +147,40 @@
                     <li class="list-group-item">
                       <h2 style="color:black;">Inspection History</h2>
                         <hr>
-                        <br>
-                        <p><strong>2016</strong></p>
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status</strong></th>
-                            </tr>
-                            <tr>
-                              <th>Department</th>
-                              <th>Type</th>
-                              <th>Date</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Codes</td>
-                              <td>Electricial Inspection</td>
-                              <td>9/6/2016</td>
-                            </tr>
-                          </tbody>
-                        </table>
+
+                          {% for year, inspections in biz_license_data.inspection_data.items %}
+                            <p><strong>{{year}}</strong></p>
+                            <hr>
+
+                            {% for inspection in inspections %}
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status : {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
+                                  </tr>
+                                </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th>Type</th>
+                                      <td>{{inspection.inspection_type_id|display_inspection_type_name}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Department</th>
+                                      <td>{{inspection.inspection_type_id|display_inspection_department_type}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Date</th>
+                                      <td>{{inspection.inspect_date|format_business_license_date}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Notes</th>
+                                      <td>{% if inspection.user_note%}{{inspection.user_note}}{%else%} No Notes {%endif%}</td>
+                                    </tr>
+                                  </tbody>
+                              </table>
+                            {% endfor %}
+                          {% endfor %}
+
                         <hr>
 
                     </li>
@@ -178,14 +190,14 @@
                 <div class="card">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                      <h2 style="color:black;">Payment Log</h2>
+                      <h2 style="color:black;">Payments</h2>
                         <hr>
-                        <p>Payment Data goes here</p>
+                        <p>Certificate of Use Application Fee</p>
                         {% for d in biz_license_data.payment_data %}
 
                               <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
-                              <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date}}</h6>
-                              <h6 class="card-subtitle mb-2 text-muted">Payment Details Date: {{d.payment_details}}</h6>
+                              <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date|format_business_license_date}}</h6>
+                              <h5>Payment Details Date: {{d.payment_details|retrieve_payment_details}}</h5>
 
                         {% endfor %}
 
