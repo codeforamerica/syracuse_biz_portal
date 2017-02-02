@@ -109,6 +109,7 @@ class ChecklistView(TemplateView):
         step_pages = models.StepPage.objects.all()
         return render(request, self.template_name, {'step_pages': step_pages})
 
+
 class BizLicenseStatusView(TemplateView):
     template_name = "biz_content/biz_license_status.html"
     form_class = forms.BizLicenseStatusForm
