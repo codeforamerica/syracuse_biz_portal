@@ -48,7 +48,7 @@ class HomePage(Page):
         InlinePanel('selected_pages', label="Selected Pages"),
     ]
 
-    subpage_types = ['biz_content.CollectionPage']
+    subpage_types = ['biz_content.CollectionPage', 'biz_content.StandAloneContentPage']
 
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
