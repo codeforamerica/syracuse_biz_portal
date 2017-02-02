@@ -112,6 +112,34 @@ class BusinessLicenseViewTestCase(TestCase):
             json.loads(str(self.payment_data)))
 
     @responses.activate
+    def test_500_when_ips_api_is_down(self):
+        license_id = 'CU2014-0050'
+        full_url = views.build_business_license_url(
+            'application_data', license_id)
+
+        responses.add(
+            responses.GET, full_url,
+            body='{"error": "not found"}',
+            status=500, content_type='application/json')
+
+        res = self.client.post(
+            reverse('biz_license_status'), {
+                'cu_id': license_id})
+
+        # self.assertEquals(res.status_code, 200)
+        # context = res.context
+        messages = list(context['messages'])
+        import pdb; pdb.set_trace()
+        # err = 'Data could be retrieved from the City of Syracuse.'
+        print(messages[0])
+        print(messages[1])
+        self.assertRaises(RequestException, response)
+        # self.assertEquals(
+        #     str(messages[0]), err)
+        # self.assertEquals(
+        #     len(messages), 1)
+
+    @responses.activate
     def test_no_business_licenses(self):
         license_id = 'CU2014-005089403'
 

@@ -1,6 +1,6 @@
 import requests
 from django.views.generic import TemplateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
 from . import forms, models
@@ -13,7 +13,6 @@ from urllib.parse import urljoin
 import os
 import sys
 import datetime
-
 
 def dashboard(request):
     return render(request, 'biz_content/dashboard.html', {})
@@ -79,18 +78,16 @@ def format_business_license_inspection_data(inspection_data):
     return formatted_inspection_data
 
 
-def retrieve_business_license_data(content_type, license_id):
+def retrieve_business_license_data(request,content_type, license_id):
     url = build_business_license_url(content_type, license_id)
-
     response = requests.get(url=url)
     try:
-        response.raise_for_status()
+        response.raise_for_status
     except RequestException as ex:
         if not hasattr(ex, 'message'):
-            ex.message = 'The server did not provide an error message'
-        response.messages = "Error from IPS API: {}".format(
-                                                ex.message, sys.exc_info()[2])
-        return response.json()
+            ex.message = "Error from IPS API: {}".format(sys.exc_info()[2])
+        messages.error(request,
+                        'Data could be retrieved from the City of Syracuse.')
     return response.json()
 
 
@@ -109,14 +106,13 @@ class BizLicenseStatusView(TemplateView):
         if form.is_valid():
             form_data = form.cleaned_data
             cu_id = form_data['cu_id']
-            application_data = retrieve_business_license_data(
+            application_data = retrieve_business_license_data(request,
                 "application_data", cu_id)
-            inspection_data = retrieve_business_license_data(
+            inspection_data = retrieve_business_license_data(request,
                 "inspection_data", cu_id)
-            payment_data = retrieve_business_license_data(
+            payment_data = retrieve_business_license_data(request,
                 "payment_data", cu_id)
             if not application_data:
-                print('No application data', application_data)
                 messages.error(
                     request,
                     "Your permit could not be found. Please contact the NBD.")
