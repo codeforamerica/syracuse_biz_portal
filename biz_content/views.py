@@ -102,6 +102,13 @@ def retrieve_business_license_data(content_type, license_id):
     return response.json()
 
 
+class ChecklistView(TemplateView):
+    template_name = "biz_content/checklist.html"
+
+    def get(self, request, *args, **kwargs):
+        step_pages = models.StepPage.objects.all()
+        return render(request, self.template_name, {'step_pages': step_pages})
+
 class BizLicenseStatusView(TemplateView):
     template_name = "biz_content/biz_license_status.html"
     form_class = forms.BizLicenseStatusForm
