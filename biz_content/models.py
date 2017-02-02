@@ -17,6 +17,7 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 
 
 class CustomCleanRegexBlock(blocks.RegexBlock):
+
     """
     Makes it easy to clean up Regex fields before saved.
     """
@@ -90,6 +91,7 @@ class ContentBlock(blocks.StreamBlock):
 
 
 class CollectionPage(Page):
+
     """
     Represents a collection of step pages.
     """
@@ -218,7 +220,9 @@ class FooterSettings(BaseSetting):
         help_text="The departnment's phone number",
         null=True)
 
+
 class StandAloneContentPage(Page):
+
     """
     Represents a stand alone content page.
     """
@@ -246,4 +250,3 @@ class StandAloneContentPage(Page):
         ImageChooserPanel('header_img'),
         StreamFieldPanel('page_content')
     ]
-
