@@ -101,6 +101,9 @@ def retrieve_business_license_data(content_type, license_id):
 
     return response.json()
 
+IPS_ERROR_MESSAGE = "Data from the City of Syracuse cannot be accessed."
+LICENSE_NOT_FOUND_ERROR_MESSAGE = "Your business license could not be found. Please contact the NBD."
+
 
 class BizLicenseStatusView(TemplateView):
     template_name = "biz_content/biz_license_status.html"
@@ -126,14 +129,13 @@ class BizLicenseStatusView(TemplateView):
                 payment_data = retrieve_business_license_data(
                     "payment_data", cu_id)
             except IPSAPIException:
-                messages.error(request,
-                    "Data from the City of Syracuse cannot be accessed.")
+                messages.error(request, IPS_ERROR_MESSAGE)
                 status = 503
             else:
                 if len(application_data) == 0:
                     messages.error(
-                        request,
-                        "Your business license could not be found. Please contact the NBD.")
+                        request,LICENSE_NOT_FOUND_ERROR_MESSAGE
+                        )
                 else:
                     biz_license_data = {"application_data": application_data,
                                         "inspection_data":

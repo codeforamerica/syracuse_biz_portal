@@ -138,7 +138,7 @@ class BusinessLicenseViewTestCase(TestCase):
         self.assertTrue('messages' in context)
 
         messages = list(context['messages'])
-        err = 'Your business license could not be found. Please contact the NBD.'
+        err = views.LICENSE_NOT_FOUND_ERROR_MESSAGE
         self.assertEquals(
             str(messages[0]), err)
 
@@ -197,7 +197,7 @@ class BusinessLicenseViewTestCase(TestCase):
                 "application_data", license_id)
 
     @patch('biz_content.views.retrieve_business_license_data')
-    def test_200_with_business_licenses(self, mock_retrieve):
+    def test_ips_error_creates_user_message_and_503(self, mock_retrieve):
         license_id = 'CU2014-0050'
         mock_retrieve.side_effect = views.IPSAPIException()
 
@@ -207,17 +207,13 @@ class BusinessLicenseViewTestCase(TestCase):
 
         self.assertEquals(res.status_code, 503)
         context = res.context
+        self.assertTrue('messages' in context)
 
-        # self.assertEquals(
-        #     context['biz_license_data']['application_data'],
-        #     json.loads(str(self.application_data)))
-        # self.assertEquals(
-        #     context['biz_license_data']['inspection_data'],
-        #     views.format_business_license_inspection_data(
-        #         json.loads(self.inspection_data)))
-        # self.assertEquals(
-        #     context['biz_license_data']['payment_data'],
-        #     json.loads(str(self.payment_data)))
+        messages = list(context['messages'])
+        err = views.IPS_ERROR_MESSAGE
+        self.assertEquals(
+            str(messages[0]), err)
+
 
 
 
