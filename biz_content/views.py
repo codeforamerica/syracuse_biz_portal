@@ -64,7 +64,7 @@ def create_datetime_object(date):
     return d
 
 
-def get_most_recent_busines_license_status(application_data):
+def get_most_recent_license_status(application_data):
     application_dates = [
         create_datetime_object(d['action_date']) for d in application_data]
     now = datetime.datetime.now()
@@ -75,7 +75,7 @@ def get_most_recent_busines_license_status(application_data):
     return most_recent_status[0]
 
 
-def format_business_license_inspection_data(inspection_data):
+def format_license_inspection(inspection_data):
     inspection_dates = [
         create_datetime_object(d['inspect_date']) for d in inspection_data]
     formatted_inspection_data = {}
@@ -101,8 +101,11 @@ def retrieve_business_license_data(content_type, license_id):
 
     return response.json()
 
+
 IPS_ERROR_MESSAGE = "Data from the City of Syracuse cannot be accessed."
-LICENSE_NOT_FOUND_ERROR_MESSAGE = "Your business license could not be found. Please contact the NBD."
+LICENSE_NOT_FOUND_ERROR_MESSAGE = ("Your business license ",
+                                   "could not be found. ",
+                                   "Please contact the NBD.",)
 
 
 class BizLicenseStatusView(TemplateView):
@@ -134,18 +137,17 @@ class BizLicenseStatusView(TemplateView):
             else:
                 if len(application_data) == 0:
                     messages.error(
-                        request,LICENSE_NOT_FOUND_ERROR_MESSAGE
-                        )
+                        request, LICENSE_NOT_FOUND_ERROR_MESSAGE
+                    )
                 else:
-                    biz_license_data = {"application_data": application_data,
-                                        "inspection_data":
-                                        format_business_license_inspection_data(
-                                            inspection_data),
-                                        "payment_data":
-                                        payment_data,
-                                        "current_status":
-                                        get_most_recent_busines_license_status(
-                                            application_data)}
+                    biz_license_data = {
+                        "application_data": application_data,
+                        "inspection_data": format_license_inspection(
+                            inspection_data),
+                        "payment_data": payment_data,
+                        "current_status": get_most_recent_license_status(
+                            application_data)
+                    }
 
         return render(request,
                       self.template_name,

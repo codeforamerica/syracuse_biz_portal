@@ -188,7 +188,7 @@ class BusinessLicenseViewTestCase(TestCase):
             "application_data", license_id)
 
         responses.add(
-            responses.GET, full_url,body='',
+            responses.GET, full_url, body='',
             status=500,
             content_type='application/json')
 
@@ -213,7 +213,3 @@ class BusinessLicenseViewTestCase(TestCase):
         err = views.IPS_ERROR_MESSAGE
         self.assertEquals(
             str(messages[0]), err)
-
-
-
-
