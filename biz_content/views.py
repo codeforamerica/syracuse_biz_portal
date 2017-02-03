@@ -103,9 +103,9 @@ def retrieve_business_license_data(content_type, license_id):
 
 
 IPS_ERROR_MESSAGE = "Data from the City of Syracuse cannot be accessed."
-LICENSE_NOT_FOUND_ERROR_MESSAGE = ("Your business license ",
-                                   "could not be found. ",
-                                   "Please contact the NBD.",)
+LICENSE_NOT_FOUND_ERROR_MESSAGE = ("Your business license "
+                                   "could not be found. "
+                                   "Please contact the NBD.")
 
 
 class BizLicenseStatusView(TemplateView):

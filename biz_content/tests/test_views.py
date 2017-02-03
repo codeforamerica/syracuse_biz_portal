@@ -84,12 +84,12 @@ class BusinessLicenseViewTestCase(TestCase):
 
     def test_get_most_recent_busines_license_status(self):
         app_data = json.loads(self.application_data)
-        status = views.get_most_recent_busines_license_status(app_data)
+        status = views.get_most_recent_license_status(app_data)
         self.assertEquals(status['action_date'], '2016-08-02T14:19:37.117')
 
-    def test_format_business_license_inspection_data(self):
+    def test_format_license_inspection_data(self):
         json_inspection_data = json.loads(self.inspection_data)
-        cleaned_data = views.format_business_license_inspection_data(
+        cleaned_data = views.format_license_inspection(
             json_inspection_data)
         self.assertEquals(list(cleaned_data.keys()), [2016, 2014])
 
@@ -114,7 +114,7 @@ class BusinessLicenseViewTestCase(TestCase):
             json.loads(str(self.application_data)))
         self.assertEquals(
             context['biz_license_data']['inspection_data'],
-            views.format_business_license_inspection_data(
+            views.format_license_inspection(
                 json.loads(self.inspection_data)))
         self.assertEquals(
             context['biz_license_data']['payment_data'],
