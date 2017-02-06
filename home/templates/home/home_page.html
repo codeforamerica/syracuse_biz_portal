@@ -87,9 +87,16 @@
             </ul>
           </div>
           <div class="col-sm-4">
-            <legend><h3>Why Syracuse?</h3></legend>
-            <p>Find out why Syracuse is a great city for business. <a href="">Read more &rarr;</a></p>
+          {% if stand_alone_pages %}
+              {% for p in stand_alone_pages %}
+
+            <legend><h3>{{p.title}}</h3></legend>
+            <p>{{p.description}}<a href="{{p.slug}}"> Read more &rarr;</a></p>
+              {% endfor %}
+
           </div>
+           {% endif %}
+
 
         </div>
       </div>

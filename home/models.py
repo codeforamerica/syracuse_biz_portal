@@ -1,5 +1,5 @@
 from django.db import models
-from biz_content.models import CollectionPage, StepPage
+from biz_content.models import CollectionPage, StepPage, StandAloneContentPage
 from modelcluster.fields import ParentalKey
 from wagtail.wagtailadmin.edit_handlers import InlinePanel
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, PageChooserPanel
@@ -48,10 +48,12 @@ class HomePage(Page):
         InlinePanel('selected_pages', label="Selected Pages"),
     ]
 
-    subpage_types = ['biz_content.CollectionPage']
+    subpage_types = [
+        'biz_content.CollectionPage', 'biz_content.StandAloneContentPage']
 
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
+        context['stand_alone_pages'] = StandAloneContentPage.objects.all()
         context['collection_pages'] = CollectionPage.objects.all()
         context['step_pages'] = StepPage.objects.all()
         context['form'] = BizLicenseStatusForm()
