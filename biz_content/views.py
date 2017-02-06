@@ -108,7 +108,7 @@ class ChecklistView(TemplateView):
     def get(self, request, *args, **kwargs):
         step_pages = models.StepPage.objects.all()
         return render(request, self.template_name, {'step_pages': step_pages})
- 
+
 IPS_ERROR_MESSAGE = "Data from the City of Syracuse cannot be accessed."
 LICENSE_NOT_FOUND_ERROR_MESSAGE = ("Your business license "
                                    "could not be found. "
