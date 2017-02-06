@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search', include('wealthmap.frontend_urls', namespace='wealthmap')),
     url(r'^robots\.txt$', lambda r: HttpResponse(
-                                    robots_txt, content_type='text/plain')),
+        robots_txt, content_type='text/plain')),
     url(r'^sitemap\.xml$', sitemap),
     url(r'', include(urls)),
     url(r'', include(wagtail_urls))
