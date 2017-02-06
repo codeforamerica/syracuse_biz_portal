@@ -1,18 +1,16 @@
 import requests
+import os
+import datetime
+import sys
+import json
+
 from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.conf import settings
 from django.contrib import messages
 from . import forms, models
+from requests.exceptions import ConnectionError, HTTPError, Timeout
 from urllib.parse import urljoin
-import requests
-from requests.exceptions import RequestException
-from django.conf import settings
-import json
-from urllib.parse import urljoin
-import os
-import datetime
-import sys
 
 
 def dashboard(request):
@@ -66,7 +64,7 @@ def create_datetime_object(date):
     return d
 
 
-def get_most_recent_busines_license_status(application_data):
+def get_most_recent_license_status(application_data):
     application_dates = [
         create_datetime_object(d['action_date']) for d in application_data]
     now = datetime.datetime.now()
@@ -77,7 +75,7 @@ def get_most_recent_busines_license_status(application_data):
     return most_recent_status[0]
 
 
-def format_business_license_inspection_data(inspection_data):
+def format_license_inspection(inspection_data):
     inspection_dates = [
         create_datetime_object(d['inspect_date']) for d in inspection_data]
     formatted_inspection_data = {}
@@ -93,12 +91,14 @@ def format_business_license_inspection_data(inspection_data):
 def retrieve_business_license_data(content_type, license_id):
     url = build_business_license_url(content_type, license_id)
 
-    response = requests.get(url=url)
     try:
-        response.raise_for_status()
-    except RequestException as ex:
-        raise IPSAPIException(
-            "Error from IPS API: {}".format(ex, sys.exc_info()[2]))
+        response = requests.get(url=url)
+    except (Timeout, ConnectionError) as ex:
+        raise IPSAPIException("Error from IPS API")
+
+    if response.status_code == 500:
+        raise IPSAPIException("500 error")
+
     return response.json()
 
 
@@ -108,6 +108,11 @@ class ChecklistView(TemplateView):
     def get(self, request, *args, **kwargs):
         step_pages = models.StepPage.objects.all()
         return render(request, self.template_name, {'step_pages': step_pages})
+ 
+IPS_ERROR_MESSAGE = "Data from the City of Syracuse cannot be accessed."
+LICENSE_NOT_FOUND_ERROR_MESSAGE = ("Your business license "
+                                   "could not be found. "
+                                   "Please contact the NBD.")
 
 
 class BizLicenseStatusView(TemplateView):
@@ -121,34 +126,37 @@ class BizLicenseStatusView(TemplateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         biz_license_data = None
+        status = 200
 
         if form.is_valid():
             form_data = form.cleaned_data
             cu_id = form_data['cu_id']
-            application_data = retrieve_business_license_data(
-                "application_data", cu_id)
-            inspection_data = retrieve_business_license_data(
-                "inspection_data", cu_id)
-            payment_data = retrieve_business_license_data(
-                "payment_data", cu_id)
-
-            if not application_data:
-                messages.error(
-                    request,
-                    "Your permit could not be found. Please contact the NBD.")
-
+            try:
+                application_data = retrieve_business_license_data(
+                    "application_data", cu_id)
+                inspection_data = retrieve_business_license_data(
+                    "inspection_data", cu_id)
+                payment_data = retrieve_business_license_data(
+                    "payment_data", cu_id)
+            except IPSAPIException:
+                messages.error(request, IPS_ERROR_MESSAGE)
+                status = 503
             else:
-                biz_license_data = {"application_data": application_data,
-                                    "inspection_data":
-                                    format_business_license_inspection_data(
-                                        inspection_data),
-                                    "payment_data":
-                                    payment_data,
-                                    "current_status":
-                                    get_most_recent_busines_license_status(
-                                        application_data)}
+                if len(application_data) == 0:
+                    messages.error(
+                        request, LICENSE_NOT_FOUND_ERROR_MESSAGE
+                    )
+                else:
+                    biz_license_data = {
+                        "application_data": application_data,
+                        "inspection_data": format_license_inspection(
+                            inspection_data),
+                        "payment_data": payment_data,
+                        "current_status": get_most_recent_license_status(
+                            application_data)
+                    }
 
         return render(request,
                       self.template_name,
                       {'form': form,
-                       'biz_license_data': biz_license_data})
+                       'biz_license_data': biz_license_data}, status=status)
