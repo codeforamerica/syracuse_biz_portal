@@ -1,5 +1,9 @@
 import responses
 import json
+import os
+import datetime
+import ast
+
 from . import factories
 from biz_content import models, forms, views
 from django.test import TestCase, TransactionTestCase
@@ -7,10 +11,9 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Permission
 from django.utils import html
 from django.conf import settings
-import os
+from requests.exceptions import ConnectionError, HTTPError, Timeout
 from urllib.parse import urljoin
-import datetime
-import ast
+from unittest.mock import patch
 
 
 class DashboardViewTestCase(TestCase):
@@ -81,12 +84,12 @@ class BusinessLicenseViewTestCase(TestCase):
 
     def test_get_most_recent_busines_license_status(self):
         app_data = json.loads(self.application_data)
-        status = views.get_most_recent_busines_license_status(app_data)
+        status = views.get_most_recent_license_status(app_data)
         self.assertEquals(status['action_date'], '2016-08-02T14:19:37.117')
 
-    def test_format_business_license_inspection_data(self):
+    def test_format_license_inspection_data(self):
         json_inspection_data = json.loads(self.inspection_data)
-        cleaned_data = views.format_business_license_inspection_data(
+        cleaned_data = views.format_license_inspection(
             json_inspection_data)
         self.assertEquals(list(cleaned_data.keys()), [2016, 2014])
 
@@ -111,7 +114,7 @@ class BusinessLicenseViewTestCase(TestCase):
             json.loads(str(self.application_data)))
         self.assertEquals(
             context['biz_license_data']['inspection_data'],
-            views.format_business_license_inspection_data(
+            views.format_license_inspection(
                 json.loads(self.inspection_data)))
         self.assertEquals(
             context['biz_license_data']['payment_data'],
@@ -135,6 +138,78 @@ class BusinessLicenseViewTestCase(TestCase):
         self.assertTrue('messages' in context)
 
         messages = list(context['messages'])
-        err = 'Your permit could not be found. Please contact the NBD.'
+        err = views.LICENSE_NOT_FOUND_ERROR_MESSAGE
+        self.assertEquals(
+            str(messages[0]), err)
+
+    @responses.activate
+    def test_retrieve_business_license_data_with_timeout(self):
+        license_id = 'CU2014-0050'
+
+        full_url = views.build_business_license_url(
+            "application_data", license_id)
+
+        def raise_timeout(request):
+            raise Timeout
+
+        responses.add_callback(
+            responses.GET, full_url,
+            callback=raise_timeout,
+            content_type='application/json')
+
+        with self.assertRaises(views.IPSAPIException):
+            views.retrieve_business_license_data(
+                "application_data", license_id)
+
+    @responses.activate
+    def test_retrieve_business_license_data_with_connection_error(self):
+        license_id = 'CU2014-0050'
+
+        full_url = views.build_business_license_url(
+            "application_data", license_id)
+
+        def raise_connection_error(request):
+            raise ConnectionError
+
+        responses.add_callback(
+            responses.GET, full_url,
+            callback=raise_connection_error,
+            content_type='application/json')
+
+        with self.assertRaises(views.IPSAPIException):
+            views.retrieve_business_license_data(
+                "application_data", license_id)
+
+    @responses.activate
+    def test_retrieve_business_license_data_with_500(self):
+        license_id = 'CU2014-0050'
+
+        full_url = views.build_business_license_url(
+            "application_data", license_id)
+
+        responses.add(
+            responses.GET, full_url, body='',
+            status=500,
+            content_type='application/json')
+
+        with self.assertRaises(views.IPSAPIException):
+            views.retrieve_business_license_data(
+                "application_data", license_id)
+
+    @patch('biz_content.views.retrieve_business_license_data')
+    def test_ips_error_creates_user_message_and_503(self, mock_retrieve):
+        license_id = 'CU2014-0050'
+        mock_retrieve.side_effect = views.IPSAPIException()
+
+        res = self.client.post(
+            reverse('biz_license_status'), {
+                'cu_id': license_id})
+
+        self.assertEquals(res.status_code, 503)
+        context = res.context
+        self.assertTrue('messages' in context)
+
+        messages = list(context['messages'])
+        err = views.IPS_ERROR_MESSAGE
         self.assertEquals(
             str(messages[0]), err)
