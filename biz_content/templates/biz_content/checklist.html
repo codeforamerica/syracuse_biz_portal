@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+
+<!--
+ -->
+ <!-- Navigation -->
+
+<header>
+  {% image self.header_img width-1200 as header_img %}
+  <div class="hero-background" style="background-image: url({{ header_img.url }})">
+    <div class="shade-bar">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            {% if self.get_ancestors|length > 1 %}
+            <ol class="breadcrumb">
+            {% for page in self.get_ancestors %}
+              {% if page.is_root == False %}
+                <li><a href="{% pageurl page %}">{{ page.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+            <li class="active">{{ self.title }}</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron collection-shade">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            {% endif %}
+            <h1 style="color:white;">
+              Checklist Overview
+            </h1>
+              <h2 class="lead" style="color:white;">Everything you need to do to start a business</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7 blog-main">
+      <article>
+        {% for page in step_pages %}
+            {% if page.title %}
+              <h3>{{ page.title }}</h3>
+            {% endif %}
+            <ul>
+              {% for c in page.checklist_items.all %}
+                <li>{{c}}</li>
+              {% endfor %}
+            </ul>
+        {% endfor %}
+      </article>
+    </div>
+     <div class="col-sm-5">
+        <button class="btn-lg">Print This Checklist</button>
+    </div>
+  </div>
+</div><!-- /.container -->
+
+
+{% endblock %}
