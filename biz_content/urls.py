@@ -10,4 +10,6 @@ urlpatterns = [
         name="permit_status"),
     url(r'^biz-license-status/$', views.BizLicenseStatusView.as_view(),
         name="biz_license_status"),
+    url(r'^checklist/$', views.ChecklistView.as_view(),
+        name="checklist"),
 ]
