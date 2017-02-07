@@ -105,13 +105,13 @@
   background-color: #5bc0de !important;
 }
 
-tr.inspection{
+th.inspection {
   background-color:#D7D7D7;
 }
 
-tr.inspection-1{
+th.inspection-1 {
   background-color:#B5E2BD;
 }
-tr.inspection-2{
+th.inspection-2 {
   background-color:#E8B5B5;
 }
