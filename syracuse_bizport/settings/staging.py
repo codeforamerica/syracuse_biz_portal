@@ -1,3 +1,5 @@
 from .heroku import *
 
-DEBUG = True
+DEBUG = False
+
+ALLOWED_HOSTS = ['*',]
