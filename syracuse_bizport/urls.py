@@ -20,6 +20,7 @@ robots_txt = """User-agent: *
 Disallow: /cms
 Disallow: /admin
 Disallow: %s
+Sitemap: https://business.syrgov.net/sitemap.xml
 """ % (settings.STATIC_URL,)
 
 urlpatterns = [
