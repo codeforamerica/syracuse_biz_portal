@@ -156,7 +156,7 @@
 
                                 colspan="3">
 
-                                <i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status : {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
+                                <i class="fa fa-{{inspection.result_status_type_id|display_inspection_status_icon}}"> <strong style="font-family:'Arial'">Status : {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
                               </tr>
                             </thead>
                               <tbody>

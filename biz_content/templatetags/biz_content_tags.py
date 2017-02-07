@@ -24,6 +24,13 @@ INSPECTION_STATUS_CHOICES = {'1': 'Pass',
                              '6': 'No Work Started'
                              }
 
+INSPECTION_ICON_CHOICES = {'1': 'check-circle-o',
+                             '2': 'exclamation-circle',
+                             '3': 'N/A',
+                             '4': 'refresh',
+                             '5': 'No Progress',
+                             '6': 'clock-o'
+                             }
 
 @register.filter
 @stringfilter
@@ -60,6 +67,11 @@ def display_inspection_department_type(inspection_type):
 @stringfilter
 def display_status_type_name(status):
     return INSPECTION_STATUS_CHOICES[status]
+
+@register.filter
+@stringfilter
+def display_inspection_status_icon(status):
+    return INSPECTION_ICON_CHOICES[status]
 
 
 @register.filter
