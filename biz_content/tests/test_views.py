@@ -108,6 +108,8 @@ class BusinessLicenseViewTestCase(TestCase):
                 'cu_id': license_id})
         self.assertEquals(res.status_code, 200)
         context = res.context
+        license = models.BizLicenseSearch.objects.all().order_by(
+            'created_at')[0]
 
         self.assertEquals(
             context['biz_license_data']['application_data'],
@@ -119,6 +121,7 @@ class BusinessLicenseViewTestCase(TestCase):
         self.assertEquals(
             context['biz_license_data']['payment_data'],
             json.loads(str(self.payment_data)))
+        self.assertEquals(license.license_id, license_id)
 
     @responses.activate
     def test_no_business_licenses(self):
