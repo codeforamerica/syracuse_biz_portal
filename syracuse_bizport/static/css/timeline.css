@@ -104,3 +104,7 @@
 .timeline-badge.info {
   background-color: #5bc0de !important;
 }
+
+table > th > .inspection-1{
+  background-color:#B5E2BD;
+}

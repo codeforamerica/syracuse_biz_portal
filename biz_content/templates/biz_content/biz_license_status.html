@@ -7,6 +7,7 @@
 
 {% block extra_css %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/timeline.css' %}">
+
 {% endblock %}
 
 {% block body_class %}template-blogpage{% endblock %}
@@ -109,27 +110,27 @@
 
                       <ul class="list-unstyled">
                         <li>
-                            <strong>Police Department</strong> 
+                            <strong>Police Department</strong>
                             <p>Does the business owner have a criminal background?</p>
                         </li>
                         <li>
-                            <strong>Parking Violations Bureau</strong> 
+                            <strong>Parking Violations Bureau</strong>
                             <p>Does the business owner have outstanding parking violations?</p>
                         </li>
                         <li>
-                            <strong>Department of Housing</strong> 
+                            <strong>Department of Housing</strong>
                             <p>Are there housing judgements against the business owner?</p>
                         </li>
                         <li>
-                            <strong>Department of Water</strong> 
+                            <strong>Department of Water</strong>
                             <p>Does the business owner have delinquent water bills?</p>
                         </li>
                         <li>
-                            <strong>Bureau of Treasury</strong> 
+                            <strong>Bureau of Treasury</strong>
                             <p>Does the property owner have outstanding taxes?</p>
                         </li>
                         <li>
-                            <strong>Office of Zoning Administration</strong> 
+                            <strong>Office of Zoning Administration</strong>
                             <p>Is the business zoned properly?</p>
                         </li>
                       </ul>
@@ -146,7 +147,7 @@
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status : {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
+                                <th class="inspection-{{inspection.result_status_type_id}}" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status : {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
                               </tr>
                             </thead>
                               <tbody>
@@ -172,15 +173,27 @@
                       {% endfor %}
                   </div>
 
-                <div class="card">
+                  <div class="card">
                       <h2>Payments</h2>
-                        <p>Certificate of Use Application Fee</p>
-                        {% for d in biz_license_data.payment_data %}
-                              <h4 class="card-title">{{d.user_defined_action_type_name}}</h4>
-                              <h6 class="card-subtitle mb-2 text-muted">Payment Date: {{d.payment_date|format_business_license_date}}</h6>
-                              <h5>Payment Details Date: {{d.payment_details|retrieve_payment_details}}</h5>
-                        {% endfor %}
-                </div>
+                      {% for d in biz_license_data.payment_data %}
+
+                      <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'"> Paid</strong></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                              <td><h3>Certificate of Use Application Fee</h3>
+                                    <h5>{{d.payment_details|retrieve_payment_details}} ${{d.amount| floatformat:2}} on {{d.payment_date|format_business_license_date}}</h5>
+                              </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                  {% endfor %}
+
+                  </div>
 
             {% else %}
               <h2>Check the Status of Your Business License</h2>
