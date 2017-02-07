@@ -149,7 +149,14 @@
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th class="inspection-{{inspection.result_status_type_id}}" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status : {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
+                                <th {% if inspection.result_status_type_id == 1 or inspection.result_status_type_id == 2 %} class="inspection-{{inspection.result_status_type_id}}"
+                                {% else %}
+                                class="inspection"
+                                {% endif %}
+
+                                colspan="3">
+
+                                <i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status : {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
                               </tr>
                             </thead>
                               <tbody>
