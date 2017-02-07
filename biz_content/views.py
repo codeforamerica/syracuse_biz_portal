@@ -147,6 +147,7 @@ class BizLicenseStatusView(TemplateView):
                         request, LICENSE_NOT_FOUND_ERROR_MESSAGE
                     )
                 else:
+                    license = models.BizLicenseSearch(license_id=cu_id).save()
                     biz_license_data = {
                         "application_data": application_data,
                         "inspection_data": format_license_inspection(
