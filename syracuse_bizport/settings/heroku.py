@@ -34,4 +34,4 @@ EMAIL_USE_TLS = True
 ADMINS = ['mikela@codeforamerica.org', ]
 
 # HTTPS EVERYWHERE
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = True
