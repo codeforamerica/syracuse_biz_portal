@@ -12,6 +12,7 @@ class BizLicenseFormTestCase(TestCase):
     def setUp(self):
         self.cu_id = 'CU-123-234'
         self.bad_cu_id = '123-234'
+        self.bad_character_cu_id = 'CU!!!2132'
 
     def test_form_validates_cu(self):
         """Checkbox items and form items should match"""
@@ -24,5 +25,12 @@ class BizLicenseFormTestCase(TestCase):
         form = forms.BizLicenseStatusForm(initial_data)
         self.assertFalse(form.is_valid())
         self.assertEqual(
+            form.errors['cu_id'][0], forms.NO_CU_ERROR)
+
+    def test_form_raises_error_without_number_letter_dash(self):
+        initial_data = {'cu_id': self.bad_character_cu_id}
+        form = forms.BizLicenseStatusForm(initial_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
             form.errors['cu_id'][0],
-            "Your business license identifier must start with CU")
+            forms.INVALID_CHARACTER_ERROR)
