@@ -17,6 +17,14 @@ INSPECTION_STATUS_CHOICES = {'1': 'Pass',
                              '6': 'No Work Started'
                              }
 
+INSPECTION_ICON_CHOICES = {'1': 'check-circle-o',
+                           '2': 'exclamation-circle',
+                           '3': 'N/A',
+                           '4': 'refresh',
+                           '5': 'No Progress',
+                           '6': 'clock-o'
+                           }
+
 PERMIT_TYPE_CHOICES = {'100': 'FPB Private Pump - FPB Private Pump',
                        '101': 'FPB Propane - FPB Propane',
                        '102': 'FPB Tanker Truck - FPB Tanker Truck',

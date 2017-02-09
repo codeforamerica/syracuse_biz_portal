@@ -392,15 +392,6 @@ footer .footer-below {
 }
 
 /* Bootstrap button overrides */
-.btn {
-	box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
-	border-width: 0;
-}
-
-.btn-default {
-	color: #1d62f0;
-	background-image: none;
-}
 
 .btn-outline {
   color: white;
@@ -625,14 +616,6 @@ a .panel-body h3 .fa-2x{
 
 @media(max-width:768px) {
   a .panel-body {padding: 15px;}
-}
-
-.input-group .form-control:first-child {
-	box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
-	border: 0;
-}
-.input-group-btn {
-	z-index: 2000;
 }
 
 .alert-text-block {

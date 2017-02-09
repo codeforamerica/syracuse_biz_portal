@@ -47,13 +47,18 @@ def display_status_type_name(status):
 
 @register.filter
 @stringfilter
+def display_inspection_status_icon(status):
+    return choices.INSPECTION_ICON_CHOICES[status]
+
+
+@register.filter
+@stringfilter
 def retrieve_payment_details(payment_details):
     root = xml.etree.ElementTree.fromstring(payment_details)
     payment = root.find('Payment_Type')
     payment_info = payment.items()
-    amount = payment_info[1][1]
     payer = payment_info[0][1]
-    return '%s paid $%s' % (payer, amount)
+    return '%s paid ' % (payer,)
 
 
 @register.filter
