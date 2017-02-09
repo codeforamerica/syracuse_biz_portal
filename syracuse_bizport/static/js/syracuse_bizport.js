@@ -4,7 +4,6 @@
     "use strict"; // Start of use strict
 
     // jQuery for minimizing logo on scroll down page
-
     $(window).scroll(function(){
       var scroll = $(window).scrollTop();
       // Minimize if the user scrolls more than 50px
@@ -69,5 +68,8 @@
             $(this).removeClass("floating-label-form-group-with-focus");
         });
     });
+
+    // Scrollspy for permit page
+    $('#cu-scrollspy-container').scrollspy();
 
 })(jQuery); // End of use strict
