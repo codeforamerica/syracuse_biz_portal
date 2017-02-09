@@ -109,7 +109,7 @@ class ChecklistView(TemplateView):
         step_pages = models.StepPage.objects.all()
         return render(request, self.template_name, {'step_pages': step_pages})
 
-IPS_ERROR_MESSAGE = "Data from the City of Syracuse cannot be accessed."
+IPS_ERROR_MESSAGE = "Search rate limited. Try again in 10 minutes."
 LICENSE_NOT_FOUND_ERROR_MESSAGE = ("Your business license "
                                    "could not be found. "
                                    "Please contact the NBD.")
@@ -134,8 +134,12 @@ class BizLicenseStatusView(TemplateView):
             try:
                 application_data = retrieve_business_license_data(
                     "application_data", cu_id)
+
+                application_data.sort(
+                    key=lambda application: application['action_date'],
+                    reverse=True)
                 inspection_data = retrieve_business_license_data(
-                    "inspection_data", cu_id)
+                                    "inspection_data", cu_id)
                 payment_data = retrieve_business_license_data(
                     "payment_data", cu_id)
             except IPSAPIException:

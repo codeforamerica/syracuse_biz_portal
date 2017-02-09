@@ -21,227 +21,230 @@
  -->
  <!-- Navigation -->
 
-    <header>
-      {% image self.header_img width-1200 as header_img %}
-      <div class="hero-background" style="background-image: url({{ header_img.url }})">
-        <div class="jumbotron hero-shade">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-12">
-                {% if page.icon %}
-                  {% image page.icon width-120 %}
-                {% endif %}
-              </div>
-              <div class="col-sm-10 col-sm-offset-0">
-                <h1 class="blog-title">Track Your Status</h1>
-              </div>
-            </div>
+<header>
+  {% image self.header_img width-1200 as header_img %}
+  <div class="hero-background" style="background-image: url({{ header_img.url }})">
+    <div class="jumbotron hero-shade">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            {% if page.icon %}
+              {% image page.icon width-120 %}
+            {% endif %}
+          </div>
+          <div class="col-sm-10 col-sm-offset-0">
+            <h1 class="blog-title">Certificate of Use Status</h1>
           </div>
         </div>
       </div>
-    </header>
+    </div>
+  </div>
+</header>
 
-
-    <div class="container">
-
-      <div class="row">
-
-        <div class="col-sm-7 blog-main tracker-details">
-            {% if biz_license_data %}
-
-                <div class="card">
-                  <h2>Certificate of Use Business License</h2>
-                    <h3 class="card-title"> Certificate Status</h3>
-                    <table class="table table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <th style="vertical-align:middle;text-align:center;background-color:#FFF56F;width:15%;" colspan="1"><i class="fa fa-clock-o fa-3x"></th>
-                          <th colspan="2">Certificate Status
-                          <p>{{biz_license_data.current_status.user_defined_action_type_name}}</p>
-                          <p><i>{{biz_license_data.current_status.action_date| format_business_license_date}}</i></p></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th>Number</th>
-                          <td>{{biz_license_data.application_data.0.complaint_number}}</td>
-                        </tr>
-                        <tr>
-                          <th>Address</th>
-                          <td>{{biz_license_data.application_data.0.nature_of_complaint}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                </div>
-
-
-
-                <div class="card">
-                      <div class="container">
-
-                      <h2>Status Timeline</h2>
-                        <div class="container">
-                            <ul class="timeline">
-                              {% for d in biz_license_data.application_data %}
-
-                                <li>
-                                  <div class="timeline-badge primary"></i></div>
-                                  <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                      {{d.user_defined_action_type_name}}
-                                    </div>
-                                    <div class="timeline-body">
-                                      <p>Date Last Updated: {{d.action_date| format_business_license_date}}</p>
-                                    </div>
-                                  </div>
-                                </li>
-                              {% endfor %}
-                            </ul>
-                        </div>
-                </div>
-
-
-                <div class="card">
-                      <h2>Departmental Review Status</h2>
-                      <p>After your license has been submitted, it is sent to the following departments for review:</p>
-
-                      <ul class="list-unstyled">
-                        <li>
-                            <strong>Police Department</strong>
-                            <p>Does the business owner have a criminal background?</p>
-                        </li>
-                        <li>
-                            <strong>Parking Violations Bureau</strong>
-                            <p>Does the business owner have outstanding parking violations?</p>
-                        </li>
-                        <li>
-                            <strong>Department of Housing</strong>
-                            <p>Are there housing judgements against the business owner?</p>
-                        </li>
-                        <li>
-                            <strong>Department of Water</strong>
-                            <p>Does the business owner have delinquent water bills?</p>
-                        </li>
-                        <li>
-                            <strong>Bureau of Treasury</strong>
-                            <p>Does the property owner have outstanding taxes?</p>
-                        </li>
-                        <li>
-                            <strong>Office of Zoning Administration</strong>
-                            <p>Is the business zoned properly?</p>
-                        </li>
-                      </ul>
-                      <p>If your permit is "In Review" and your status does not indicate that the city is ready to conduct a site inspection, that means that one or more of the departments listed above have not issued an approval regarding your business license.</p>
-                </div>
-
-                <div class="card">
-                  <h2>Inspection History</h2>
-
-                      {% for year, inspections in biz_license_data.inspection_data.items %}
-                        <p><strong>{{year}}</strong></p>
-
-                        {% for inspection in inspections %}
-                          <table class="table table-bordered">
-                            <thead>
-                              <tr>
-                                <th {% if inspection.result_status_type_id == 1 or inspection.result_status_type_id == 2 %} class="inspection-{{inspection.result_status_type_id}}"
-                                {% else %}
-                                class="inspection"
-                                {% endif %}
-
-                                colspan="3">
-
-                                <i class="fa fa-{{inspection.result_status_type_id|display_inspection_status_icon}}"> <strong class="payment-status">Status : {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
-                              </tr>
-                            </thead>
-                              <tbody>
-                                <tr>
-                                  <th>Type</th>
-                                  <td>{{inspection.inspection_type_id|display_inspection_type_name}}</td>
-                                </tr>
-                                <tr>
-                                  <th>Department</th>
-                                  <td>{{inspection.inspection_type_id|display_inspection_department_type}}</td>
-                                </tr>
-                                <tr>
-                                  <th>Date</th>
-                                  <td>{{inspection.inspect_date|format_business_license_date}}</td>
-                                </tr>
-                                <tr>
-                                  <th>Notes</th>
-                                  <td>{% if inspection.user_note%}{{inspection.user_note}}{%else%} No Notes {%endif%}</td>
-                                </tr>
-                              </tbody>
-                          </table>
-                        {% endfor %}
-                      {% endfor %}
-                  </div>
-
-                  <div class="card">
-                      <h2>Payments</h2>
-                      {% for d in biz_license_data.payment_data %}
-
-                      <table class="table table-bordered">
-                            <thead>
-                              <tr>
-                                <th class="inspection-1" colspan="3"><i class="fa fa-circle-o"> <strong class="payment-status"> Paid</strong></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                              <td><h3>Certificate of Use Application Fee</h3>
-                                    <h5>{{d.payment_details|retrieve_payment_details}} ${{d.amount| floatformat:2}} on {{d.payment_date|format_business_license_date}}</h5>
-                              </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                  {% endfor %}
-
-                  </div>
-
-            {% else %}
-              <h2>Check the Status of Your Business License</h2>
-              {% if messages %}
-                  {% for message in messages %}
-                      <div class="alert alert-info">
-                          <a class="close" data-dismiss="alert">×</a>
-                          <p>{{ message }}</p>
-                      </div>
-                  {% endfor %}
-              {% endif %}
-
-              <form class="form-inline" action="" method="post">
-                  {% csrf_token %}
-                  {% for field in form %}
-                  {{ form.title }}
-                  <div class="form-group">
-
-                  {%if field.errors%}
-                    <div class="alert alert-danger">  <!-- singular -->
-                        <a class="close" data-dismiss="alert">×</a>
-                        <p class="error">{{ field.errors }}</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7 blog-main tracker-details">
+      {% if biz_license_data %}
+        <div id="current-status" class="card">
+            <h3 class="card-title"> Current Status</h3>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="vertical-align:middle;text-align:center;width:15%;" colspan="1"><i class="fa fa-info-circle fa-3x"></th>
+                  <th colspan="2">Certificate Status
+                  <p>{{biz_license_data.current_status.user_defined_action_type_name}}</p>
+                  <p><i>{{biz_license_data.current_status.action_date| format_business_license_date}}</i></p></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Number</th>
+                  <td>{{biz_license_data.application_data.0.complaint_number}}</td>
+                </tr>
+                <tr>
+                  <th>Address</th>
+                  <td>{{biz_license_data.application_data.0.nature_of_complaint}}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <div id="status-timeline" class="card">
+          <h3 class="card-title">Status Timeline <small>(Most recent first)</small></h3>
+            <ul class="timeline">
+              {% for d in biz_license_data.application_data %}
+                <li>
+                  <div class="timeline-badge info"><i class="fa fa-flag fa-1"></i></div>
+                  <div class="timeline-panel">
+                    <div class="timeline-heading">
+                      <strong>{{d.action_date| format_business_license_date}}:</strong> {{d.user_defined_action_type_name}}
                     </div>
-                  {% endif %}
-
-
-                    <label>{{ field.label }}</label>
-                    <br>
-                    {% render_field field class+="form-control" %}
-                    <button type="submit" class="btn btn-default">Search</button>
-                    {% if field.help_text %}
-                      <span id="helpBlock" class="help-block">{{field.help_text}}</span>
-                    {% endif %}
                   </div>
-                  {% endfor %}
-
-
-              </form>
-            {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
         </div>
 
-      </div><!-- /.row -->
+        <div id="departmental-review" class="card">
+          <h3 class="card-title">Departmental Review Status</h3>
+          <p>After your license has been submitted, it is sent to the following departments for review:</p>
 
-    </div><!-- /.container -->
+          <ul class="list-unstyled">
+            <li>
+                <strong>Police Department</strong>
+                <p>Does the business owner have a criminal background?</p>
+            </li>
+            <li>
+                <strong>Parking Violations Bureau</strong>
+                <p>Does the business owner have outstanding parking violations?</p>
+            </li>
+            <li>
+                <strong>Department of Housing</strong>
+                <p>Are there housing judgements against the business owner?</p>
+            </li>
+            <li>
+                <strong>Department of Water</strong>
+                <p>Does the business owner have delinquent water bills?</p>
+            </li>
+            <li>
+                <strong>Bureau of Treasury</strong>
+                <p>Does the property owner have outstanding taxes?</p>
+            </li>
+            <li>
+                <strong>Office of Zoning Administration</strong>
+                <p>Is the business zoned properly?</p>
+            </li>
+          </ul>
+          <p>If your permit is "In Review" and your status does not indicate that the city is ready to conduct a site inspection, that means that one or more of the departments listed above have not issued an approval regarding your business license.</p>
+        </div>
 
+        <div id="inspection-history" class="card">
+          <h3 class="card-title">Inspection History <small>(Most recent first)</small></h3>
+            {% for year, inspections in biz_license_data.inspection_data.items %}
+              <p><strong>{{year}}</strong></p>
+              {% for inspection in inspections %}
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th {% if inspection.result_status_type_id == 1 or inspection.result_status_type_id == 2 %} class="inspection-{{inspection.result_status_type_id}}"
+                      {% else %}
+                      class="inspection"
+                      {% endif %}
+                      colspan="3">
 
+                      <i class="fa fa-{{inspection.result_status_type_id|display_inspection_status_icon}}"> <strong class="payment-status">Status: {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>Type</th>
+                      <td>{{inspection.inspection_type_id|display_inspection_type_name}}</td>
+                    </tr>
+                    <tr>
+                      <th>Department</th>
+                      <td>{{inspection.inspection_type_id|display_inspection_department_type}}</td>
+                    </tr>
+                    <tr>
+                      <th>Date</th>
+                      <td>{{inspection.inspect_date|format_business_license_date}}</td>
+                    </tr>
+                  {% if inspection.user_note%}
+                    <tr>
+                      <th>Notes</th>
+                      <td>{{inspection.user_note}}</td>
+                    </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            {% endfor %}
+          {% endfor %}
+        </div>
+
+        <div id="payments" class="card">
+          <h3 class="card-title">Payments</h3>
+          {% for d in biz_license_data.payment_data %}
+          <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="inspection-1" colspan="3"><i class="fa fa-circle-o"> <strong class="payment-status"> Paid</strong></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>
+                    <h3>Certificate of Use Application Fee</h3>
+                    <h5>{{d.payment_details|retrieve_payment_details}} ${{d.amount| floatformat:2}} on {{d.payment_date|format_business_license_date}}</h5>
+                  </td>
+                </tr>
+                </tbody>
+          </table>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div id="section-nav" data-spy="affix" data-offset-top="200" data-offset-bottom="200">
+          <h3>Sections</h3>
+          <ul class="nav nav-pills nav-stacked" role="tablist">
+            <li>
+              <a href="#current-status">Current Status</a>
+            </li>
+            <li>
+              <a href="#status-timeline">Status Timeline</a>
+            </li>
+            <li>
+              <a href="#departmental-review">Departmental Review</a>
+            </li>
+            <li>
+              <a href="#inspection-history">Inspection History</a>
+            </li>
+            <li>
+              <a href="#payments">Payments</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-md-7">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h2>Check the Status of Your Business License</h2>
+
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-info">
+                  <a class="close" data-dismiss="alert">×</a>
+                  <p>{{ message }}</p>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+            <form class="form-inline" action="" method="post">
+              {% csrf_token %}
+              {% for field in form %}
+                {{ form.title }}
+                <div class="form-group">
+
+                  {% if field.errors %}
+                    <div class="alert alert-danger">  <!-- singular -->
+                      <a class="close" data-dismiss="alert">×</a>
+                      <p class="error">{{ field.errors }}</p>
+                    </div>
+                  {% endif %}
+                  <label>{{ field.label }}:</label>
+                  <br>
+                  <div class="input-group input-group-lg">
+                    {% render_field field placeholder="Example: CU2000-1234" class+="form-control" %}
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default">Search</button>
+                    </span>
+                  </div>
+                </div>
+              {% endfor %}
+            </form>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div><!-- /.row -->
+</div><!-- /.container -->
 {% endblock %}
