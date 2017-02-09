@@ -70,15 +70,14 @@
                         </tr>
                         <tr>
                           <th>Permit Type</th>
-                          <td>{{permit_data.0.permit_application_type_id}}</td>
+                          <td>{{permit_data.0.permit_application_type_id|display_permit_type_name}}</td>
                         </tr>
                       </tbody>
                     </table>
                 </div>
 
                 <div class="card">
-                  <h2>Approvals</h2>
-
+                  <h3 class="card-title"> Permit Approvals</h3>
                       {% for p in permit_data %}
                         <p><strong>{{p.status_date|format_business_license_date}}
                         </strong></p>
@@ -92,16 +91,20 @@
                               <tbody>
                                 <tr>
                                   <th>Department</th>
-                                  <td>{{p.approval_groupusers_id}}</td>
+                                  <td>{{p.approval_groupusers_id|display_permit_dpt_name}}</td>
                                 </tr>
+                                {% if p.description_of_work %}
                                 <tr>
                                   <th>Description of Work</th>
                                   <td>{{p.description_of_work}}</td>
                                 </tr>
+                                {% endif %}
+                                {% if p.comments %}
                                 <tr>
                                   <th>Comments</th>
                                   <td>{{p.comments}}</td>
                                 </tr>
+                                {% endif %}
                               </tbody>
                           </table>
                       {% endfor %}
@@ -142,7 +145,6 @@
                     {% endif %}
                   </div>
                   {% endfor %}
-
 
               </form>
             {% endif %}
