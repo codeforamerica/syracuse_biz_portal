@@ -1,11 +1,12 @@
-from django import forms
 import re
+
+from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 NO_CU_ERROR = "Your business license identifier must start with CU"
 
-INVALID_CHARACTER_ERROR = ("Your identifier must only contain"
+INVALID_CHARACTER_ERROR = ("Your identifier must only contain "
                            "numbers and letters.")
 
 
@@ -16,7 +17,7 @@ class PermitStatusForm(forms.Form):
 
 
 def starts_with_cu(value):
-    if "CU" not in value:
+    if not value.startswith('CU'):
         raise forms.ValidationError(NO_CU_ERROR)
 
 
