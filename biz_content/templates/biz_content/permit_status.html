@@ -14,15 +14,6 @@
 
 {% block content %}
 
-<!--
- -->
- <!-- Navigation -->
- <style>
-
-
-
- </style>
-
     <header>
       {% image self.header_img width-1200 as header_img %}
       <div class="hero-background" style="background-image: url({{ header_img.url }})">
@@ -50,48 +41,61 @@
 
         <div class="col-sm-7 blog-main tracker-details">
             {% if permit_data %}
+            <h2>Right of Way Permit</h2>
+             <div id="current-status" class="card">
+                <h3 class="card-title"> Current Permmit Status</h3>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="vertical-align:middle;text-align:center;width:15%;" colspan="1"><i class="fa fa-info-circle fa-3x"></th>
+                      <th colspan="2"> Status
+                       <p>{{permit_data.0.status_type_name}}</p>
+                          <p><i>{{permit_data.0.status_date| format_business_license_date}}</i></p>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>Number</th>
+                      <td>{{permit_data.0.application_number}}</td>
+                    </tr>
+                    <tr>
+                      <th>Permit Type</th>
+                      <td>{{permit_data.0.permit_application_type_id|display_permit_type_name}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-                <div class="card">
-                  <h2>ROW Permit</h2>
-                    <h3 class="card-title"> Current Permit Status</h3>
-                    <table class="table table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <th style="vertical-align:middle;text-align:center;background-color:#FFF56F;width:15%;" colspan="1"><i style="" class="fa fa-clock-o fa-3x"></th>
-                          <th colspan="2"> Status
-                          <p>{{permit_data.0.status_type_name}}</p>
-                          <p><i>{{permit_data.0.status_date| format_business_license_date}}</i></p></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th>Number</th>
-                          <td>{{permit_data.0.application_number}}</td>
-                        </tr>
-                        <tr>
-                          <th>Permit Type</th>
-                          <td>{{permit_data.0.permit_application_type_id|display_permit_type_name}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                </div>
 
                 <div class="card">
                   <h3 class="card-title"> Permit Approvals</h3>
                       {% for p in permit_data %}
-                        <p><strong>{{p.status_date|format_business_license_date}}
-                        </strong></p>
 
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status : {{p.approval_status_types_name}}</strong></th>
+                              <th {% if inspection.approval_status_types_name == "Approved" %}
+                                  class="inspection-1"
+                              {% elif inspection.approval_status_types_name == "Denited" %}
+                                class="inspection-2"
+                              {% else %}
+                                class="inspection"
+                              {% endif %}
+                              colspan="3">
+
+                              <i class="fa fa-circle-o"> <strong class="payment-status">Status: {{p.approval_status_types_name}}</strong></th>
                               </tr>
                             </thead>
                               <tbody>
                                 <tr>
                                   <th>Department</th>
                                   <td>{{p.approval_groupusers_id|display_permit_dpt_name}}</td>
+                                </tr>
+                                <tr>
+                                  <th>Date</th>
+                                  <td>{{p.status_date|format_business_license_date}}
+                                  </td>
                                 </tr>
                                 {% if p.description_of_work %}
                                 <tr>

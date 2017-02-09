@@ -8,7 +8,7 @@ from django.test.client import RequestFactory
 from django.core.exceptions import ValidationError
 
 
-class BizLicenseFormValidationTestCase(TestCase):
+class FormValidationTestCase(TestCase):
 
     def setUp(self):
         self.cu_id = 'CU-123-234'
@@ -24,4 +24,9 @@ class BizLicenseFormValidationTestCase(TestCase):
     def test_validate_is_letter_number_dashes(self):
         with self.assertRaises(forms.ValidationError):
             forms.is_letter_number_dashes(
+                self.bad_character_cu_id)
+
+    def test_validate_pc(self):
+        with self.assertRaises(forms.ValidationError):
+            forms.starts_with_pc(
                 self.bad_character_cu_id)
