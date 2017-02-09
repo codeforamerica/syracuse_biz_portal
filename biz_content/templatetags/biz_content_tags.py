@@ -48,7 +48,7 @@ def display_status_type_name(status):
 @register.filter
 @stringfilter
 def display_inspection_status_icon(status):
-    return INSPECTION_ICON_CHOICES[status]
+    return choices.INSPECTION_ICON_CHOICES[status]
 
 
 @register.filter
