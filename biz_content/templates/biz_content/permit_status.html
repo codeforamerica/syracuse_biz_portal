@@ -1,29 +1,41 @@
 {% extends "base.html" %}
+{% load static %}
+{% load biz_content_tags %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load i18n widget_tweaks %}
 
+{% block extra_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/timeline.css' %}">
+{% endblock %}
+
 {% block body_class %}template-blogpage{% endblock %}
+
 
 {% block content %}
 
 <!--
  -->
  <!-- Navigation -->
+ <style>
+
+
+
+ </style>
 
     <header>
       {% image self.header_img width-1200 as header_img %}
       <div class="hero-background" style="background-image: url({{ header_img.url }})">
         <div class="jumbotron hero-shade">
           <div class="container">
-            <div class="row text-center">
+            <div class="row">
               <div class="col-sm-12">
                 {% if page.icon %}
                   {% image page.icon width-120 %}
                 {% endif %}
               </div>
               <div class="col-sm-10 col-sm-offset-0">
-                <h1 class="blog-title">Track Your Permit</h1>
+                <h1 class="blog-title">Track Your Status</h1>
               </div>
             </div>
           </div>
@@ -31,54 +43,111 @@
       </div>
     </header>
 
+
     <div class="container">
 
       <div class="row">
 
-        <div class="col-sm-7 blog-main">
-              <h2>Check the Status of Your Permit</h2>
-              <br>
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">  <!-- singular -->
-                        <a class="close" data-dismiss="alert">×</a>
-                        <p style="color:red;font-size:12px;">{{ message }}</p>
-                    </div>
-                {% endfor %}
-            {% endif %}
-
+        <div class="col-sm-7 blog-main tracker-details">
             {% if permit_data %}
-                {% for p in permit_data %}
-                    <h3>Permit Application {{p.approval_approvals_id}}</h3>
-                    <hr>
-                    <h4>Department Approval Date</h4>{{p.application_date}}
-                    <h4>Department Approval Status</h4>{{p.approval_status_types_name}}
-                    <h4>Permit Application Number</h4>{{p.application_number}}
-                    <h4>Permit (or Department??) Application Type</h4>{{p.permit_application_type_id}}
-                    <h4>Permit Application Status</h4>{{p.status_type_name}}
-                    <h4>Description of Work</h4>{{p.description_of_work}}
-                    <h4>Comments</h4>{{p.comments}}
-                {% endfor %}
+
+                <div class="card">
+                  <h2>ROW Permit</h2>
+                    <h3 class="card-title"> Current Permit Status</h3>
+                    <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th style="vertical-align:middle;text-align:center;background-color:#FFF56F;width:15%;" colspan="1"><i style="" class="fa fa-clock-o fa-3x"></th>
+                          <th colspan="2"> Status
+                          <p>{{permit_data.0.status_type_name}}</p>
+                          <p><i>{{permit_data.0.status_date| format_business_license_date}}</i></p></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>Number</th>
+                          <td>{{permit_data.0.application_number}}</td>
+                        </tr>
+                        <tr>
+                          <th>Permit Type</th>
+                          <td>{{permit_data.0.permit_application_type_id|display_permit_type_name}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                  <h3 class="card-title"> Permit Approvals</h3>
+                      {% for p in permit_data %}
+                        <p><strong>{{p.status_date|format_business_license_date}}
+                        </strong></p>
+
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th style="background-color:#B5E2BD;" colspan="3"><i class="fa fa-circle-o"> <strong style="font-family:'Arial'">Status : {{p.approval_status_types_name}}</strong></th>
+                              </tr>
+                            </thead>
+                              <tbody>
+                                <tr>
+                                  <th>Department</th>
+                                  <td>{{p.approval_groupusers_id|display_permit_dpt_name}}</td>
+                                </tr>
+                                {% if p.description_of_work %}
+                                <tr>
+                                  <th>Description of Work</th>
+                                  <td>{{p.description_of_work}}</td>
+                                </tr>
+                                {% endif %}
+                                {% if p.comments %}
+                                <tr>
+                                  <th>Comments</th>
+                                  <td>{{p.comments}}</td>
+                                </tr>
+                                {% endif %}
+                              </tbody>
+                          </table>
+                      {% endfor %}
+                  </div>
+
 
             {% else %}
-              <form action="" method="post">
+              <h2>Check the Status of Your Permit</h2>
+              {% if messages %}
+                  {% for message in messages %}
+                      <div class="alert alert-info">
+                          <a class="close" data-dismiss="alert">×</a>
+                          <p>{{ message }}</p>
+                      </div>
+                  {% endfor %}
+              {% endif %}
+
+              <form class="form-inline" action="" method="post">
                   {% csrf_token %}
                   {% for field in form %}
                   {{ form.title }}
                   <div class="form-group">
-                    <label>{{ field.errors }}</label>
+
+                  {%if field.errors%}
+                    <div class="alert alert-danger">  <!-- singular -->
+                        <a class="close" data-dismiss="alert">×</a>
+                        <p style="color:red;font-size:12px;">{{ field.errors }}</p>
+                    </div>
+                  {% endif %}
+
 
                     <label>{{ field.label }}</label>
+                    <br>
                     {% render_field field class+="form-control" %}
+                    <button type="submit" class="btn btn-default">Search</button>
+                    {% if field.help_text %}
+                      <span id="helpBlock" class="help-block">{{field.help_text}}</span>
+                    {% endif %}
                   </div>
                   {% endfor %}
 
-                <input type="submit" class="btn btn-primary" value="{% trans 'View my Status' %}" />
               </form>
             {% endif %}
-
-              <br>
-              <br>
         </div>
 
       </div><!-- /.row -->
