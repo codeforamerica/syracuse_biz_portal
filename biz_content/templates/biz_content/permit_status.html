@@ -41,9 +41,9 @@
 
         <div class="col-sm-7 blog-main tracker-details">
             {% if permit_data %}
-            <h2>Right of Way Permit</h2>
+            <h2>Right of Way Permit Tracker</h2>
              <div id="current-status" class="card">
-                <h3 class="card-title"> Current Permmit Status</h3>
+                <h3 class="card-title"> Current Permit Status</h3>
                 <table class="table table-bordered">
                   <thead>
                     <tr>
@@ -75,9 +75,9 @@
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                              <th {% if inspection.approval_status_types_name == "Approved" %}
+                              <th {% if p.approval_status_types_name == 'Approved' %}
                                   class="inspection-1"
-                              {% elif inspection.approval_status_types_name == "Denited" %}
+                              {% elif p.approval_status_types_name == 'Denied' %}
                                 class="inspection-2"
                               {% else %}
                                 class="inspection"
