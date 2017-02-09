@@ -108,6 +108,8 @@ class BusinessLicenseViewTestCase(TestCase):
                 'cu_id': license_id})
         self.assertEquals(res.status_code, 200)
         context = res.context
+        license = models.BizLicenseSearch.objects.all().order_by(
+            'created_at')[0]
 
         self.assertEquals(
             context['biz_license_data']['application_data'],
@@ -119,6 +121,7 @@ class BusinessLicenseViewTestCase(TestCase):
         self.assertEquals(
             context['biz_license_data']['payment_data'],
             json.loads(str(self.payment_data)))
+        self.assertEquals(license.license_id, license_id)
 
     @responses.activate
     def test_no_business_licenses(self):
@@ -204,6 +207,133 @@ class BusinessLicenseViewTestCase(TestCase):
         res = self.client.post(
             reverse('biz_license_status'), {
                 'cu_id': license_id})
+
+        self.assertEquals(res.status_code, 503)
+        context = res.context
+        self.assertTrue('messages' in context)
+
+        messages = list(context['messages'])
+        err = views.IPS_ERROR_MESSAGE
+        self.assertEquals(
+            str(messages[0]), err)
+
+
+class PermitViewTestCase(TestCase):
+
+    def setUp(self):
+        self.location = os.path.realpath(
+            os.path.join(os.getcwd(), os.path.dirname(__file__)))
+        self.permit_data = open(
+            os.path.join(self.location, 'permit_data.json'), 'r').read()
+        self.no_permit_data = '[]'
+
+    def test_build_permit_url(self):
+        permit_id = 'PC-0368-13'
+        url = views.build_permit_url(permit_id)
+        business_license_url = '%spermits/%s' % (
+            settings.SYRACUSE_IPS_URL,
+            permit_id
+        )
+        self.assertEquals(url, business_license_url)
+
+    @responses.activate
+    def test_200_with_permit_data(self):
+        permit_id = 'PC-0368-13'
+
+        full_url = views.build_permit_url(permit_id)
+        responses.add(
+            responses.GET, full_url,
+            body=self.permit_data, status=200, content_type='application/json')
+
+        res = self.client.post(
+            reverse('permit_status'), {
+                'permit_id': permit_id})
+        self.assertEquals(res.status_code, 200)
+        context = res.context
+
+        self.assertEquals(
+            context['permit_data'],
+            json.loads(str(self.permit_data)))
+
+    @responses.activate
+    def test_no_permit(self):
+        permit_id = 'PC-0368-1345'
+
+        full_url = views.build_permit_url(permit_id)
+        responses.add(
+            responses.GET, full_url,
+            body=self.no_permit_data,
+            status=200,
+            content_type='application/json')
+
+        data = {'permit_id': permit_id}
+        res = self.client.post(reverse('permit_status'), data)
+        self.assertEquals(res.status_code, 200)
+
+        context = res.context
+        self.assertTrue('messages' in context)
+
+        messages = list(context['messages'])
+        err = views.LICENSE_NOT_FOUND_ERROR_MESSAGE
+        self.assertEquals(
+            str(messages[0]), err)
+
+    @responses.activate
+    def test_retrieve_permit_data_with_timeout(self):
+        permit_id = 'PC-0368-13'
+
+        full_url = views.build_permit_url(permit_id)
+
+        def raise_timeout(request):
+            raise Timeout
+
+        responses.add_callback(
+            responses.GET, full_url,
+            callback=raise_timeout,
+            content_type='application/json')
+
+        with self.assertRaises(views.IPSAPIException):
+            views.retrieve_permit_data(permit_id)
+
+    @responses.activate
+    def test_retrieve_permit_data_with_connection_error(self):
+        permit_id = 'PC-0368-13'
+
+        full_url = views.build_permit_url(permit_id)
+
+        def raise_connection_error(request):
+            raise ConnectionError
+
+        responses.add_callback(
+            responses.GET, full_url,
+            callback=raise_connection_error,
+            content_type='application/json')
+
+        with self.assertRaises(views.IPSAPIException):
+            views.retrieve_permit_data(permit_id)
+
+    @responses.activate
+    def test_retrieve_permit_data_with_500(self):
+        permit_id = 'PC-0368-13'
+
+        full_url = views.build_permit_url(permit_id)
+
+        responses.add(
+            responses.GET, full_url, body='',
+            status=500,
+            content_type='application/json')
+
+        with self.assertRaises(views.IPSAPIException):
+            views.retrieve_permit_data(permit_id)
+
+    @patch('biz_content.views.retrieve_permit_data')
+    def test_ips_error_creates_user_message_and_503(self, mock_retrieve):
+        permit_id = 'PC-0368-13'
+        mock_retrieve.side_effect = views.IPSAPIException()
+
+        res = self.client.post(
+            reverse('permit_status'), {
+                'permit_id': permit_id})
 
         self.assertEquals(res.status_code, 503)
         context = res.context

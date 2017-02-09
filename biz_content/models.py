@@ -250,3 +250,8 @@ class StandAloneContentPage(Page):
         ImageChooserPanel('header_img'),
         StreamFieldPanel('page_content')
     ]
+
+
+class BizLicenseSearch(models.Model):
+    license_id = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)

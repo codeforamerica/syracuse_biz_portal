@@ -20,11 +20,8 @@ robots_txt = """User-agent: *
 Disallow: /cms
 Disallow: /admin
 Disallow: %s
+Sitemap: https://business.syrgov.net/sitemap.xml
 """ % (settings.STATIC_URL,)
-
-dcv = """6268AF5D5CC5EFFE9689C8FA5797F1D918C34B0A
-comodoca.com
-"""
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -34,8 +31,6 @@ urlpatterns = [
     url(r'^search', include('wealthmap.frontend_urls', namespace='wealthmap')),
     url(r'^robots\.txt$', lambda r: HttpResponse(
         robots_txt, content_type='text/plain')),
-    url(r'^BDCA74ED8C6126C0EFA304E5136B611B\.txt$', lambda r: HttpResponse(
-        dcv, content_type='text/plain')),
     url(r'^sitemap\.xml$', sitemap),
     url(r'', include(urls)),
     url(r'', include(wagtail_urls))

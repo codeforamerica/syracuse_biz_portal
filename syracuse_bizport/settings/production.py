@@ -1,4 +1,4 @@
 from .heroku import *
 
-DEBUG = True
-ALLOWED_HOSTS = ['business.syrgov.net']
+DEBUG = False
+ALLOWED_HOSTS = ['business.syrgov.net', 'syracuse-bizport.herokuapp.com', ]
