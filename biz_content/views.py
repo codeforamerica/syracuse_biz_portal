@@ -17,43 +17,18 @@ def dashboard(request):
     return render(request, 'biz_content/dashboard.html', {})
 
 
-class PermitStatusView(TemplateView):
-    template_name = "biz_content/permit_status.html"
-    form_class = forms.PermitStatusForm
-
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        permit_data = None
-
-        if form.is_valid():
-            form_data = form.cleaned_data
-            permit_id = form_data['permit_id']
-            try:
-                r = requests.get(urljoin(settings.SYRACUSE_IPS_URL, permit_id))
-            except:
-                pass
-            else:
-                permit_data = r.json()
-            if not permit_data:
-                messages.error(
-                    request,
-                    "Your permit could not be found. Please contact the NBD.")
-        return render(request,
-                      self.template_name,
-                      {'form': form,
-                       'permit_data': permit_data})
-
-
 class IPSAPIException(Exception):
     pass
 
 
 def build_business_license_url(content_type, license_id):
     relative_url = '/'.join(['business_license', content_type, license_id])
+    full_url = urljoin(settings.SYRACUSE_IPS_URL, relative_url)
+    return full_url
+
+
+def build_permit_url(permit_id):
+    relative_url = '/'.join(['permits', permit_id])
     full_url = urljoin(settings.SYRACUSE_IPS_URL, relative_url)
     return full_url
 
@@ -102,6 +77,20 @@ def retrieve_business_license_data(content_type, license_id):
     return response.json()
 
 
+def retrieve_permit_data(permit_id):
+    url = build_permit_url(permit_id)
+
+    try:
+        response = requests.get(url=url)
+    except (Timeout, ConnectionError) as ex:
+        raise IPSAPIException("Error from IPS API")
+
+    if response.status_code == 500:
+        raise IPSAPIException("500 error")
+
+    return response.json()
+
+
 class ChecklistView(TemplateView):
     template_name = "biz_content/checklist.html"
 
@@ -110,7 +99,7 @@ class ChecklistView(TemplateView):
         return render(request, self.template_name, {'step_pages': step_pages})
 
 IPS_ERROR_MESSAGE = "Data from the City of Syracuse cannot be accessed."
-LICENSE_NOT_FOUND_ERROR_MESSAGE = ("Your business license "
+LICENSE_NOT_FOUND_ERROR_MESSAGE = ("Your permit or business license "
                                    "could not be found. "
                                    "Please contact the NBD.")
 
@@ -160,3 +149,38 @@ class BizLicenseStatusView(TemplateView):
                       self.template_name,
                       {'form': form,
                        'biz_license_data': biz_license_data}, status=status)
+
+
+class PermitStatusView(TemplateView):
+    template_name = "biz_content/permit_status.html"
+    form_class = forms.PermitStatusForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        permit_data = None
+        status = 200
+
+        if form.is_valid():
+            form_data = form.cleaned_data
+            permit_id = form_data['permit_id']
+            try:
+                permit_data = retrieve_permit_data(permit_id)
+            except IPSAPIException:
+                messages.error(request, IPS_ERROR_MESSAGE)
+                status = 503
+            else:
+                if len(permit_data) == 0:
+                    messages.error(
+                        request, LICENSE_NOT_FOUND_ERROR_MESSAGE
+                    )
+                else:
+                    permit_data = permit_data
+
+        return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'permit_data': permit_data}, status=status)
