@@ -5,6 +5,8 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load i18n widget_tweaks %}
 
+{% block title %}Permit Tracker{% endblock %}
+
 {% block extra_css %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/timeline.css' %}">
 {% endblock %}
@@ -116,42 +118,73 @@
 
 
             {% else %}
-              <h2>Check the Status of Your Permit</h2>
-              {% if messages %}
-                  {% for message in messages %}
-                      <div class="alert alert-info">
-                          <a class="close" data-dismiss="alert">×</a>
-                          <p>{{ message }}</p>
-                      </div>
-                  {% endfor %}
-              {% endif %}
+             <div class="container">
 
-              <form class="form-inline" action="" method="post">
-                  {% csrf_token %}
-                  {% for field in form %}
-                  {{ form.title }}
-                  <div class="form-group">
+        <div class="row">
 
-                  {%if field.errors%}
+        <div class="col-sm-7 blog-main tracker-details">
+
+        <div class="panel panel-default">
+        <div class="panel-body">
+          <h2>Check the Status of Your Permit</h2>
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-info">
+                  <a class="close" data-dismiss="alert">×</a>
+                  <p>{{ message }}</p>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+            <form class="form-inline" action="" method="post">
+              {% csrf_token %}
+              {% for field in form %}
+                {{ form.title }}
+                <div class="form-group">
+
+                  {% if field.errors %}
                     <div class="alert alert-danger">  <!-- singular -->
-                        <a class="close" data-dismiss="alert">×</a>
-                        <p style="color:red;font-size:12px;">{{ field.errors }}</p>
+                      <a class="close" data-dismiss="alert">×</a>
+                      <p class="error">{{ field.errors }}</p>
                     </div>
                   {% endif %}
-
-
-                    <label>{{ field.label }}</label>
-                    <br>
+                  <label>{{ field.label }}:</label>
+                  <br>
+                  <div class="input-group input-group-lg">
                     {% render_field field class+="form-control" %}
-                    <button type="submit" class="btn btn-default">Search</button>
                     {% if field.help_text %}
-                      <span id="helpBlock" class="help-block">{{field.help_text}}</span>
-                    {% endif %}
+                     <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default">Search</button>
+                    </span>
                   </div>
-                  {% endfor %}
-
-              </form>
-            {% endif %}
+                  <span id="helpBlock" class="help-block">{{field.help_text}}</span>
+                    {% endif %}
+                </div>
+              {% endfor %}
+            </form>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="col-sm-5">
+          <h4>You can lookup:</h4>
+          <ul>
+            <li>
+              Right of Way Permits
+            </li>
+          </ul>
+          <h4>You cannot lookup:</h4>
+          <ul>
+            <li>
+              Elevator Permits
+            </li>
+          </ul>
+          <p>Please contact XXX for more information about these permits.</p>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
         </div>
 
       </div><!-- /.row -->

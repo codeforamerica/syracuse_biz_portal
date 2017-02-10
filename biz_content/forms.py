@@ -19,7 +19,7 @@ def starts_with_cu(value):
 
 def starts_with_pc(value):
     if not value.startswith('PC'):
-        raise forms.ValidationError(NO_CU_ERROR)
+        raise forms.ValidationError(NO_PC_ERROR)
 
 
 def is_letter_number_dashes(value):
@@ -31,7 +31,7 @@ def is_letter_number_dashes(value):
 class PermitStatusForm(forms.Form):
     permit_id = forms.CharField(required=True,
                                 label="Permit ID",
-                                help_text="Enter your Permit Application ID",
+                                help_text="Example: PC-1201-12",
                                 validators=[starts_with_pc,
                                             is_letter_number_dashes])
 
