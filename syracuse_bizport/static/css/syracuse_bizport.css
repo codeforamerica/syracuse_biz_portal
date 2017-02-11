@@ -599,14 +599,21 @@ fieldset[disabled] .btn-success.active {
 .panel {
   box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
 }
-a .panel-body h3{
-  font-size: 20px;
-  margin-top: 10px;
+.panel-body h2{
+  margin-top:0;
 }
-a .panel-body h3 .fa-2x{
+.resource-block .panel-body h3{
+  font-size: 20px;
+  margin:0;
+}
+.resource-block .panel-body h3 .fa-2x{
   font-size: 1em;
   color: #777;
   padding-right: 10px;
+}
+
+.resource-block .panel-body {
+  padding:20px;
 }
 
 .databox-iframes{
