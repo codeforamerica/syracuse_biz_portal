@@ -647,6 +647,11 @@ fieldset[disabled] .btn-success.active {
 	color: #fff;
 }
 
+.alert-text-block h4 {
+  font-weight: normal;
+  margin-top: 10px;
+}
+
 input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:focus {
   -webkit-box-shadow: none;
   -moz-box-sizing: content-box;
