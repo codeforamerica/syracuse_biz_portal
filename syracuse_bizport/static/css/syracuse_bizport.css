@@ -81,10 +81,10 @@ header.step{
 .jumbotron h2 {
 	margin-bottom: 0;
   margin-top: 0;
-  color: #000;
+  color: #fff;
 }
-.tracker-promo .jumbotron h2 {
-	color: #fff;
+.tracker-promo h2 {
+	color: #000;
 }
 
 .hero-background {
