@@ -606,6 +606,9 @@ fieldset[disabled] .btn-success.active {
   font-size: 20px;
   margin:0;
 }
+.resource-block .panel-body h3:hover, .resource-block .panel-body:hover{
+  color: #23527c;
+}
 .resource-block .panel-body h3 .fa-2x{
   font-size: 1em;
   color: #777;
