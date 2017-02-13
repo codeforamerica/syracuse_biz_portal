@@ -73,10 +73,11 @@
             <ul class="timeline">
               {% for d in biz_license_data.application_data %}
                 <li>
-                  <div class="timeline-badge info"><i class="fa fa-flag fa-1"></i></div>
+                  <div class="timeline-badge info"></div>
                   <div class="timeline-panel">
                     <div class="timeline-heading">
-                      <strong>{{d.action_date| format_business_license_date}}:</strong> {{d.user_defined_action_type_name}}
+                      <p>{{d.user_defined_action_type_name}}</p>
+                      <p><small>{{d.action_date| format_business_license_date}}</small></p> 
                     </div>
                   </div>
                 </li>
@@ -88,7 +89,7 @@
           <h3 class="card-title">Departmental Review Status</h3>
           <p>After your license has been submitted, it is sent to the following departments for review:</p>
 
-          <ul class="list-unstyled">
+          <ul>
             <li>
                 <strong>Police Department</strong>
                 <p>Does the business owner have a criminal background?</p>
@@ -169,13 +170,28 @@
                   </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>
-                    <h3>Certificate of Use Application Fee</h3>
-                    <h5>{{d.payment_details|retrieve_payment_details}} ${{d.amount| floatformat:2}} on {{d.payment_date|format_business_license_date}}</h5>
-                  </td>
-                </tr>
+                  <tr>
+                    <th>Fee</th>
+                    <td>Certificate of Use Application Fee</td>
+                  </tr>
+                  <tr>
+                    <th>Amount</th>
+                    <td>${{d.amount| floatformat:2}}</td>
+                  </tr>
+                  <tr>
+                    <th>Payer</th>
+                    <td>{{d.payment_details|retrieve_payment_details}}</td>
+                  </tr>
+                  <tr>
+                    <th>Date</th>
+                    <td>{{d.payment_date|format_business_license_date}}</td>
+                  </tr>
+
                 </tbody>
+
+
+
+           
           </table>
           {% endfor %}
         </div>
