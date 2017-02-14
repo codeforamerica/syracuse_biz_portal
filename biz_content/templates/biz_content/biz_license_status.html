@@ -45,31 +45,31 @@
   <div class="row">
     <div class="col-sm-7 blog-main tracker-details">
       {% if biz_license_data %}
-        <div id="current-status" class="card">
-            <h3> Current Status</h3>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th style="vertical-align:middle;text-align:center;width:15%;" colspan="1"><i class="fa fa-info-circle fa-3x"></th>
-                  <th colspan="2" class="tracker-status">
-                    <p><b>Status:</b> {{biz_license_data.current_status.user_defined_action_type_name}}</p>
-                    <p class="small">{{biz_license_data.current_status.action_date| format_business_license_date}}</p>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>Number</th>
-                  <td>{{biz_license_data.application_data.0.complaint_number}}</td>
-                </tr>
-                <tr>
-                  <th>Address</th>
-                  <td>{{biz_license_data.application_data.0.nature_of_complaint}}</td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
-        <div id="status-timeline" class="card">
+        <section id="current-status" class="card">
+          <h3> Current Status</h3>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="vertical-align:middle;text-align:center;width:15%;" colspan="1"><i class="fa fa-info-circle fa-3x"></i></th>
+                <th colspan="2" class="tracker-status">
+                  <p><b>Status:</b> {{biz_license_data.current_status.user_defined_action_type_name}}</p>
+                  <p class="small">{{biz_license_data.current_status.action_date| format_business_license_date}}</p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Number</th>
+                <td>{{biz_license_data.application_data.0.complaint_number}}</td>
+              </tr>
+              <tr>
+                <th>Address</th>
+                <td>{{biz_license_data.application_data.0.nature_of_complaint}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section id="status-timeline" class="card">
           <h3>Status Timeline <small>(Most recent first)</small></h3>
             <ul class="timeline">
               {% for d in biz_license_data.application_data %}
@@ -84,12 +84,10 @@
                 </li>
               {% endfor %}
             </ul>
-        </div>
-
-        <div id="departmental-review" class="card">
+        </section>
+        <section id="departmental-review" class="card">
           <h3 class="card-title">Departmental Review Status</h3>
           <p>After your license has been submitted, it is sent to the following departments for review:</p>
-
           <ul>
             <li>
                 <strong>Police Department</strong>
@@ -117,9 +115,8 @@
             </li>
           </ul>
           <p>If your permit is "In Review" and your status does not indicate that the city is ready to conduct a site inspection, that means that one or more of the departments listed above have not issued an approval regarding your business license.</p>
-        </div>
-
-        <div id="inspection-history" class="card">
+        </section>
+        <section id="inspection-history" class="card">
           <h3>Inspection History <small>(Most recent first)</small></h3>
             {% for year, inspections in biz_license_data.inspection_data.items %}
               <p><strong>{{year}}</strong></p>
@@ -132,7 +129,6 @@
                       class="inspection"
                       {% endif %}
                       colspan="3">
-
                       <i class="fa fa-{{inspection.result_status_type_id|display_inspection_status_icon}}"> <strong class="payment-status">Status: {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
                     </tr>
                   </thead>
@@ -159,39 +155,40 @@
               </table>
             {% endfor %}
           {% endfor %}
-        </div>
-
-        <div id="payments" class="card">
+        </section>
+        <section id="payments" class="card">
           <h3>Payments</h3>
           {% for d in biz_license_data.payment_data %}
           <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th class="inspection-1" colspan="3"><i class="fa fa-circle-o"> <strong class="payment-status"> Paid</strong></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th>Fee</th>
-                    <td>Certificate of Use Application Fee</td>
-                  </tr>
-                  <tr>
-                    <th>Amount</th>
-                    <td>${{d.amount| floatformat:2}}</td>
-                  </tr>
-                  <tr>
-                    <th>Payer</th>
-                    <td>{{d.payment_details|retrieve_payment_details}}</td>
-                  </tr>
-                  <tr>
-                    <th>Date</th>
-                    <td>{{d.payment_date|format_business_license_date}}</td>
-                  </tr>
-                </tbody>
+            <thead>
+              <tr>
+                <th class="inspection-1" colspan="3"><i class="fa fa-circle-o"> <strong class="payment-status"> Paid</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Fee</th>
+                <td>Certificate of Use Application Fee</td>
+              </tr>
+              <tr>
+                <th>Amount</th>
+                <td>${{d.amount| floatformat:2}}</td>
+              </tr>
+              <tr>
+                <th>Payer</th>
+                <td>{{d.payment_details|retrieve_payment_details}}</td>
+              </tr>
+              <tr>
+                <th>Date</th>
+                <td>{{d.payment_date|format_business_license_date}}</td>
+              </tr>
+            </tbody>
           </table>
           {% endfor %}
-        </div>
+        </section>
+
       </div>
+
       <div class="col-md-5">
         <div id="section-nav" data-spy="affix" data-offset-top="200" data-offset-bottom="200">
           <h3>Sections</h3>
@@ -214,6 +211,7 @@
           </ul>
         </div>
       </div>
+
       {% else %}
       <div class="container">
         <div class="row">
@@ -229,9 +227,6 @@
         <div class="panel panel-default">
         <div class="panel-body">
           <h2>Check the Status of Your Business License</h2>
-
-
-
             <form class="form-inline" action="" method="post">
               {% csrf_token %}
               {% for field in form %}

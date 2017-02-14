@@ -680,7 +680,9 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
 thead {
   border-bottom-width: 1px;
 }
-
+.tracker-details section {
+  padding-bottom: 20px;
+}
 .track-btn{
   width:100%;
   display:inline-block;
