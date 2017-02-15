@@ -20,3 +20,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Before setting this to `False`, make sure to set ALLOWED_HOSTS
 DEBUG = True
 
+# Set this to { 'http': proxy_url } to test proxy
+IPS_PROXIES = None
