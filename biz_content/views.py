@@ -63,11 +63,18 @@ def format_license_inspection(inspection_data):
     return formatted_inspection_data
 
 
+def proxy_requests(url):
+    if settings.IPS_PROXIES:
+        return requests.get(url=url, proxies=settings.IPS_PROXIES)
+    else:
+        return requests.get(url=url)
+
+
 def retrieve_business_license_data(content_type, license_id):
     url = build_business_license_url(content_type, license_id)
 
     try:
-        response = requests.get(url=url)
+        response = proxy_requests(url)
     except (Timeout, ConnectionError) as ex:
         raise IPSAPIException("Error from IPS API")
 
@@ -81,7 +88,7 @@ def retrieve_permit_data(permit_id):
     url = build_permit_url(permit_id)
 
     try:
-        response = requests.get(url=url)
+        response = proxy_requests(url)
     except (Timeout, ConnectionError) as ex:
         raise IPSAPIException("Error from IPS API")
 
@@ -129,7 +136,7 @@ class BizLicenseStatusView(TemplateView):
                     key=lambda application: application['action_date'],
                     reverse=True)
                 inspection_data = retrieve_business_license_data(
-                                    "inspection_data", cu_id)
+                    "inspection_data", cu_id)
                 payment_data = retrieve_business_license_data(
                     "payment_data", cu_id)
             except IPSAPIException:

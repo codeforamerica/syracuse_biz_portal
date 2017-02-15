@@ -39,3 +39,7 @@ ADMINS = [
 
 # HTTPS EVERYWHERE
 SECURE_SSL_REDIRECT = True
+
+# Static Proxy for Reqeuest to IPS
+
+IPS_PROXIES = {'http': os.environ['PROXIMO_URL']}

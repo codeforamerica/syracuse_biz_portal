@@ -24,7 +24,8 @@
     "bucketeer",
     "papertrail",
     "heroku-postgresql",
-    "sendgrid"
+    "sendgrid",
+    "proximo"
   ],
   "buildpacks": [
     {
