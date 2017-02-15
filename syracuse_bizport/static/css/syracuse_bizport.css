@@ -130,7 +130,6 @@ ol.breadcrumb {
 .blog-main h3, .blog-main h4 {
 	margin-top: 20px;
 	font-weight: bold;
-	color: #333;
 }
 
 .blog-main h4 {
@@ -151,7 +150,10 @@ body {
 }
 
 p.small {
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1;
+  color: #777;
 }
 a,
 a:hover,
@@ -667,11 +669,20 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
 
 .tracker-details h3 {
   border-bottom: 1px solid #555;
+  padding-bottom: 5px;
 }
 .tracker-details table {
   background-color: #fff;
 }
-
+.tracker-status {
+  font-weight: normal;
+}
+thead {
+  border-bottom-width: 1px;
+}
+.tracker-details section {
+  padding-bottom: 20px;
+}
 .track-btn{
   width:100%;
   display:inline-block;
