@@ -81,10 +81,10 @@ header.step{
 .jumbotron h2 {
 	margin-bottom: 0;
   margin-top: 0;
-  color: #000;
+  color: #fff;
 }
-.tracker-promo .jumbotron h2 {
-	color: #fff;
+.tracker-promo h2 {
+	color: #000;
 }
 
 .hero-background {
@@ -601,14 +601,24 @@ fieldset[disabled] .btn-success.active {
 .panel {
   box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
 }
-a .panel-body h3{
-  font-size: 20px;
-  margin-top: 10px;
+.panel-body h2{
+  margin-top:0;
 }
-a .panel-body h3 .fa-2x{
+.resource-block .panel-body h3{
+  font-size: 20px;
+  margin:0;
+}
+.resource-block .panel-body h3:hover, .resource-block .panel-body:hover{
+  color: #23527c;
+}
+.resource-block .panel-body h3 .fa-2x{
   font-size: 1em;
   color: #777;
   padding-right: 10px;
+}
+
+.resource-block .panel-body {
+  padding:20px;
 }
 
 .databox-iframes{
@@ -637,6 +647,11 @@ a .panel-body h3 .fa-2x{
 
 .alert-text-block .alert-icon h4 {
 	color: #fff;
+}
+
+.alert-text-block h4 {
+  font-weight: normal;
+  margin-top: 10px;
 }
 
 input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:focus {
