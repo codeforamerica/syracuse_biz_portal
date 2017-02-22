@@ -382,14 +382,14 @@ footer a p {
 }
 footer .footer-above {
   padding: 30px 0 20px 0;
-  background-color: #2C3E50;
+  background-color: rgba(60, 44, 91, 0.9);
 }
 footer .footer-col {
   margin-bottom: 50px;
 }
 footer .footer-below {
   padding: 25px 0;
-  background-color: #233140;
+  background-color: rgba(60, 44, 91, 1);
 }
 
 /* Bootstrap button overrides */
