@@ -13,12 +13,12 @@ NO_PC_ERROR = "Your ROW Permit identifier must start with PC"
 
 
 def starts_with_cu(value):
-    if not value.startswith(('CU','cu')):
+    if not value.startswith(('CU', 'cu')):
         raise forms.ValidationError(NO_CU_ERROR)
 
 
 def starts_with_pc(value):
-    if not value.startswith(('PC','pc')) or value.startswith('pc'):
+    if not value.startswith(('PC', 'pc')) or value.startswith('pc'):
         raise forms.ValidationError(NO_PC_ERROR)
 
 
