@@ -21,7 +21,6 @@ h1, h2, h3, h4, h5, h6 {
 	color: #fff;
 	padding: 3px;
 	text-align: center;
-	font-weight: bold;
 }
 
 .beta-notification a {
@@ -377,20 +376,24 @@ footer {
 footer h3 {
   margin-bottom: 30px;
 }
-footer a p {
+footer a {
 	color: white;
 	text-decoration: underline;
 }
+footer a:hover {
+  color: white;
+  font-weight: bold;
+}
 footer .footer-above {
-  padding-top: 50px;
-  background-color: #2C3E50;
+  padding: 30px 0 20px 0;
+  background-color: rgba(60, 44, 91, 0.9);
 }
 footer .footer-col {
   margin-bottom: 50px;
 }
 footer .footer-below {
   padding: 25px 0;
-  background-color: #233140;
+  background-color: rgba(60, 44, 91, 1);
 }
 
 /* Bootstrap button overrides */
@@ -672,7 +675,7 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
 }
 
 .help-line{
-  padding:5px;
+  margin:0;
   color:white;
 }
 
