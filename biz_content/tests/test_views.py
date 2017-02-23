@@ -274,7 +274,7 @@ class PermitViewTestCase(TestCase):
         self.assertTrue('messages' in context)
 
         messages = list(context['messages'])
-        err = views.LICENSE_NOT_FOUND_ERROR_MESSAGE
+        err = views.PERMIT_NOT_FOUND_ERROR_MESSAGE
         self.assertEquals(
             str(messages[0]), err)
 

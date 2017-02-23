@@ -12,6 +12,7 @@ class FormValidationTestCase(TestCase):
 
     def setUp(self):
         self.cu_id = 'CU-123-234'
+        self.cu_id_lowercase = 'cu-123-234'
         self.bad_cu_id = '123-234'
         self.bad_character_cu_id = 'CU!!!2132'
 
@@ -20,6 +21,13 @@ class FormValidationTestCase(TestCase):
         with self.assertRaises(forms.ValidationError):
             forms.starts_with_cu(
                 self.bad_cu_id)
+
+    def test_validate_cu_lowercase(self):
+        """Checkbox items and form items should match"""
+        f = forms.starts_with_cu(
+                self.cu_id_lowercase)
+        self.assertEqual(f,None)
+
 
     def test_validate_is_letter_number_dashes(self):
         with self.assertRaises(forms.ValidationError):

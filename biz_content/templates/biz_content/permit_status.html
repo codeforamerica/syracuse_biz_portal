@@ -65,6 +65,12 @@
                       <th>Permit Type</th>
                       <td>{{permit_data.0.permit_application_type_id|display_permit_type_name}}</td>
                     </tr>
+                     {% if p.description_of_work %}
+                      <tr>
+                        <th>Description of Work</th>
+                        <td>{{p.description_of_work}}</td>
+                      </tr>
+                     {% endif %}
                   </tbody>
                 </table>
               </div>
@@ -77,7 +83,7 @@
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                              <th {% if p.approval_status_types_name == 'Approved' %}
+                              <th {% if p.approval_status_types_name == 'Approved' or p.approval_status_types_name == 'Conditionally Approved' %}
                                   class="inspection-1"
                               {% elif p.approval_status_types_name == 'Denied' %}
                                 class="inspection-2"
@@ -99,12 +105,6 @@
                                   <td>{{p.status_date|format_business_license_date}}
                                   </td>
                                 </tr>
-                                {% if p.description_of_work %}
-                                <tr>
-                                  <th>Description of Work</th>
-                                  <td>{{p.description_of_work}}</td>
-                                </tr>
-                                {% endif %}
                                 {% if p.comments %}
                                 <tr>
                                   <th>Comments</th>
@@ -179,6 +179,8 @@
               Elevator Permits
             </li>
           </ul>
+          <h5>Can't find what you're looking for? Contact the Zoning Permit Coordinator at(315)-448-4715 or CentralPermitOffice@SyrGov.net.</h5>
+
         </div>
       </div>
       </div>

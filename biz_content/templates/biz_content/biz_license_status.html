@@ -78,7 +78,7 @@
                   <div class="timeline-panel">
                     <div class="timeline-heading">
                       <p>{{d.user_defined_action_type_name}}</p>
-                      <p class="small">{{d.action_date| format_business_license_date}}</p> 
+                      <p class="small">{{d.action_date| format_business_license_date}}</p>
                     </div>
                   </div>
                 </li>
@@ -149,6 +149,11 @@
                     <tr>
                       <th>Notes</th>
                       <td>{{inspection.user_note}}</td>
+                    </tr>
+                  {% endif %}
+                  {% if inspection.result_status_type_id == 2 %}
+                    <tr>
+                      <td>Please contact the Business License Coordinator for more information at 315-448-8474 or BusinessLicense@syrgov.net.</td>
                     </tr>
                   {% endif %}
                 </tbody>
@@ -272,6 +277,7 @@
                 Entertainment Licenses
               </li>
             </ul>
+            <h5>Can't find what you're looking for? Contact the Business License Coordinator at (315)-448-8474 or BusinessLicense@SyrGov.net.</h5>
         </div>
         </div>
         </div>
