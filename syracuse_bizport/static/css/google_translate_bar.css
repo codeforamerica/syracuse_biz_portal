@@ -58,3 +58,7 @@
   border: 1px solid #333333;
   padding: 5px 8px;
 }
+
+.gsc-search-button {
+  box-sizing: initial;
+}
