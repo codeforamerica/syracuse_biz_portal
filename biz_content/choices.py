@@ -17,6 +17,7 @@ INSPECTION_STATUS_CHOICES = {'1': 'Pass',
                              '6': 'No Work Started'
                              }
 
+
 INSPECTION_ICON_CHOICES = {'1': 'check-circle-o',
                            '2': 'exclamation-circle',
                            '3': 'N/A',

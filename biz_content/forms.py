@@ -30,15 +30,15 @@ def is_letter_number_dashes(value):
 
 class PermitStatusForm(forms.Form):
     permit_id = forms.CharField(required=True,
-                                label="Permit ID",
-                                help_text="Example: PC-1201-12",
+                                label="Please Enter a Permit ID",
+                                help_text="Example ROW ID: PC-1201-12",
                                 validators=[starts_with_pc,
                                             is_letter_number_dashes])
 
 
 class BizLicenseStatusForm(forms.Form):
     cu_id = forms.CharField(required=True,
-                            label="Certificate of Use ID",
-                            help_text="Example: CU2000-1234",
+                            label="Permit Enter a Certificate of Use ID",
+                            help_text="Example CU ID: CU2000-1234",
                             validators=[starts_with_cu,
                                         is_letter_number_dashes])

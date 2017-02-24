@@ -68,20 +68,22 @@
         </div>
 
         {% if self.checklist_items.all %}
-        <div class="col-sm-5 blog-sidebar">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4>
-              On This Page
-              </h4>
+        <div data-spy="affix" data-offset-top="355" data-offset-bottom="200">
+          <div id="checklist" class="col-sm-12 blog-sidebar">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4>
+                On This Page
+                </h4>
+              </div>
+              <div class="panel-body"><ul>
+                {% for item in self.checklist_items.all %}
+                  <li>{{ item.text }}</li>
+                {% endfor %}
+              </ul></div>
             </div>
-            <div class="panel-body"><ul>
-              {% for item in self.checklist_items.all %}
-                <li>{{ item.text }}</li>
-              {% endfor %}
-            </ul></div>
-          </div>
-        </div><!-- /.blog-sidebar -->
+          </div><!-- /.blog-sidebar -->
+        </div>
         {% endif %}
 
       </div><!-- /.row -->
@@ -100,3 +102,5 @@
     </div><!-- /.container -->
 
 {% endblock %}
+
+

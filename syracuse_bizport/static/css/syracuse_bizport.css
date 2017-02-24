@@ -703,3 +703,20 @@ thead {
   display:inline-block;
   margin-top:15px;
 }
+
+ul.errorlist{
+  list-style-type: none;
+}
+
+.affix{
+  display:inline-block;
+  }
+
+.affix-top{
+  display:inline-block;
+}
+
+.affix-bottom{
+  display:inline-block;
+}
+

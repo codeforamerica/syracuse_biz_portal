@@ -236,18 +236,27 @@
               {% csrf_token %}
               {% for field in form %}
                 {{ form.title }}
-                <div class="form-group">
+
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
 
                   {% if field.errors %}
-                    <div class="alert alert-danger">  <!-- singular -->
-                      <a class="close" data-dismiss="alert">×</a>
-                      <p class="error">{{ field.errors }}</p>
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-6 offest2">
+                          <div class="alert alert-danger">  <!-- singular -->
+                            <p class="error">{{ field.errors }}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   {% endif %}
                   <label>{{ field.label }}:</label>
                   <br>
                   <div class="input-group input-group-lg">
+
                     {% render_field field class+="form-control" %}
+
+
                     {% if field.help_text %}
                      <span class="input-group-btn">
                       <button type="submit" class="btn btn-default">Search</button>
@@ -255,6 +264,7 @@
                   </div>
                   <span id="helpBlock" class="help-block">{{field.help_text}}</span>
                     {% endif %}
+
                 </div>
               {% endfor %}
             </form>
@@ -277,7 +287,6 @@
                 Entertainment Licenses
               </li>
             </ul>
-            <h5>Can't find what you're looking for? Contact the Business License Coordinator at (315)-448-8474 or BusinessLicense@SyrGov.net.</h5>
         </div>
         </div>
         </div>
