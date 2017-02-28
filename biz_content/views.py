@@ -107,9 +107,28 @@ class ChecklistView(TemplateView):
 
 
 IPS_ERROR_MESSAGE = "Data from the City of Syracuse cannot be accessed."
-LICENSE_NOT_FOUND_ERROR_MESSAGE = ("Your permit or business license "
+LICENSE_NOT_FOUND_ERROR_MESSAGE = ("We're sorry, your business license "
                                    "could not be found. "
-                                   "Please contact the NBD.")
+                                   "Please contact the Business License "
+                                   "Coordinator. "
+                                   " "
+                                   "Phone: (315)-448-8474 "
+                                   "Email: BusinessLicense@SyrGov.net"
+                                   )
+PERMIT_NOT_FOUND_ERROR_MESSAGE = ("We're sorry, your permit "
+                                  "could not be found. Please contact one"
+                                  "of the following offices for more "
+                                  "information. "
+                                  " "
+                                  "Right of Way Permits: "
+                                  "Zoning Permit Coordinator at"
+                                  "(315)-448-4715 or"
+                                  "CentralPermitOffice@SyrGov.net"
+                                  " "
+                                  "Building Permits: "
+                                  "Central Permit Office at"
+                                  "(315)-448-8600 or"
+                                  "DOCEPermits@SyrGov.net")
 
 
 class BizLicenseStatusView(TemplateView):
@@ -188,7 +207,7 @@ class PermitStatusView(TemplateView):
             else:
                 if len(permit_data) == 0:
                     messages.error(
-                        request, LICENSE_NOT_FOUND_ERROR_MESSAGE
+                        request, PERMIT_NOT_FOUND_ERROR_MESSAGE
                     )
                 else:
                     permit_data = permit_data

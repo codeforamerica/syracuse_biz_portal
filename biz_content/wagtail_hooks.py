@@ -23,3 +23,13 @@ def register_styleguide_menu_item():
         classnames='icon icon-fa-bar-chart',
         order=1000
     )
+
+
+@hooks.register('register_admin_menu_item')
+def register_styleguide_menu_item():
+    return MenuItem(
+        _('Resource Matcher'),
+        urlresolvers.reverse('admin:index'),
+        classnames='icon icon-fa-map-pin',
+        order=1000
+    )
