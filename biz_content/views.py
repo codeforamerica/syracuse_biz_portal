@@ -216,3 +216,9 @@ class PermitStatusView(TemplateView):
                       self.template_name,
                       {'form': form,
                        'permit_data': permit_data}, status=status)
+
+class APIDocView(TemplateView):
+    template_name = "biz_content/api_docs.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)

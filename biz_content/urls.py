@@ -12,4 +12,6 @@ urlpatterns = [
         name="biz_license_status"),
     url(r'^checklist/$', views.ChecklistView.as_view(),
         name="checklist"),
+    url(r'^api_docs/$', views.APIDocView.as_view(),
+        name="api_docs"),
 ]
