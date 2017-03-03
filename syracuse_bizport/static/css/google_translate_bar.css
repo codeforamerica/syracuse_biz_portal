@@ -2,6 +2,8 @@
   display: inline-block;
   float: right;
   background-color: transparent;
+      margin-left:-30px;
+
 }
 .translate-bar .dismiss-gt-link {
   float: right;
@@ -13,6 +15,7 @@
   display: inline-block !important;
   color: #e5e5e5 !important;
   padding: 15px;
+
 }
 #google_translate_element .goog-te-gadget-simple .goog-te-menu-value,
 #google_translate_element .goog-te-gadget {
@@ -22,6 +25,7 @@
   content: "";
   position: relative;
   top: 2px;
+  left:10px;
 }
 #google_translate_element .goog-te-gadget-simple {
   background-color: transparent !important;
@@ -57,8 +61,10 @@
 .google-translate-sidebar #google_translate_element {
   border: 1px solid #333333;
   padding: 5px 8px;
+
 }
 
-.gsc-search-button {
+input.gsc-search-button {
   box-sizing: initial;
 }
+
