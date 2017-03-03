@@ -217,6 +217,7 @@ class PermitStatusView(TemplateView):
                       {'form': form,
                        'permit_data': permit_data}, status=status)
 
+
 class APIDocView(TemplateView):
     template_name = "biz_content/api_docs.html"
 
