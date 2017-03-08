@@ -15,13 +15,15 @@ class Command(BaseCommand):
         if confirmation == 'Y':
             self.stdout.write(
                 '== Creating Backup of Heroku Production Database ==')
-            subprocess.call(
-                'heroku pg:backups:capture DATABASE_URL --app=syracuse-bizport', shell=True)
+            subprocess.call((
+                'heroku pg:backups:capture DATABASE_URL'
+                '--app=syracuse-bizport'), shell=True)
 
             self.stdout.write(
                 '== Downloading Backup of Heroku Production Database ==')
             subprocess.call(
-                ('heroku pg:backups:download --app=syracuse-bizport'), shell=True)
+                ('heroku pg:backups:download --app=syracuse-bizport'),
+                shell=True)
 
             self.stdout.write(
                 ('== Restoring Backup of Heroku Production Database'
