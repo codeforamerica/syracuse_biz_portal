@@ -16,13 +16,12 @@ class Command(BaseCommand):
             self.stdout.write(
                 '== Creating Backup of Heroku Production Database ==')
             subprocess.call(
-                'heroku pg:backups capture --app=syracuse-bizport', shell=True)
+                'heroku pg:backups:capture DATABASE_URL --app=syracuse-bizport', shell=True)
 
             self.stdout.write(
                 '== Downloading Backup of Heroku Production Database ==')
             subprocess.call(
-                ('curl -o latest.dump `heroku pg:backups public-url'
-                    ' --app=syracuse-bizport`'), shell=True)
+                ('heroku pg:backups:download --app=syracuse-bizport'), shell=True)
 
             self.stdout.write(
                 ('== Restoring Backup of Heroku Production Database'
