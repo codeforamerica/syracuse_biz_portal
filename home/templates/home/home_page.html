@@ -64,7 +64,7 @@
             {%endfor%}
           </div>
           <div class="col-sm-4 google-custom-search">
-            <legend><h3><i class="fa fa-search" aria-hidden="true"></i> Popular Pages</h3></legend>
+            <legend><h3><i class="fa fa-search" aria-hidden="true"></i> Site Search</h3></legend>
             <script>
               (function() {
                 var cx = '015206489618795500048:r3rfaau61ho';
@@ -90,10 +90,10 @@
           <div class="col-sm-4">
           {% if stand_alone_pages %}
               {% for p in stand_alone_pages %}
-
-            <legend><h3><i class="fa fa-home" aria-hidden="true">{{p.title}}</h3></legend>
-            <p>{{p.description}}<a href="{{p.slug}}"> Read more &rarr;</a></p>
+              <legend><h3><i class="fa fa-home" aria-hidden="true"></i>{{p.title}}</h3></legend>
+                <p>{{p.description}}<a href="{{p.slug}}"> Read more &rarr;</a></p>
               {% endfor %}
+
 
           </div>
            {% endif %}
