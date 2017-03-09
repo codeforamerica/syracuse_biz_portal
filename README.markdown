@@ -65,6 +65,11 @@ You may need to sync your dev database with production in order to debug or buil
 python manage.py updatedatabase
 ```
 
+Create a user to log in to and manage the application. This deletes users in the DB.
+```
+./manage.py createsuperuser
+```
+
 ## For Contributors
 
 First thank you for helping its much appreciated.  This project is currently has to major functions to host a bizport CMS with Wagtail and to offer a resource search tool using [wealthmap](https://github.com/codeforamerica/wealthmap) which is configured in the matcher app in this project.
