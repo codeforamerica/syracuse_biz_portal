@@ -58,12 +58,16 @@ class BusinessLicenseViewTestCase(TestCase):
             os.path.join(self.location, 'inspection_data.json'), 'r').read()
         self.payment_data = open(
             os.path.join(self.location, 'payment_data.json'), 'r').read()
+        self.approvals_data = open(
+            os.path.join(self.location, 'approvals_data.json'), 'r').read()
         self.mock_urls = {"application_data": self.application_data,
                           "inspection_data": self.inspection_data,
-                          "payment_data": self.payment_data}
+                          "payment_data": self.payment_data,
+                          "approvals": self.approvals_data}
         self.empty_mock_urls = {"application_data": '[]',
                                 "inspection_data": '[]',
-                                "payment_data": '[]'}
+                                "payment_data": '[]',
+                                "approvals": '[]'}
 
     def test_build_business_license_url(self):
         content_type = 'application_data'
