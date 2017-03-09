@@ -399,7 +399,7 @@
         ]
       }
     },
-    "/api/permit_record/permit_number/": {
+    "/permit_record/permit_number/": {
       "get": {
         "description": "Pass Permit Number as String",
         "operationId": "",
