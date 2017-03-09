@@ -150,12 +150,16 @@ class BizLicenseStatusView(TemplateView):
             try:
                 application_data = retrieve_business_license_data(
                     "application_data", cu_id)
-
                 application_data.sort(
                     key=lambda application: application['action_date'],
                     reverse=True)
                 inspection_data = retrieve_business_license_data(
                     "inspection_data", cu_id)
+                approvals_data = retrieve_business_license_data(
+                    "approvals", cu_id)
+                approvals_data.sort(
+                    key=lambda approval: approval['status_date'],
+                    reverse=True)
                 payment_data = retrieve_business_license_data(
                     "payment_data", cu_id)
             except IPSAPIException:
@@ -172,6 +176,7 @@ class BizLicenseStatusView(TemplateView):
                         "application_data": application_data,
                         "inspection_data": format_license_inspection(
                             inspection_data),
+                        "approvals_data": approvals_data,
                         "payment_data": payment_data,
                         "current_status": get_most_recent_license_status(
                             application_data)

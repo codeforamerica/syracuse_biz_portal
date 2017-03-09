@@ -115,9 +115,70 @@
             </li>
           </ul>
           <p>If your permit is "In Review" and your status does not indicate that the city is ready to conduct a site inspection, that means that one or more of the departments listed above have not issued an approval regarding your business license.</p>
+
+           {% for a in biz_license_data.approvals_data %}
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+
+                      <th {% if a.approval_status_types_name == 'Approved' or a.approval_status_types_name == 'Conditionally Approved' %} class="inspection-1"
+                      {% else %}
+                      class="inspection"
+                      {% endif %}
+                      colspan="3">
+
+                      {% if a.approval_status_types_name == 'Approved' or a.approval_status_types_name == 'Conditionally Approved' %}
+                      <i class="fa fa-{{1|display_inspection_status_icon}}">
+                      {%elif a.approval_status_types_name == 'Denied' %}
+                        <i class="fa fa-{{2|display_inspection_status_icon}}">
+                      {%else%}
+                        <i class="fa fa-{{6|display_inspection_status_icon}}">
+                      {%endif%}
+
+
+                      <strong class="payment-status">Status: {{a.approval_status_types_name}}</strong></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>Department</th>
+                      <td>{{a.groupusers_name}}</td>
+                    </tr>
+                    <tr>
+                      <th>Status Date</th>
+                      <td>{{a.status_date|format_business_license_date}}</td>
+                    </tr>
+                  {% if a.comments%}
+                    <tr>
+                      <th>Notes</th>
+                      <td>{{a.comments}}</td>
+                    </tr>
+                  {% endif %}
+                  {% if a.approval_status_types_name == "Denied" %}
+                    <tr>
+                      <td>Please contact the Business License Coordinator for more information at 315-448-8474 or BusinessLicense@syrgov.net.</td>
+                    </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+          {% endfor %}
+
         </section>
         <section id="inspection-history" class="card">
           <h3>Inspection History <small>(Most recent first)</small></h3>
+           <p>After all departmental approvals have been completed, your business requires three inspections.</p>
+           <ul>
+            <li>
+                <strong>Codes Department (Building Inspectio)</strong>
+            </li>
+            <li>
+                <strong>Codes Department (Electrical Inspection)</strong>
+            </li>
+            <li>
+                <strong>Fire Department (Fire Inspection)</strong>
+            </li>
+          </ul>All inspections must be completed before a Certificate of Use is issued. It is your responsibility to schedule these inspections. If you've failed any inspections, you must schedule all necessary follow-up inspections. To schedule an inspection, call (315) 448-8695.</p>
+
             {% for year, inspections in biz_license_data.inspection_data.items %}
               <p><strong>{{year}}</strong></p>
               {% for inspection in inspections %}
