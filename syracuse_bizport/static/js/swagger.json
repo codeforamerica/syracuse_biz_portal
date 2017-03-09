@@ -423,7 +423,7 @@
             "description": "API is down."
           }
         },
-        "summary": "Retrieves Permit Record Data for a Building or Site Permit. A Permit Record is created after construction has completed and site inspections need to start.",
+        "summary": "Retrieves Permit Record Data for a Building or Site Permit.",
         "tags": [
           "Permit Record"
         ]
