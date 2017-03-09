@@ -1,0 +1,519 @@
+{
+  "basePath": "http://24.97.110.146:8081/api/",
+  "definitions": {
+    "ApiResponse": {
+      "properties": {
+        "code": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Category": {
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "xml": {
+        "name": "Category"
+      }
+    },
+    "Order": {
+      "properties": {
+        "complete": {
+          "default": false,
+          "type": "boolean"
+        },
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "petId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "quantity": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "shipDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "status": {
+          "description": "Order Status",
+          "enum": [
+            "placed",
+            "approved",
+            "delivered"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "xml": {
+        "name": "Order"
+      }
+    },
+    "pet": {
+      "properties": {
+        "category": {
+          "$ref": "#/definitions/Category"
+        },
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "example": "doggie",
+          "type": "string"
+        },
+        "photoUrls": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "xml": {
+            "name": "photoUrl",
+            "wrapped": true
+          }
+        },
+        "status": {
+          "description": "pet status in the store",
+          "enum": [
+            "available",
+            "pending",
+            "sold"
+          ],
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "$ref": "#/definitions/Tag"
+          },
+          "type": "array",
+          "xml": {
+            "name": "tag",
+            "wrapped": true
+          }
+        }
+      },
+      "required": [
+        "name",
+        "photoUrls"
+      ],
+      "type": "object",
+      "xml": {
+        "name": "Pet"
+      }
+    },
+    "Tag": {
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "xml": {
+        "name": "Tag"
+      }
+    },
+    "User": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "userStatus": {
+          "description": "User Status",
+          "format": "int32",
+          "type": "integer"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "xml": {
+        "name": "User"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Syracuse IPS API",
+    "url": "http://swagger.io"
+  },
+  "host": "petstore.swagger.io",
+  "info": {
+    "description": "This page provides url endpoints for accessing Syracuse permit and license data from the City of Syracuse.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "",
+    "title": "Syracuse Bizport IPS API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/business_license/inspection_data/complaint_id": {
+      "get": {
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "description": "",
+        "operationId": "updatePet",
+        "parameters": [
+          {
+            "description": "Retrieves Inspection Data for a Business License",
+            "in": "complaint_id",
+            "name": "complaint_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/string"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "[]": {
+            "description": "Business License Not Found"
+          },
+          "500": {
+            "description": "API is down."
+          }
+        },
+        "summary": "Retrieves Inspection Data for a Business License",
+        "tags": [
+          "Business License"
+        ]
+      }
+    },
+    "/business_license/payment_data/complaint_id": {
+		"get": {
+        "description": "Pass Complaint ID as String",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Retrieves Inspection Data for a Business License",
+            "in": "complaint_id",
+            "name": "complaint_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/string"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "[]": {
+            "description": "Business License Not Found"
+          },
+          "500": {
+            "description": "API is down."
+          }
+        },
+        "security": [
+        ],
+        "summary": "Retrieves Application Data for a Business License",
+        "tags": [
+          "Business License"
+        ]
+      }
+    },
+    "/business_license/application_data/complaint_id": {
+      "get": {
+        "description": "Pass Complaint ID as String",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Retrieves Application Data for a Business License",
+            "in": "complaint_id",
+            "name": "complaint_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/string"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "500": {
+            "description": "API is down."
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ],
+        "summary": "Retrieves Application Data for a Business License",
+        "tags": [
+          "Business License"
+        ]
+      }
+    },
+    "/permit_application/application_number": {
+      "get": {
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "description": "Retrieves application data for ALL permits. (Right of Way and Building/Site Permits)",
+        "operationId": "updatePet",
+        "parameters": [
+          {
+            "description": "Pass application number as string",
+            "in": "application_number",
+            "name": "application_number",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/string"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "[]": {
+            "description": "Business License Not Found"
+          },
+          "500": {
+            "description": "API is down."
+          }
+        },
+        "summary": "Retrieves Application Data for Permits",
+        "tags": [
+          "Permit Application"
+        ]
+      }
+    },
+    "/permits/application_number": {
+		"get": {
+        "description": "Retrieves ROW permit data",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Retrieves ROW permit data",
+            "in": "application_number",
+            "name": "application_number",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/string"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "[]": {
+            "description": "ROW Permit Not Found"
+          },
+          "500": {
+            "description": "API is down."
+          }
+        },
+        "security": [
+        ],
+        "summary": "Retrieves Data for a ROW Permit",
+        "tags": [
+          "Right of Way Permit"
+        ]
+      }
+    },
+    "/business_license/approvals/complaint_id": {
+      "get": {
+        "description": "Pass Complaint ID as String",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Retrieves Departmental Approvals for a Business License",
+            "in": "complaint_id",
+            "name": "complaint_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/string"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "500": {
+            "description": "API is down."
+          }
+        },
+        "summary": "Retrieves Departmental Approval Data for a Business License",
+        "tags": [
+          "Business License"
+        ]
+      }
+    },
+    "/api/permit_record/permit_number/": {
+      "get": {
+        "description": "Pass Permit Number as String",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Retrieves Permit Record Data for a Building or Site Permit",
+            "in": "permit_number",
+            "name": "permit_number",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/string"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "500": {
+            "description": "API is down."
+          }
+        },
+        "summary": "Retrieves Permit Record Data for a Building or Site Permit.",
+        "tags": [
+          "Permit Record"
+        ]
+      }
+    },
+    "/permits/application_number/": {
+      "get": {
+        "description": "Pass Complaint ID as String",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Retrieves Departmental Approvals for any Permit (IF APPLICABLE)",
+            "in": "application_number",
+            "name": "application_number",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/string"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "500": {
+            "description": "API is down."
+          }
+        },
+        "summary": "Retrieves Departmental Approvals for any Permit (IF APPLICABLE)",
+        "tags": [
+          "Permit Record"
+        ]
+      }
+    },
+     "/permit_record/inspection/permit_number": {
+      "get": {
+        "description": "Pass Permit Number as String",
+        "operationId": "",
+        "parameters": [
+          {
+            "description": "Retrieves Permit Inspections for Building and Site Permits (IF APPLICABLE)",
+            "in": "permit_number",
+            "name": "permit_number",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/string"
+            }
+          }
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "500": {
+            "description": "API is down."
+          }
+        },
+        "summary": "Retrieves Permit Inspections for Building and Site Permits (IF APPLICABLE)",
+        "tags": [
+          "Permit Record"
+        ]
+      }
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "tags": [
+    {
+      "description": "Data Related to Business Licenses",
+      "externalDocs": {
+        "description": "Data Related to Business Licenses",
+        "url": "http://swagger.io"
+      },
+      "name": "Business Licenses"
+    },
+    {
+      "description": "Access to Petstore orders",
+      "name": "store"
+    },
+    {
+      "description": "Operations about user",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      },
+      "name": "user"
+    }
+  ]
+}

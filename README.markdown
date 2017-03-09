@@ -47,7 +47,23 @@ Start your app:
 python manage.py runserver
 ```
 
-Go to [http://localhost:8080/admin](http://localhost:8080/admin) and enter the credentials that you used when running `./manage.py createsuperuser`.
+* Main site: go to [http://localhost:8000/admin](http://localhost:8000)
+* Django Admin: go to [http://localhost:8000/admin](http://localhost:8000/admin)
+* Wagtail CMS Admin: go to [http://localhost:8000/cms](http://localhost:8000/cms)
+
+(Enter the credentials that you used when running `./manage.py createsuperuser`.)
+
+### Connecting to Heroku
+Make sure you have access to the Heroku project and then run:
+```
+git remote add heroku https://git.heroku.com/syracuse-bizport.git
+```
+
+### Update Dev Database Content from Production
+You may need to sync your dev database with production in order to debug or build features. To do this, run:
+```
+python manage.py updatedatabase
+```
 
 ## For Contributors
 
