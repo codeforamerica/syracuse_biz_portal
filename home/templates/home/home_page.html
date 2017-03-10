@@ -81,11 +81,11 @@
           </div>
 
           <div class="col-sm-4">
-          <a href="/search/">
+          <a id="sidebar-panel" href="/search/">
             <div class="panel panel-default">
               <div class="panel-body">
                 <h3>Find Help For Your Business</h3>
-                 <p>Discover loans, grants, mentorship, and more to take your business to the next level. Get Started <i class="fa fa-arrow-right" aria-hidden="true"></i></p>
+                 <p>Discover loans, grants, mentorship, and more to take your business to the next level. <span class="more-link">Get Started <i class="fa fa-arrow-right" aria-hidden="true"></i></span></p>
               </div>
             </div>
           </a>
@@ -108,7 +108,7 @@
           {% if stand_alone_pages %}
               {% for p in stand_alone_pages %}
               <legend><h3><i class="fa fa-home" aria-hidden="true"></i> {{p.title}}</h3></legend>
-                <p>{{p.description}}<a href="{{p.slug}}"> Read more <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
+                <p>{{p.description}} <a href="{{p.slug}}">Read more <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
               {% endfor %}
           </div>
         </div>

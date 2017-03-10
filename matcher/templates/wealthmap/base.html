@@ -1,10 +1,16 @@
+{% extends "wealthmap/base.html" %}
+
 {% load static %}
+
+
 
 <html>
 <head>
   <title>{% block title %}{% endblock %}</title>
   <link rel="stylesheet" href="/static/wealthmap/css/style.css">
 </head>
+
+
 <body>
   <div class="page-wrapper">
     <div class="slab">
@@ -17,7 +23,9 @@
               </div>
               <div class="grid__item width-five-sixths">
                 <h1 class="form-card__title">{% block header %}{% endblock %}</h1>
-                <p>{% block subhead %}{% endblock %}</p>
+                <p>{% block subhead %}
+                {% endblock %}
+                </p>
               </div>
             </div>
           </header>
@@ -30,4 +38,6 @@
     </div>
   </div>
 </body>
+
+
 </html>

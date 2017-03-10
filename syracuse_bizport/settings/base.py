@@ -20,8 +20,8 @@ INSTALLED_APPS = [
     'home',
     'rest_framework',
     'adminsortable2',
-    'wealthmap',
     'matcher',
+    'wealthmap',
 
     'biz_content',
 

@@ -245,10 +245,10 @@ a.portfolio-link p, .sidebar a .panel-body p {
   margin-bottom: 0px;
 }
 
-.sidebar .panel-body:hover {
+a#sidebar-panel:hover {
   text-decoration: none;
-  background: pink;
 }
+
 
 .portfolio-item .icon-container {
   background-color: #5C802C;
@@ -266,7 +266,7 @@ a.portfolio-link p, .sidebar a .panel-body p {
   display: table;
 	width: 100%;
 }
-.portfolio-item:hover {
+.portfolio-item:hover, #sidebar-panel .panel:hover {
 	top: -5px;
 	box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
 	transition: all 0.15s ease;
@@ -746,4 +746,7 @@ ul.errorlist{
 }
 .sidebar h3 {
   margin-top: 0;
+}
+.more-link {
+  color: #337ab7;
 }
