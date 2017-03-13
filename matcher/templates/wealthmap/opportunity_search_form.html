@@ -1,8 +1,52 @@
 {% extends "wealthmap/opportunity_search_form.html" %}
 {% load i18n widget_tweaks %}
 {% block subhead %}
-	Syracuse has many resources for local businesses.
-	These include grants, training, mentorship, and more.
-	Answer a few questions about your business and we'll
-	tell you what you're eligible for.
+Syracuse has many resources for local businesses.
+These include grants, training, mentorship, and more.
+Answer a few questions about your business and we'll
+tell you what you're eligible for.
 {% endblock %}
+
+{% block content %}
+<form action="" method="post">
+	{% csrf_token %}
+
+	<h3>What are you looking for?</h3>
+	<p>Narrow down your results by choosing which type of resources you're interested in.
+		You can pick as many as you like.</p>
+		{% for item in form.purposes %}
+		<div class="checkbox">
+			{{ item }}
+		</div>
+		{% endfor %}
+
+		<h3>Which types of business are you?</h3>
+		<p>Pick which terms describe your industry. You can choose more than one.</p>
+		{% for item in form.industries %}
+		<div class="checkbox">
+			{{ item }}
+		</div>
+		{% endfor %}
+
+		<h3>Can you raise match funding?</h3>
+		<p>Some opportunities offer money that you're required to raise match funding for.</p>
+		<div class="checkbox">
+			{% for item in form.personal_investment %}
+			<label>{{ item }} Yes, I have access to money for match funding.</label>
+			{% endfor %}
+			{% if form.personal_investment.error %}
+			<p>There was an error</p>
+			{% endif %}
+		</div>
+
+		<h3>What stage are you at?</h3>
+		<p>Is your business up and running, or you just starting and not yet in operation?</p>
+		{% for item in form.existing_business %}
+		<div class="radio">
+			{{ item }}
+		</div>
+		{% endfor %}
+		<input type="submit" value="{% trans 'Search' %}" class="btn btn-primary btn-lg" />
+	</form>
+
+	{% endblock %}
