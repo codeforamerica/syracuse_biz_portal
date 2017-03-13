@@ -3,31 +3,27 @@
 <html>
 <head>
   <title>{% block title %}{% endblock %}</title>
-  {% include 'wealthmap/partials/style.html' %}
+  {% include 'wealthmap/partials/styles.html' %}
 </head>
 <body>
-  <div class="page-wrapper">
-    <div class="slab">
-      <div class="grid">
-        <div class="form-card">
-          <header class="form-card__header">
-            <div class="grid">
-              <div class="grid__item width-one-sixth">
-                <img class="illustration" src="/static/matcher/images/san-diego-seal-gold.jpg">
-              </div>
-              <div class="grid__item width-five-sixths">
-                <h1 class="form-card__title">{% block header %}{% endblock %}</h1>
-                <p>{% block subhead %}{% endblock %}</p>
-              </div>
-            </div>
-          </header>
-          <section>
-            {% block content %}
-            {% endblock %}
-          </section>
+  <header>
+  <div class="collection-shade jumbotron">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-7">
+            <h1>
+              <img class="illustration" src="images/SyracuseLogo.png">
+              {% block header %}{% endblock %}
+            </h1>
+            <h2 class="lead blog-description">{% block subhead %}{% endblock %}</h2>
+          </div>
         </div>
       </div>
     </div>
+  </header>
+  <div class="container">
+    {% block content %}
+    {% endblock %}
   </div>
 </body>
 </html>
