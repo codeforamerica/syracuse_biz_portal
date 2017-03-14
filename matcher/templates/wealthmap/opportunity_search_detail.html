@@ -2,7 +2,9 @@
 {% block title %}Search Results{% endblock %}
 {% block header %}Search Results{% endblock %}
 {% block content %}
+
 <ul class="list-unstyled">
+{% if object.search %}
   {% for opportunity in object.search %}
   <li>
     <h3>
@@ -18,6 +20,12 @@
 </li>
 <hr>
 {% endfor %}
+{% else %}
+
+<li><p>No results are available at this time.</p>
+    <p>Please try different search criteria.</p></li>
+
+{% endif %}
 </ul>
 
 <a href="/search" class="btn btn-default btn-lg"><i class="fa fa-refresh" aria-hidden="true"></i> New search</a>
