@@ -62,6 +62,7 @@
             </a>
             {%endfor%}
           </div>
+         <div class="sidebar">
           <div class="col-sm-4 google-custom-search">
             <legend><h3><i class="fa fa-search" aria-hidden="true"></i> Site Search</h3></legend>
             <script>
@@ -79,13 +80,14 @@
           </div>
 
           <div class="col-sm-4">
+          <a id="sidebar-panel" href="/search/">
             <div class="panel panel-default">
               <div class="panel-body">
-                  <h3>Track Your Applications</h3>
-                    <a href="{% url 'biz_license_status' %}" class="btn btn-primary btn-lg track-btn">Certificate of Use</a>
-                    <a href="{% url 'permit_status' %}" class="btn btn-primary btn-lg track-btn">Right of Way Permit</a>
+                <h3>Find Help For Your Business</h3>
+                 <p>Discover loans, grants, mentorship, and more to take your business to the next level. <span class="more-link">Get Started <i class="fa fa-arrow-right" aria-hidden="true"></i></span></p>
               </div>
             </div>
+          </a>
           </div>
 
          <div class="col-sm-4">
@@ -105,11 +107,10 @@
           {% if stand_alone_pages %}
               {% for p in stand_alone_pages %}
               <legend><h3><i class="fa fa-home" aria-hidden="true"></i> {{p.title}}</h3></legend>
-                <p>{{p.description}}<a href="{{p.slug}}"> Read more &rarr;</a></p>
+                <p>{{p.description}} <a href="{{p.slug}}">Read more <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
               {% endfor %}
-
-
           </div>
+        </div>
            {% endif %}
 
 

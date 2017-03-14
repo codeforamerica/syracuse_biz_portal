@@ -83,7 +83,7 @@ header.step{
   color: #fff;
 }
 .tracker-promo h2 {
-	color: #555;
+	color: #444; /*this is darker than the other text so that it visually matches*/
 }
 
 .hero-background {
@@ -236,14 +236,19 @@ section.success {
   padding: 15px;
 }
 
-a.portfolio-link h2 {
+a.portfolio-link h2, a .panel-body h3 {
   color: #337ab7;
 }
 
-a.portfolio-link p {
+a.portfolio-link p, .sidebar a .panel-body p {
   color: #555;
   margin-bottom: 0px;
 }
+
+a#sidebar-panel:hover {
+  text-decoration: none;
+}
+
 
 .portfolio-item .icon-container {
   background-color: #5C802C;
@@ -261,7 +266,7 @@ a.portfolio-link p {
   display: table;
 	width: 100%;
 }
-.portfolio-item:hover {
+.portfolio-item:hover, #sidebar-panel .panel:hover {
 	top: -5px;
 	box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
 	transition: all 0.15s ease;
@@ -689,7 +694,7 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
 }
 
 .tracker-details h3 {
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid #555; 
   padding-bottom: 5px;
 }
 .tracker-details table {
@@ -736,4 +741,12 @@ ul.errorlist{
 .rm-promo h3{
   color:#337ab7;
 }
-
+.sidebar .col-sm-4 {
+  margin-bottom: 20px;
+}
+.sidebar h3 {
+  margin-top: 0;
+}
+.more-link {
+  color: #337ab7;
+}

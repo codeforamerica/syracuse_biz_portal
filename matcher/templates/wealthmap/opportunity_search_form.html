@@ -1,8 +1,99 @@
 {% extends "wealthmap/opportunity_search_form.html" %}
 {% load i18n widget_tweaks %}
+{% load static %}
+ {% block extra_css %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/syracuse_bizport.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/google_translate_bar.css' %}">
+
+{% endblock %}
+
+
+
+
 {% block subhead %}
 	Syracuse has many resources for local businesses.
 	These include grants, training, mentorship, and more.
 	Answer a few questions about your business and we'll
 	tell you what you're eligible for.
 {% endblock %}
+
+{% block content %}
+
+
+<form action="" method="post">
+	{% csrf_token %}
+
+	<strong><label>What are you looking for?</label></strong>
+	<p>Narrow down your results by choosing which type of resources you're interested in.
+	You can pick as many as you like.</p>
+	<div>
+	{% for item in form.purposes %}
+		<div>
+			<label>
+				{{ item }}
+			</label>
+		</div>
+	{% endfor %}
+	</div>
+
+	<strong>
+		<legend>
+			Which types of business are you?
+		</legend>
+	</strong>
+	<p>Pick which terms describe your industry. You can choose more than one.</p>
+	<div>
+		{% for item in form.industries %}
+			<div>
+				<label>
+					{{ item }}
+				</label>
+			</div>
+		{% endfor %}
+	</div>
+
+	<strong>
+		<label>Can you raise match funding?</label>
+	</strong>
+	<p>Some opportunities offer money that you're required to raise match funding for.</p>
+	<div>
+		<div>
+			{% for item in form.personal_investment %}
+				<label>
+					{{ item }}
+					Yes, I have access to money for match funding.
+				</label>
+			{% endfor %}
+			{% if form.personal_investment.error %}
+				<p>There was an error</p>
+			{% endif %}
+		</div>
+	</div>
+
+	<strong>
+		<label>What stage are you at?</label>
+	</strong>
+	<p>Is your business up and running, or you just starting and not yet in operation?</p>
+	<div>
+		{% for item in form.existing_business %}
+			<div>
+				<label>
+					{{ item }}
+				</label>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div>
+		<input type="submit" value="{% trans 'Search' %}" class="btn btn-default" />
+	</div>
+</form>
+{% endblock %}
+
+
