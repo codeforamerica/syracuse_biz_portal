@@ -27,8 +27,8 @@ def build_business_license_url(content_type, license_id):
     return full_url
 
 
-def build_permit_url(permit_id):
-    relative_url = '/'.join(['permits', permit_id])
+def build_permit_url(content_type, permit_id):
+    relative_url = '/'.join([content_type, permit_id])
     full_url = urljoin(settings.SYRACUSE_IPS_URL, relative_url)
     return full_url
 
@@ -84,7 +84,21 @@ def retrieve_business_license_data(content_type, license_id):
     return response.json()
 
 
-def retrieve_permit_data(permit_id):
+def retrieve_permit_data(content_type, permit_id):
+    url = build_permit_url(content_type, permit_id)
+
+    try:
+        response = proxy_requests(url)
+    except (Timeout, ConnectionError) as ex:
+        raise IPSAPIException("Error from IPS API")
+
+    if response.status_code == 500:
+        raise IPSAPIException("500 error")
+
+    return response.json()
+
+
+def retrieve_all_permit_data(permit_id):
     url = build_permit_url(permit_id)
 
     try:
@@ -108,9 +122,9 @@ class ChecklistView(TemplateView):
 
 IPS_ERROR_MESSAGE = "Data from the City of Syracuse cannot be accessed."
 LICENSE_NOT_FOUND_ERROR_MESSAGE = ("We're sorry, your business license "
-                                   "could not be found. "
+                                   " could not be found. "
                                    "Please contact the Business License "
-                                   "Coordinator. "
+                                   " Coordinator. "
                                    " "
                                    "Phone: (315)-448-8474 "
                                    "Email: BusinessLicense@SyrGov.net"
@@ -162,6 +176,9 @@ class BizLicenseStatusView(TemplateView):
                     reverse=True)
                 payment_data = retrieve_business_license_data(
                     "payment_data", cu_id)
+                payment_data.sort(
+                    key=lambda payment: payment['payment_date'],
+                    reverse=True)
             except IPSAPIException:
                 messages.error(request, IPS_ERROR_MESSAGE)
                 status = 503
@@ -205,17 +222,31 @@ class PermitStatusView(TemplateView):
             form_data = form.cleaned_data
             permit_id = form_data['permit_id']
             try:
-                permit_data = retrieve_permit_data(permit_id)
+                application_data = retrieve_permit_data(
+                    'permit_application', permit_id)
+                application_approval_data = retrieve_permit_data(
+                    'permits', permit_id)
+                record_data = retrieve_permit_data(
+                    'permit_record', permit_id)
+
+                # permit_record_inspections_data = []
+
             except IPSAPIException:
                 messages.error(request, IPS_ERROR_MESSAGE)
                 status = 503
             else:
-                if len(permit_data) == 0:
+                if len(application_data) == 0:
                     messages.error(
                         request, PERMIT_NOT_FOUND_ERROR_MESSAGE
                     )
                 else:
-                    permit_data = permit_data
+                    permit_data = {'application_data':
+                                   application_data,
+                                   'application_approval_data':
+                                   application_approval_data,
+                                   'record_data': record_data
+                                   }
+                    raise
 
         return render(request,
                       self.template_name,
