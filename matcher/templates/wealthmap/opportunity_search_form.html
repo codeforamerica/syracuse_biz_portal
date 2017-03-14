@@ -14,20 +14,29 @@ tell you what you're eligible for.
 	<h3>What are you looking for?</h3>
 	<p>Narrow down your results by choosing which type of resources you're interested in.
 		You can pick as many as you like.</p>
-		{% for item in form.purposes %}
-		<div class="checkbox">
-			{{ item }}
+		<div class="row">
+			{% for item in form.purposes %}
+			<div class="col-md-6">		
+				<div class="checkbox">
+					{{ item }}
+				</div>
+			</div>
+			{% endfor %}
 		</div>
-		{% endfor %}
+		<hr>
 
-		<h3>Which types of business are you?</h3>
+		<h3>What type of business are you?</h3>
 		<p>Pick which terms describe your industry. You can choose more than one.</p>
-		{% for item in form.industries %}
-		<div class="checkbox">
-			{{ item }}
+		<div class="row">
+			{% for item in form.industries %}
+			<div class="col-md-6">		
+				<div class="checkbox">
+					{{ item }}
+				</div>
+			</div>
+			{% endfor %}
 		</div>
-		{% endfor %}
-
+		<hr>
 		<h3>Can you raise match funding?</h3>
 		<p>Some opportunities offer money that you're required to raise match funding for.</p>
 		<div class="checkbox">
@@ -41,11 +50,16 @@ tell you what you're eligible for.
 
 		<h3>What stage are you at?</h3>
 		<p>Is your business up and running, or you just starting and not yet in operation?</p>
-		{% for item in form.existing_business %}
-		<div class="radio">
-			{{ item }}
+		<div class="row">
+			{% for item in form.existing_business %}
+			<div class="col-md-6">		
+				<div class="radio">
+					{{ item }}
+				</div>
+			</div>
+			{% endfor %}
 		</div>
-		{% endfor %}
+		<hr>
 		<input type="submit" value="{% trans 'Search' %}" class="btn btn-primary btn-lg" />
 	</form>
 	{% endblock %}

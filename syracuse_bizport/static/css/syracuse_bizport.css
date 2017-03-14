@@ -741,7 +741,7 @@ ul.errorlist{
     cursor: pointer;
     display: block;
     background-color: #FFFFFF;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
     padding: 10px 15px;
     border: 1px solid #ddd;
     border-radius: 2px;
