@@ -8,7 +8,7 @@ tell you what you're eligible for.
 {% endblock %}
 
 {% block content %}
-<form action="" method="post">
+<form action="" method="post" class="resource-matcher">
 	{% csrf_token %}
 
 	<h3>What are you looking for?</h3>
@@ -48,5 +48,4 @@ tell you what you're eligible for.
 		{% endfor %}
 		<input type="submit" value="{% trans 'Search' %}" class="btn btn-primary btn-lg" />
 	</form>
-
 	{% endblock %}

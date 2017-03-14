@@ -2,9 +2,9 @@
 {% block title %}Search Results{% endblock %}
 {% block header %}Search Results{% endblock %}
 {% block content %}
-<ul>
+<ul class="list-unstyled">
   {% for opportunity in object.search %}
-  <li class="list-unstyled">
+  <li>
     <h3>
      <a href="{% url 'wealthmap:opportunity-detail' opportunity.pk %}">
       {{ opportunity.title}}

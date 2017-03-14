@@ -736,3 +736,20 @@ ul.errorlist{
   color:#337ab7;
 }
 
+.resource-matcher .checkbox, .resource-matcher .radio {
+    user-select: none;
+    cursor: pointer;
+    display: block;
+    background-color: #FFFFFF;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+}
+.resource-matcher label {
+    font-size: 18px;
+    display: block;
+} 
+.resource-matcher .checkbox:hover, .resource-matcher .radio:hover {
+  background-color: #ddd;
+}
