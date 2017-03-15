@@ -26,6 +26,17 @@ tell you what you're eligible for.
 	<p>Narrow down your results by choosing which type of resources you're interested in.
 		You can pick as many as you like.</p>
 		<div class="row">
+			{% if form.purposes.errors %}
+	        <div class="container">
+              <div class="row">
+                <div class="col-sm-4 offest2">
+                  <div class="alert alert-danger">  <!-- singular -->
+                    <p class="error">{{form.purposes.errors}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+			{% endif %}
 			{% for item in form.purposes %}
 			<div class="col-md-6">
 				<div class="checkbox">
@@ -36,10 +47,24 @@ tell you what you're eligible for.
 		</div>
 		</section>
 
-<section>
+		<section>
 		<h3>What type of business are you? <span class="help-block">(Required)</span></h3>
 		<p>Pick which terms describe your industry. You can choose more than one.</p>
 		<div class="row">
+			{% if form.industries.errors %}
+
+	        <div class="container">
+              <div class="row">
+                <div class="col-sm-4 offest2">
+                  <div class="alert alert-danger">  <!-- singular -->
+                    <p class="error">{{form.industries.errors}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% endif %}
+
 			{% for item in form.industries %}
 			<div class="col-md-6">
 				<div class="checkbox">
@@ -48,25 +73,53 @@ tell you what you're eligible for.
 			</div>
 			{% endfor %}
 		</div>
-</section>
+		</section>
 
-<section>
+		<section>
 		<h3>Can you raise match funding?</h3>
 		<p>Some opportunities offer money that you're required to raise match funding for.</p>
 		<div class="checkbox">
+			{% if form.personal_investment.errors %}
+	        <div class="container">
+              <div class="row">
+                <div class="col-sm-4 offest2">
+                  <div class="alert alert-danger">  <!-- singular -->
+                    <p class="error">{{form.personal_investment.errors}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
 			{% for item in form.personal_investment %}
 			<label>{{ item }} Yes, I have access to money for match funding.</label>
+								{{ item }}
+
 			{% endfor %}
 
 		</div>
-</section>
+		</section>
 
 <section>
 		<h3>Are you a small business?</h3>
 		<p>help text here.</p>
 		<div class="checkbox">
+			{% if form.small_business.errors %}
+	        <div class="container">
+              <div class="row">
+                <div class="col-sm-4 offest2">
+                  <div class="alert alert-danger">  <!-- singular -->
+                    <p class="error">{{form.small_business.errors}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
 			{% for item in form.small_business %}
 			<label>{{ item }} Yes, this is a small business.</label>
+								{{ item }}
+
 			{% endfor %}
 		</div>
 </section>
@@ -76,6 +129,18 @@ tell you what you're eligible for.
 		<h3>What stage are you at? <span class="help-block">(Required)</span></h3>
 		<p>Is your business up and running, or you just starting and not yet in operation?</p>
 		<div class="row">
+			{% if form.existing_business.errors %}
+	        <div class="container">
+              <div class="row">
+                <div class="col-sm-4 offest2">
+                  <div class="alert alert-danger">  <!-- singular -->
+                    <p class="error">{{form.existing_business.errors}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
 			{% for item in form.existing_business %}
 			<div class="col-md-6">
 				<div class="radio">
