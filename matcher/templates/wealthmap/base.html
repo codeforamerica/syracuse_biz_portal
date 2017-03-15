@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
-<html>
-<head>
-  <title>{% block title %}{% endblock %}</title>
-  {% include 'wealthmap/partials/styles.html' %}
-</head>
-<body>
+{% block content-super %}
   <header>
   <div class="collection-shade jumbotron">
       <div class="container">
@@ -29,5 +23,4 @@
       </div>
     </div>
   </div>
-</body>
-</html>
+{% endblock %}

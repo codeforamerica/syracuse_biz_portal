@@ -21,7 +21,8 @@ tell you what you're eligible for.
 <form action="" method="post" class="resource-matcher">
 	{% csrf_token %}
 
-	<h3>What are you looking for?</h3>
+	<section>
+	<h3>What are you looking for? <span class="help-block">(Required)</span></h3>
 	<p>Narrow down your results by choosing which type of resources you're interested in.
 		You can pick as many as you like.</p>
 		<div class="row">
@@ -33,9 +34,10 @@ tell you what you're eligible for.
 			</div>
 			{% endfor %}
 		</div>
-		<hr>
+		</section>
 
-		<h3>What type of business are you?</h3>
+<section>
+		<h3>What type of business are you? <span class="help-block">(Required)</span></h3>
 		<p>Pick which terms describe your industry. You can choose more than one.</p>
 		<div class="row">
 			{% for item in form.industries %}
@@ -46,19 +48,32 @@ tell you what you're eligible for.
 			</div>
 			{% endfor %}
 		</div>
-		<hr>
+</section>
+
+<section>
 		<h3>Can you raise match funding?</h3>
 		<p>Some opportunities offer money that you're required to raise match funding for.</p>
 		<div class="checkbox">
 			{% for item in form.personal_investment %}
 			<label>{{ item }} Yes, I have access to money for match funding.</label>
 			{% endfor %}
-			{% if form.personal_investment.error %}
-			<p>There was an error</p>
-			{% endif %}
-		</div>
 
-		<h3>What stage are you at?</h3>
+		</div>
+</section>
+
+<section>
+		<h3>Are you a small business?</h3>
+		<p>help text here.</p>
+		<div class="checkbox">
+			{% for item in form.small_business %}
+			<label>{{ item }} Yes, this is a small business.</label>
+			{% endfor %}
+		</div>
+</section>
+
+
+<section>
+		<h3>What stage are you at? <span class="help-block">(Required)</span></h3>
 		<p>Is your business up and running, or you just starting and not yet in operation?</p>
 		<div class="row">
 			{% for item in form.existing_business %}
@@ -69,7 +84,7 @@ tell you what you're eligible for.
 			</div>
 			{% endfor %}
 		</div>
-		<hr>
+</section>
 		<input type="submit" value="{% trans 'Search' %}" class="btn btn-primary btn-lg" />
 	</form>
 	{% endblock %}

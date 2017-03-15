@@ -750,6 +750,16 @@ ul.errorlist{
     font-size: 18px;
     display: block;
 } 
+.resource-matcher section {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee; 
+}
 .resource-matcher .checkbox:hover, .resource-matcher .radio:hover {
   background-color: #ddd;
+}
+.help-block {
+  display: inline;
+  font-size: 20px;
+  font-weight: normal;
 }
