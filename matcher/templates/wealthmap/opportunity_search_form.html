@@ -98,7 +98,7 @@ tell you what you're eligible for.
 		</div>
 		</section>
 
-<section>
+<section id="small-biz">
 		<h3>Are you a small business?</h3>
 		<p>help text here.</p>
 		<div class="checkbox">
@@ -122,7 +122,7 @@ tell you what you're eligible for.
 </section>
 
 
-<section>
+	<section>
 		<h3>What stage are you at? <span class="help-block">(Required)</span></h3>
 		<p>Is your business up and running, or you just starting and not yet in operation?</p>
 		<div class="row">
@@ -146,7 +146,13 @@ tell you what you're eligible for.
 			</div>
 			{% endfor %}
 		</div>
-</section>
+	</section>
 		<input type="submit" value="{% trans 'Search' %}" class="btn btn-primary btn-lg" />
 	</form>
 	{% endblock %}
+
+	<script>
+		$( document ).ready(function() {
+	  		$('input#id_small_business').prop('checked', true)
+		});
+	</script>
