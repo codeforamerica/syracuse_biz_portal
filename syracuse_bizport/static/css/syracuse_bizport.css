@@ -714,11 +714,14 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
 }
 
 .tracker-details h3 {
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid #ddd;
   padding-bottom: 5px;
 }
 .tracker-details table {
   background-color: #fff;
+}
+.tracker-details table thead th {
+  border-bottom: none;
 }
 .tracker-status {
   font-weight: normal;
