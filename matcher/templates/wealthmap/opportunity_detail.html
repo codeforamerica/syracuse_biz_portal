@@ -1,0 +1,33 @@
+{% extends "wealthmap/base.html" %}
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block header %}
+  {{ object.title }}
+{% endblock %}
+
+{% block subhead %}
+  Provided by: {{ object.agency }}
+{% endblock %}
+
+{% block content %}
+  {% if object.application_link %}
+    <h2>Program Link</h2>
+    <a href="{{ object.application_link }}" target="_blank" class="btn btn-primary btn-lg">
+      Get Started
+    </a>
+  {% endif %}
+
+  {% if object.value_prop %}
+    <h2>Why You Should Apply</h2>
+      {{ object.value_prop|linebreaks }}
+  {% endif %}
+
+  {% if object.description %}
+    <h2>Description</h2>
+    {{ object.description|linebreaks }}
+  {% endif %}
+	<div class="">
+		<a onclick="window.history.back();" class="btn btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i> Return to results</a>
+		<a href="/search"  class="btn btn-default"><i class="fa fa-refresh" aria-hidden="true"></i> New search</a>
+	</div>
+{% endblock %}

@@ -4,6 +4,8 @@
 {% block content %}
 
 <ul class="list-unstyled">
+{% if object.search %}
+
   {% for opportunity in object.search %}
   <li>
     <h3>
@@ -18,7 +20,14 @@
  </p>
 </li>
 <hr>
-  {% endfor %}
+{% endfor %}
+{% else %}
+
+<li><p>No results are available at this time.</p>
+    <p>Please try different search criteria.</p></li>
+
+{% endif %}
+
 
 </ul>
 
