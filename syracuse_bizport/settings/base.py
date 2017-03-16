@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'adminsortable2',
     'matcher',
     'wealthmap',
+
     'biz_content',
 
     'wagtail.contrib.settings',

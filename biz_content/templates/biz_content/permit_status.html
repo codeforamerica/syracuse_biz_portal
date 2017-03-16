@@ -43,78 +43,91 @@
 
     <div class="col-sm-7 blog-main tracker-details">
       {% if permit_data %}
-      <h2>Right of Way Permit Tracker</h2>
+      <h2>Permit Tracker</h2>
       <div id="current-status" class="card">
-        <h3 class="card-title"> Current Permit Status</h3>
+        <h3 class="card-title"> Permit Summary</h3>
         <table class="table table-bordered">
           <thead>
             <tr>
               <th style="vertical-align:middle;text-align:center;width:15%;" colspan="1"><i class="fa fa-info-circle fa-3x"></th>
               <th colspan="2"> Status
-               <p>{{permit_data.0.status_type_name}}</p>
-               <p><i>{{permit_data.0.status_date| format_business_license_date}}</i></p>
+               <p>{{permit_data.application_data.0.status_type_name}}</p>
+               <p><i>{{permit_data.application_data.0.application_date| format_business_license_date}}</i></p>
              </th>
            </tr>
          </thead>
          <tbody>
           <tr>
             <th>Number</th>
-            <td>{{permit_data.0.application_number}}</td>
+            <td>{{permit_data.application_data.0.application_number}}</td>
+          </tr>
+          <tr>
+            <th>Department</th>
+            <td>{{permit_data.application_data.0.department_name}}</td>
           </tr>
           <tr>
             <th>Permit Type</th>
-            <td>{{permit_data.0.permit_application_type_id|display_permit_type_name}}</td>
+            <td>{{permit_data.application_data.0.permit_type_description}}</td>
           </tr>
-          {% if p.description_of_work %}
+          {% if permit_data.application_data.0.description_of_work %}
           <tr>
             <th>Description of Work</th>
-            <td>{{p.description_of_work}}</td>
+            <td>{{permit_data.application_data.0.description_of_work}}</td>
           </tr>
           {% endif %}
+          {% if permit_data.record_data.0.permit_completion_type_name %}
+          <tr>
+            <th>Completion Type</th>
+            <td>{{permit_data.record_data.0.permit_completion_type_name}}</td>
+          </tr>
+          {% endif %}
+
         </tbody>
       </table>
     </div>
 
-
+    {% if permit_data.application_approval_data %}
     <div class="card">
       <h3 class="card-title"> Permit Approvals</h3>
-      {% for p in permit_data %}
+        {% for p in permit_data.application_approval_data %}
 
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th {% if p.approval_status_types_name == 'Approved' or p.approval_status_types_name == 'Conditionally Approved' %}
-            class="inspection-1"
-            {% elif p.approval_status_types_name == 'Denied' %}
-            class="inspection-2"
-            {% else %}
-            class="inspection"
-            {% endif %}
-            colspan="3">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th {% if p.approval_status_types_name == 'Approved' or p.approval_status_types_name == 'Conditionally Approved' %}
+              class="inspection-1"
+              {% elif p.approval_status_types_name == 'Denied' %}
+              class="inspection-2"
+              {% else %}
+              class="inspection"
+              {% endif %}
+              colspan="3">
 
-            <i class="fa fa-circle-o"> <strong class="payment-status">Status: {{p.approval_status_types_name}}</strong></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>Department</th>
-              <td>{{p.approval_groupusers_id|display_permit_dpt_name}}</td>
-            </tr>
-            <tr>
-              <th>Date</th>
-              <td>{{p.status_date|format_business_license_date}}
-              </td>
-            </tr>
-            {% if p.comments %}
-            <tr>
-              <th>Comments</th>
-              <td>{{p.comments}}</td>
-            </tr>
-            {% endif %}
-          </tbody>
-        </table>
-        {% endfor %}
-      </div>
+              <i class="fa fa-circle-o"> <strong class="payment-status">Status: {{p.approval_status_types_name}}</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Department</th>
+                <td>{{p.approval_groupusers_id|display_permit_dpt_name}}</td>
+              </tr>
+              <tr>
+                <th>Date</th>
+                <td>{{p.status_date|format_business_license_date}}
+                </td>
+              </tr>
+              {% if p.comments %}
+              <tr>
+                <th>Comments</th>
+                <td>{{p.comments}}</td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+          {% endfor %}
+        </div>
+        {% endif %}
+
 
 
       {% else %}
@@ -175,13 +188,13 @@
             <h4>You can lookup:</h4>
             <ul>
               <li>
-                Right of Way Permits
+                Building Permits
               </li>
-            </ul>
-            <h4>You cannot lookup:</h4>
-            <ul>
               <li>
-                Elevator Permits
+                Site Work Permits
+              </li>
+              <li>
+                Right of Way Permits
               </li>
             </ul>
           </div>

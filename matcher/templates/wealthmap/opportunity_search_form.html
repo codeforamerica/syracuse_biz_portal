@@ -1,5 +1,6 @@
 {% extends "wealthmap/opportunity_search_form.html" %}
 {% load i18n widget_tweaks %}
+<<<<<<< HEAD
 
 
 {% block title %}
@@ -9,6 +10,21 @@ Syracuse Business Resource Matcher
 {% block header %}
 Resource Matcher
 {% endblock %}
+=======
+{% load static %}
+ {% block extra_css %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/syracuse_bizport.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/google_translate_bar.css' %}">
+
+{% endblock %}
+
+
 
 {% block subhead %}
 Syracuse has many resources for local businesses.
@@ -156,3 +172,5 @@ tell you what you're eligible for.
 	  		$('input#id_small_business').prop('checked', true)
 		});
 	</script>
+
+
