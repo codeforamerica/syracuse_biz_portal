@@ -114,30 +114,6 @@ tell you what you're eligible for.
 		</div>
 		</section>
 
-<section id="small-biz">
-		<h3>Are you a small business?</h3>
-		<p>help text here.</p>
-		<div class="checkbox">
-			{% if form.small_business.errors %}
-	        <div class="container">
-              <div class="row">
-                <div class="col-sm-8">
-                  <div class="alert alert-danger">  <!-- singular -->
-                    <p class="error">{{form.small_business.errors}}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-
-			{% for item in form.small_business %}
-			<label>{{ item }} Yes, this is a small business.</label>
-
-			{% endfor %}
-		</div>
-</section>
-
-
 	<section>
 		<h3>What stage are you at? <span class="help-block">(Required)</span></h3>
 		<p>Is your business up and running, or you just starting and not yet in operation?</p>
@@ -163,14 +139,10 @@ tell you what you're eligible for.
 			{% endfor %}
 		</div>
 	</section>
-		<input type="submit" value="{% trans 'Search' %}" class="btn btn-primary btn-lg" />
+	<input type="hidden" id="id_small_business" name="small_business" value="True">
+
+	<input type="submit" value="{% trans 'Search' %}" class="btn btn-primary btn-lg" />
 	</form>
 	{% endblock %}
-
-	<script>
-		$( document ).ready(function() {
-	  		$('input#id_small_business').prop('checked', true)
-		});
-	</script>
 
 
