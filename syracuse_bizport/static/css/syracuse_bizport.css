@@ -711,6 +711,7 @@ thead {
 
 ul.errorlist{
   list-style-type: none;
+  padding-left: 0;
 }
 
 .affix{
@@ -758,7 +759,7 @@ ul.errorlist{
 .resource-matcher .checkbox:hover, .resource-matcher .radio:hover {
   background-color: #ddd;
 }
-.help-block {
+.resource-matcher .help-block {
   display: inline;
   font-size: 20px;
   font-weight: normal;
@@ -766,4 +767,21 @@ ul.errorlist{
 
 #small-biz{
   display:none;
+}
+
+.alert {
+  border-radius: 0;
+  padding: 10px 15px;
+  background-image: none;
+}
+.alert-danger {
+  color: #b72332;
+  border-color:#b72332;
+}
+.has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label {
+  color: #b72332;
+}
+
+.has-error .form-control {
+  border-color:#b72332;
 }
