@@ -246,7 +246,6 @@ class PermitStatusView(TemplateView):
                                    application_approval_data,
                                    'record_data': record_data
                                    }
-                    raise
 
         return render(request,
                       self.template_name,
