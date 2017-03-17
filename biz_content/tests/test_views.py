@@ -227,14 +227,15 @@ class PermitViewTestCase(TestCase):
     def setUp(self):
         self.location = os.path.realpath(
             os.path.join(os.getcwd(), os.path.dirname(__file__)))
-        self.permit_data = open(
-            os.path.join(self.location, 'permit_data.json'), 'r').read()
-        self.no_permit_data = '[]'
 
         self.application_data = open(
-            os.path.join(self.location, 'permit_application_data.json'), 'r').read()
+            os.path.join(self.location,
+                         'permit_application_data.json'),
+            'r').read()
         self.application_approval_data = open(
-            os.path.join(self.location, 'permit_application_data.json'), 'r').read()
+            os.path.join(self.location,
+                         'permit_application_approval_data.json'),
+            'r').read()
         self.record_data = open(
             os.path.join(self.location, 'permit_record_data.json'), 'r').read()
         self.mock_urls = {"permit_application": self.application_data,
@@ -259,7 +260,7 @@ class PermitViewTestCase(TestCase):
         permit_id = 'PC-0368-13'
 
         for url, data in self.mock_urls.items():
-            full_url = views.build_business_license_url(url, permit_id)
+            full_url = views.build_permit_url(url, permit_id)
             responses.add(
                 responses.GET, full_url,
                 body=data, status=200, content_type='application/json')
@@ -267,33 +268,34 @@ class PermitViewTestCase(TestCase):
         res = self.client.post(
             reverse('permit_status'), {
                 'permit_id': permit_id})
+
         self.assertEquals(res.status_code, 200)
+
         context = res.context
 
         self.assertEquals(
-            context['biz_license_data']['application_data'],
+            context['permit_data']['application_data'],
             json.loads(str(self.application_data)))
         self.assertEquals(
-            context['biz_license_data']['application_approval_data'],
-                json.loads(self.application_approval_data))
+            context['permit_data']['application_approval_data'],
+            json.loads(self.application_approval_data))
         self.assertEquals(
-            context['biz_license_data']['record_data'],
+            context['permit_data']['record_data'],
             json.loads(str(self.record_data)))
 
     @responses.activate
     def test_no_permit(self):
         permit_id = 'PC-0368-1345'
 
-        full_url = views.build_permit_url('permits', permit_id)
-        responses.add(
-            responses.GET, full_url,
-            body=self.no_permit_data,
-            status=200,
-            content_type='application/json')
+        for url, data in self.empty_mock_urls.items():
+            full_url = views.build_permit_url(url, permit_id)
+            responses.add(
+                responses.GET, full_url,
+                body=data, status=200, content_type='application/json')
 
         data = {'permit_id': permit_id}
         res = self.client.post(reverse('permit_status'), data)
-        # self.assertEquals(res.status_code, 200)
+        self.assertEquals(res.status_code, 200)
 
         context = res.context
         self.assertTrue('messages' in context)
