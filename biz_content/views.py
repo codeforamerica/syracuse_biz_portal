@@ -228,8 +228,7 @@ class PermitStatusView(TemplateView):
                     'permits', permit_id)
                 record_data = retrieve_permit_data(
                     'permit_record', permit_id)
-
-                # permit_record_inspections_data = []
+                # inspections_data = []
 
             except IPSAPIException:
                 messages.error(request, IPS_ERROR_MESSAGE)

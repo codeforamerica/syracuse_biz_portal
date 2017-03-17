@@ -227,9 +227,24 @@ class PermitViewTestCase(TestCase):
     def setUp(self):
         self.location = os.path.realpath(
             os.path.join(os.getcwd(), os.path.dirname(__file__)))
-        self.permit_data = open(
-            os.path.join(self.location, 'permit_data.json'), 'r').read()
-        self.no_permit_data = '[]'
+
+        self.application_data = open(
+            os.path.join(self.location,
+                         'permit_application_data.json'),
+            'r').read()
+        self.application_approval_data = open(
+            os.path.join(self.location,
+                         'permit_application_approval_data.json'),
+            'r').read()
+        self.record_data = open(
+            os.path.join(self.location, 'permit_record_data.json'), 'r').read()
+        self.mock_urls = {"permit_application": self.application_data,
+                          "permits": self.application_approval_data,
+                          "permit_record": self.record_data}
+        self.empty_mock_urls = {"permit_application": '[]',
+                                "permits": '[]',
+                                "permit_record": '[]'
+                                }
 
     def test_build_permit_url(self):
         permit_id = 'PC-0368-13'
@@ -240,47 +255,55 @@ class PermitViewTestCase(TestCase):
         )
         self.assertEquals(url, business_license_url)
 
-# @responses.activate
-# def test_200_with_permit_data(self):
-#     permit_id = 'PC-0368-13'
+    @responses.activate
+    def test_200_with_permit_data(self):
+        permit_id = 'PC-0368-13'
 
-#     full_url = views.build_permit_url('permits', permit_id)
-#     responses.add(
-#         responses.GET, full_url,
-#         body=self.permit_data, status=200, content_type='application/json')
+        for url, data in self.mock_urls.items():
+            full_url = views.build_permit_url(url, permit_id)
+            responses.add(
+                responses.GET, full_url,
+                body=data, status=200, content_type='application/json')
 
-#     res = self.client.post(
-#         reverse('permit_status'), {
-#             'permit_id': permit_id})
-#     # self.assertEquals(res.status_code, 200)
-#     context = res.context
+        res = self.client.post(
+            reverse('permit_status'), {
+                'permit_id': permit_id})
 
-#     self.assertEquals(
-#         context['permit_data'],
-#         json.loads(str(self.permit_data)))
+        self.assertEquals(res.status_code, 200)
 
-# @responses.activate
-# def test_no_permit(self):
-#     permit_id = 'PC-0368-1345'
+        context = res.context
 
-#     full_url = views.build_permit_url('permits', permit_id)
-#     responses.add(
-#         responses.GET, full_url,
-#         body=self.no_permit_data,
-#         status=200,
-#         content_type='application/json')
+        self.assertEquals(
+            context['permit_data']['application_data'],
+            json.loads(str(self.application_data)))
+        self.assertEquals(
+            context['permit_data']['application_approval_data'],
+            json.loads(self.application_approval_data))
+        self.assertEquals(
+            context['permit_data']['record_data'],
+            json.loads(str(self.record_data)))
 
-#     data = {'permit_id': permit_id}
-#     res = self.client.post(reverse('permit_status'), data)
-#     # self.assertEquals(res.status_code, 200)
+    @responses.activate
+    def test_no_permit(self):
+        permit_id = 'PC-0368-1345'
 
-#     context = res.context
-#     self.assertTrue('messages' in context)
+        for url, data in self.empty_mock_urls.items():
+            full_url = views.build_permit_url(url, permit_id)
+            responses.add(
+                responses.GET, full_url,
+                body=data, status=200, content_type='application/json')
 
-#     messages = list(context['messages'])
-#     err = views.PERMIT_NOT_FOUND_ERROR_MESSAGE
-#     self.assertEquals(
-#         str(messages[0]), err)
+        data = {'permit_id': permit_id}
+        res = self.client.post(reverse('permit_status'), data)
+        self.assertEquals(res.status_code, 200)
+
+        context = res.context
+        self.assertTrue('messages' in context)
+
+        messages = list(context['messages'])
+        err = views.PERMIT_NOT_FOUND_ERROR_MESSAGE
+        self.assertEquals(
+            str(messages[0]), err)
 
     @responses.activate
     def test_retrieve_permit_data_with_timeout(self):
