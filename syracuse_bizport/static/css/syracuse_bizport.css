@@ -246,7 +246,7 @@ header .intro-text {
   }
 }
 
-section h2 {
+.portfolio-item h2 {
   margin: 0;
   font-size: 2.5em;
 }
@@ -712,8 +712,7 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
   margin:0;
   color:white;
 }
-
-.tracker-details h3 {
+.tracker-details h2 {
   border-bottom: 1px solid #ddd;
   padding-bottom: 5px;
 }
