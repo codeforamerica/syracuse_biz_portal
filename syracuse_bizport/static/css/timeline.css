@@ -80,7 +80,7 @@
   top: 16px;
   left: 6px;
   margin-right: -25px;
-  background-color: #999999;
+  background-color: #3F47A1;
   z-index: 100;
   border-top-right-radius: 50%;
   border-top-left-radius: 50%;
@@ -106,7 +106,7 @@
 }
 
 .timeline-badge.info {
-  background-color: #5bc0de !important;
+  background-color: #3F47A1 !important;
 }
 
 .timeline-badge .fa-flag {
