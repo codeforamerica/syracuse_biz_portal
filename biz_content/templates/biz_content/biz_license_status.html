@@ -126,18 +126,15 @@
               class="inspection"
               {% endif %}
               colspan="3">
-
-              {% if a.approval_status_types_name == 'Approved' or a.approval_status_types_name == 'Conditionally Approved' %}
-              <i class="fa fa-{{1|display_inspection_status_icon}}">
-                {%elif a.approval_status_types_name == 'Denied' %}
+                {% if a.approval_status_types_name == 'Approved' or a.approval_status_types_name == 'Conditionally Approved' %}
+                <i class="fa fa-{{1|display_inspection_status_icon}}">
+                  {%elif a.approval_status_types_name == 'Denied' %}
                 <i class="fa fa-{{2|display_inspection_status_icon}}">
                   {%else%}
-                  <i class="fa fa-{{6|display_inspection_status_icon}}">
-                    {%endif%}
-
-
-                    <strong class="payment-status">Status: {{a.approval_status_types_name}}</strong></th>
-                  </tr>
+                <i class="fa fa-{{6|display_inspection_status_icon}}">
+                 {%endif%}
+                <strong class="payment-status">Status: {{a.approval_status_types_name}}</strong></th>
+              </tr>
                 </thead>
                 <tbody>
                   <tr>
@@ -177,7 +174,8 @@
                 <li>
                   <strong>Fire Department (Fire Inspection)</strong>
                 </li>
-              </ul>All inspections must be completed before a Certificate of Use is issued. It is your responsibility to schedule these inspections. If you've failed any inspections, you must schedule all necessary follow-up inspections. To schedule an inspection, call (315) 448-8695.</p>
+              </ul>
+              <p>All inspections must be completed before a Certificate of Use is issued. It is your responsibility to schedule these inspections. If you've failed any inspections, you must schedule all necessary follow-up inspections. To schedule an inspection, call (315) 448-8695.</p>
 
               {% for year, inspections in biz_license_data.inspection_data.items %}
               <p><strong>{{year}}</strong></p>
@@ -281,14 +279,14 @@
             {% else %}
             <div class="panel panel-default">
               <div class="panel-body">
-                          {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info">
-              <a class="close" data-dismiss="alert">×</a>
-              <p>{{ message }}</p>
-            </div>
-            {% endfor %}
-            {% endif %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-info">
+                  <a class="close" data-dismiss="alert">×</a>
+                  <p>{{ message }}</p>
+                </div>
+                {% endfor %}
+                {% endif %}
 
                 <form class="form-inline" action="" method="post">
                   {% csrf_token %}
@@ -322,15 +320,15 @@
                     </div>
                     <span id="helpBlock" class="help-block">{{field.help_text}}</span>
                     {% endif %}
-
                   </div>
                   {% endfor %}
                 </form>
               </div>
             </div>
+            <small>All businesses that require a business license must post them in a public place. For information about a business' license history, please submit a <a href="http://www.syracuse.ny.us/uploadedFiles/Departments/Law/Content/Freedom%20of%20Information%20Application.pdf">Freedom of Information Act request</a> (PDF).</small>
           </div>
           <div class="col-sm-5">
-          <h3>You can look up:</h3>
+            <h3>You can look up:</h3>
             <ul>
               <li>
                 Certificate of Use Business Licenses
