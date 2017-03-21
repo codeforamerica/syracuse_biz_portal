@@ -122,27 +122,27 @@ class ChecklistView(TemplateView):
 
 IPS_ERROR_MESSAGE = "Data from the City of Syracuse cannot be accessed."
 LICENSE_NOT_FOUND_ERROR_MESSAGE = ("We're sorry, your business license "
-                                   " could not be found. "
-                                   "Please contact the Business License "
+                                   " could not be found."
+                                   " Please contact the Business License "
                                    " Coordinator. "
-                                   " "
-                                   "Phone: (315)-448-8474 "
-                                   "Email: BusinessLicense@SyrGov.net"
+                                   "<br><br>"
+                                   "Phone: <a href='tel:+13154484874'>(315)-448-8474</a> <br>"
+                                   "Email: <a href='mailto:BusinessLicense@SyrGov.net?Subject=CU License Inquiry' target='_top'>BusinessLicense@SyrGov.net</a>"
                                    )
-PERMIT_NOT_FOUND_ERROR_MESSAGE = ("We're sorry, your permit "
-                                  "could not be found. Please contact one"
+PERMIT_NOT_FOUND_ERROR_MESSAGE = ("We're sorry, your permit"
+                                  " could not be found. Please contact one"
                                   " of the following offices for more "
-                                  "information. "
-                                  " "
-                                  "Right of Way Permits: "
+                                  " information. "
+                                  "<br><br> "
+                                  "<strong>Right of Way Permits:</strong><br> "
                                   "Zoning Permit Coordinator at"
-                                  " (315)-448-4715 or"
-                                  " CentralPermitOffice@SyrGov.net"
-                                  " "
-                                  "Building Permits: "
+                                  " <a href='tel:+13154484715'>(315)-448-4715</a> or"
+                                  " <a href='mailto:CentralPermitOffice@SyrGov.net?Subject=Permit Inquiry' target='_top'>CentralPermitOffice@SyrGov.net</a>"
+                                  "<br><br> "
+                                  "<strong>Building Permits:</strong><br> "
                                   "Central Permit Office at"
-                                  " (315)-448-8600 or"
-                                  " DOCEPermits@SyrGov.net")
+                                  " <a href='tel:+13154488600'>(315)-448-8600</a> or"
+                                  " <a href='mailto:DOCEPermits@SyrGov.net?Subject=Permit Inquiry' target='_top'>DOCEPermits@SyrGov.net")
 
 
 class BizLicenseStatusView(TemplateView):
