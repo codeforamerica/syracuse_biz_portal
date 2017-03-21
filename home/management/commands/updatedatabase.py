@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from syracuse_bizport.settings.base import *
 import subprocess
+import sys
 
 
 class Command(BaseCommand):
@@ -34,6 +35,11 @@ class Command(BaseCommand):
                     ' latest.dump'), shell=True)
 
             self.stdout.write('== Deleting Dump File ==')
-            subprocess.call('rm ' + BASE_DIR + '/latest.dump', shell=True)
+
+            if sys.platform.startswith(('darwin', 'os')):
+                subprocess.call('rm ' + BASE_DIR + '/latest.dump', shell=True)
+            elif sys.platform.startswith(('win', 'cygwin')):
+                subprocess.call('del ' + BASE_DIR + '/latest.dump', shell=True)
+
         else:
             self.stdout.write('Error! Local Database Dump Unsuccessful')

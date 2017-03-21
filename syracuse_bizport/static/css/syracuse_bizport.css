@@ -622,8 +622,16 @@ fieldset[disabled] .btn-success.active {
 	top: 95px;
 }
 .affix-top, .affix-bottom, .affix {
-	width: 300px;
+	width: 450px;
 	position: static;
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width:768px) {
+  .affix-top, .affix-bottom, .affix {width: 300px;}
+}
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .affix-top, .affix-bottom, .affix {width: 400px;}
 }
 
 .panel-default>.panel-heading {
