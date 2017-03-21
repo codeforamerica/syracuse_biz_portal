@@ -131,18 +131,18 @@ LICENSE_NOT_FOUND_ERROR_MESSAGE = ("We're sorry, your business license "
                                    )
 PERMIT_NOT_FOUND_ERROR_MESSAGE = ("We're sorry, your permit "
                                   "could not be found. Please contact one"
-                                  "of the following offices for more "
+                                  " of the following offices for more "
                                   "information. "
                                   " "
                                   "Right of Way Permits: "
                                   "Zoning Permit Coordinator at"
-                                  "(315)-448-4715 or"
-                                  "CentralPermitOffice@SyrGov.net"
+                                  " (315)-448-4715 or"
+                                  " CentralPermitOffice@SyrGov.net"
                                   " "
                                   "Building Permits: "
                                   "Central Permit Office at"
-                                  "(315)-448-8600 or"
-                                  "DOCEPermits@SyrGov.net")
+                                  " (315)-448-8600 or"
+                                  " DOCEPermits@SyrGov.net")
 
 
 class BizLicenseStatusView(TemplateView):
@@ -228,8 +228,7 @@ class PermitStatusView(TemplateView):
                     'permits', permit_id)
                 record_data = retrieve_permit_data(
                     'permit_record', permit_id)
-
-                # permit_record_inspections_data = []
+                # inspections_data = []
 
             except IPSAPIException:
                 messages.error(request, IPS_ERROR_MESSAGE)

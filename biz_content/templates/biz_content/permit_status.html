@@ -28,7 +28,7 @@
             {% endif %}
           </div>
           <div class="col-sm-10 col-sm-offset-0">
-            <h1 class="blog-title">Track Your Status</h1>
+            <h1 class="blog-title">Permit Tracker</h1>
           </div>
         </div>
       </div>
@@ -43,9 +43,8 @@
 
     <div class="col-sm-7 blog-main tracker-details">
       {% if permit_data %}
-      <h2>Permit Tracker</h2>
       <div id="current-status" class="card">
-        <h3 class="card-title"> Permit Summary</h3>
+        <h2 class="card-title"> Permit Summary</h2>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -88,125 +87,116 @@
 
     {% if permit_data.application_approval_data %}
     <div class="card">
-      <h3 class="card-title"> Permit Approvals</h3>
-        {% for p in permit_data.application_approval_data %}
+      <h2> Permit Approvals</h2>
+      {% for p in permit_data.application_approval_data %}
 
-        <table class="table table-bordered">
-          <thead>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th {% if p.approval_status_types_name == 'Approved' or p.approval_status_types_name == 'Conditionally Approved' %}
+            class="inspection-1"
+            {% elif p.approval_status_types_name == 'Denied' %}
+            class="inspection-2"
+            {% else %}
+            class="inspection"
+            {% endif %}
+            colspan="3">
+
+            <i class="fa fa-circle-o"> <strong class="payment-status">Status: {{p.approval_status_types_name}}</strong></th>
+            </tr>
+          </thead>
+          <tbody>
             <tr>
-              <th {% if p.approval_status_types_name == 'Approved' or p.approval_status_types_name == 'Conditionally Approved' %}
-              class="inspection-1"
-              {% elif p.approval_status_types_name == 'Denied' %}
-              class="inspection-2"
-              {% else %}
-              class="inspection"
-              {% endif %}
-              colspan="3">
-
-              <i class="fa fa-circle-o"> <strong class="payment-status">Status: {{p.approval_status_types_name}}</strong></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Department</th>
-                <td>{{p.approval_groupusers_id|display_permit_dpt_name}}</td>
-              </tr>
-              <tr>
-                <th>Date</th>
-                <td>{{p.status_date|format_business_license_date}}
-                </td>
-              </tr>
-              {% if p.comments %}
-              <tr>
-                <th>Comments</th>
-                <td>{{p.comments}}</td>
-              </tr>
-              {% endif %}
-            </tbody>
-          </table>
-          {% endfor %}
-        </div>
-        {% endif %}
+              <th>Department</th>
+              <td>{{p.approval_groupusers_id|display_permit_dpt_name}}</td>
+            </tr>
+            <tr>
+              <th>Date</th>
+              <td>{{p.status_date|format_business_license_date}}
+              </td>
+            </tr>
+            {% if p.comments %}
+            <tr>
+              <th>Comments</th>
+              <td>{{p.comments}}</td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+        {% endfor %}
+      </div>
+      {% endif %}
 
 
 
       {% else %}
-      <div class="container">
 
-        <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-info">
+            <a class="close" data-dismiss="alert">×</a>
+            <p>{{ message }}</p>
+          </div>
+          {% endfor %}
+          {% endif %}
 
-          <div class="col-sm-7 blog-main tracker-details">
+          <form class="form-inline" action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            {{ form.title }}
+            <div class="form-group">
 
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <h2>Check the Status of Your Permit</h2>
-                {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-info">
-                  <a class="close" data-dismiss="alert">×</a>
-                  <p>{{ message }}</p>
-                </div>
-                {% endfor %}
-                {% endif %}
-
-                <form class="form-inline" action="" method="post">
-                  {% csrf_token %}
-                  {% for field in form %}
-                  {{ form.title }}
-                  <div class="form-group">
-
-                    {% if field.errors %}
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-md-6 offest2">
-                          <div class="alert alert-danger">  <!-- singular -->
-                            <p class="error">{{ field.errors }}</p>
-                          </div>
-                        </div>
-                      </div>
+              {% if field.errors %}
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 offest2">
+                    <div class="alert alert-danger">  <!-- singular -->
+                      <p class="error">{{ field.errors }}</p>
                     </div>
-                    {% endif %}
-                    <label>{{ field.label }}:</label>
-                    <br>
-                    <div class="input-group input-group-lg">
-                      {% render_field field class+="form-control" %}
-                      {% if field.help_text %}
-                      <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default">Search</button>
-                      </span>
-                    </div>
-                    <span id="helpBlock" class="help-block">{{field.help_text}}</span>
-                    {% endif %}
                   </div>
-                  {% endfor %}
-                </form>
+                </div>
               </div>
+              {% endif %}
+              <label>{{ field.label }}:</label>
+              <br>
+              <div class="input-group input-group-lg">
+                {% render_field field class+="form-control" %}
+                {% if field.help_text %}
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default">Search</button>
+                </span>
+              </div>
+              <span id="helpBlock" class="help-block">{{field.help_text}}</span>
+              {% endif %}
             </div>
-            {% endif %}
-          </div>
-          <div class="col-sm-5">
-            <h4>You can lookup:</h4>
-            <ul>
-              <li>
-                Building Permits
-              </li>
-              <li>
-                Site Work Permits
-              </li>
-              <li>
-                Right of Way Permits
-              </li>
-            </ul>
-          </div>
+            {% endfor %}
+          </form>
         </div>
       </div>
+
     </div>
+    <div class="col-sm-5">
+    <h3>You can look up:</h3>
+      <ul>
+        <li>
+          Building Permits
+        </li>
+        <li>
+          Site Work Permits
+        </li>
+        <li>
+          Right of Way Permits
+        </li>
+      </ul>
+    </div>
+    {% endif %}
   </div>
 </div>
+</div>
+</div>
 
-</div><!-- /.row -->
-
-</div><!-- /.container -->
 
 
 {% endblock %}

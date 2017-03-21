@@ -8,7 +8,7 @@
 {% block title %}Business License Tracker{% endblock %}
 
 {% block extra_css %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/timeline.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/timeline.css' %}">
 
 {% endblock %}
 
@@ -18,8 +18,8 @@
 {% block content %}
 
 <!--
- -->
- <!-- Navigation -->
+-->
+<!-- Navigation -->
 
 <header>
   {% image self.header_img width-1200 as header_img %}
@@ -29,11 +29,11 @@
         <div class="row">
           <div class="col-sm-12">
             {% if page.icon %}
-              {% image page.icon width-120 %}
+            {% image page.icon width-120 %}
             {% endif %}
           </div>
           <div class="col-sm-10 col-sm-offset-0">
-            <h1 class="blog-title">Track Your Status</h1>
+            <h1 class="blog-title">License Tracker</h1>
           </div>
         </div>
       </div>
@@ -45,152 +45,149 @@
   <div class="row">
     <div class="col-sm-7 blog-main tracker-details">
       {% if biz_license_data %}
-        <section id="current-status" class="card">
-          <h3> Current Status</h3>
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th style="vertical-align:middle;text-align:center;width:15%;" colspan="1"><i class="fa fa-info-circle fa-3x"></i></th>
-                <th colspan="2" class="tracker-status">
-                  <p><b>Status:</b> {{biz_license_data.current_status.user_defined_action_type_name}}</p>
-                  <p class="small">{{biz_license_data.current_status.action_date| format_business_license_date}}</p>
-                </th>
+      <section id="current-status" class="card">
+        <h2> Current Status</h2>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="vertical-align:middle;text-align:center;width:15%;" colspan="1"><i class="fa fa-info-circle fa-3x"></i></th>
+              <th colspan="2" class="tracker-status">
+                <p><b>Status:</b> {{biz_license_data.current_status.user_defined_action_type_name}}</p>
+                <p class="small">{{biz_license_data.current_status.action_date| format_business_license_date}}</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Number</th>
+              <td>{{biz_license_data.application_data.0.complaint_number}}</td>
+            </tr>
+            <tr>
+              <th>Address</th>
+              <td>{{biz_license_data.application_data.0.nature_of_complaint}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section id="status-timeline" class="card">
+        <h2>Status Timeline <small>(Most recent first)</small></h2>
+        <ul class="timeline">
+          {% for d in biz_license_data.application_data %}
+          <li>
+            <div class="timeline-badge info"></div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <p>{{d.user_defined_action_type_name}}</p>
+                <p class="small">{{d.action_date| format_business_license_date}}</p>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      <section id="departmental-review" class="card">
+        <h2 class="card-title">Departmental Review Status</h2>
+        <p>After your license has been submitted, it is sent to the following departments for review:</p>
+        <ul>
+          <li>
+            <strong>Police Department</strong>
+            <p>Does the business owner have a relevant and recent criminal conviction?</p>
+          </li>
+          <li>
+            <strong>Parking Violations Bureau</strong>
+            <p>Does the business or property owner have outstanding parking violations?</p>
+          </li>
+          <li>
+            <strong>Department of Housing</strong>
+            <p>Are there housing judgements against the property or business owner?</p>
+          </li>
+          <li>
+            <strong>Department of Water</strong>
+            <p>Does the business or property owner have delinquent water bills?</p>
+          </li>
+          <li>
+            <strong>Bureau of Treasury</strong>
+            <p>Does the property or business owner have outstanding taxes?</p>
+          </li>
+          <li>
+            <strong>Office of Zoning Administration</strong>
+            <p>Is the business zoned properly?</p>
+          </li>
+        </ul>
+        <p>If your permit is "In Review" and your status does not indicate that the city is ready to conduct a site inspection, that means that one or more of the departments listed above have not issued an approval regarding your business license.</p>
+
+        {% for a in biz_license_data.approvals_data %}
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+
+              <th {% if a.approval_status_types_name == 'Approved' or a.approval_status_types_name == 'Conditionally Approved' %} class="inspection-1"
+              {% else %}
+              class="inspection"
+              {% endif %}
+              colspan="3">
+                {% if a.approval_status_types_name == 'Approved' or a.approval_status_types_name == 'Conditionally Approved' %}
+                <i class="fa fa-{{1|display_inspection_status_icon}}">
+                  {%elif a.approval_status_types_name == 'Denied' %}
+                <i class="fa fa-{{2|display_inspection_status_icon}}">
+                  {%else%}
+                <i class="fa fa-{{6|display_inspection_status_icon}}">
+                 {%endif%}
+                <strong class="payment-status">Status: {{a.approval_status_types_name}}</strong></th>
               </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Number</th>
-                <td>{{biz_license_data.application_data.0.complaint_number}}</td>
-              </tr>
-              <tr>
-                <th>Address</th>
-                <td>{{biz_license_data.application_data.0.nature_of_complaint}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <section id="status-timeline" class="card">
-          <h3>Status Timeline <small>(Most recent first)</small></h3>
-            <ul class="timeline">
-              {% for d in biz_license_data.application_data %}
-                <li>
-                  <div class="timeline-badge info"></div>
-                  <div class="timeline-panel">
-                    <div class="timeline-heading">
-                      <p>{{d.user_defined_action_type_name}}</p>
-                      <p class="small">{{d.action_date| format_business_license_date}}</p>
-                    </div>
-                  </div>
-                </li>
-              {% endfor %}
-            </ul>
-        </section>
-        <section id="departmental-review" class="card">
-          <h3 class="card-title">Departmental Review Status</h3>
-          <p>After your license has been submitted, it is sent to the following departments for review:</p>
-          <ul>
-            <li>
-                <strong>Police Department</strong>
-                <p>Does the business owner have a relevant and recent criminal conviction?</p>
-            </li>
-            <li>
-                <strong>Parking Violations Bureau</strong>
-                <p>Does the business or property owner have outstanding parking violations?</p>
-            </li>
-            <li>
-                <strong>Department of Housing</strong>
-                <p>Are there housing judgements against the property or business owner?</p>
-            </li>
-            <li>
-                <strong>Department of Water</strong>
-                <p>Does the business or property owner have delinquent water bills?</p>
-            </li>
-            <li>
-                <strong>Bureau of Treasury</strong>
-                <p>Does the property or business owner have outstanding taxes?</p>
-            </li>
-            <li>
-                <strong>Office of Zoning Administration</strong>
-                <p>Is the business zoned properly?</p>
-            </li>
-          </ul>
-          <p>If your permit is "In Review" and your status does not indicate that the city is ready to conduct a site inspection, that means that one or more of the departments listed above have not issued an approval regarding your business license.</p>
-
-           {% for a in biz_license_data.approvals_data %}
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-
-                      <th {% if a.approval_status_types_name == 'Approved' or a.approval_status_types_name == 'Conditionally Approved' %} class="inspection-1"
-                      {% else %}
-                      class="inspection"
-                      {% endif %}
-                      colspan="3">
-
-                      {% if a.approval_status_types_name == 'Approved' or a.approval_status_types_name == 'Conditionally Approved' %}
-                      <i class="fa fa-{{1|display_inspection_status_icon}}">
-                      {%elif a.approval_status_types_name == 'Denied' %}
-                        <i class="fa fa-{{2|display_inspection_status_icon}}">
-                      {%else%}
-                        <i class="fa fa-{{6|display_inspection_status_icon}}">
-                      {%endif%}
-
-
-                      <strong class="payment-status">Status: {{a.approval_status_types_name}}</strong></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th>Department</th>
-                      <td>{{a.groupusers_name}}</td>
-                    </tr>
-                    <tr>
-                      <th>Status Date</th>
-                      <td>{{a.status_date|format_business_license_date}}</td>
-                    </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Department</th>
+                    <td>{{a.groupusers_name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Status Date</th>
+                    <td>{{a.status_date|format_business_license_date}}</td>
+                  </tr>
                   {% if a.comments%}
-                    <tr>
-                      <th>Notes</th>
-                      <td>{{a.comments}}</td>
-                    </tr>
+                  <tr>
+                    <th>Notes</th>
+                    <td>{{a.comments}}</td>
+                  </tr>
                   {% endif %}
                   {% if a.approval_status_types_name == "Denied" %}
-                    <tr>
-                      <td>Please contact the Business License Coordinator for more information at 315-448-8474 or BusinessLicense@syrgov.net.</td>
-                    </tr>
+                  <tr>
+                    <td>Please contact the Business License Coordinator for more information at 315-448-8474 or BusinessLicense@syrgov.net.</td>
+                  </tr>
                   {% endif %}
                 </tbody>
               </table>
-          {% endfor %}
+              {% endfor %}
+            </section>
+            <section id="inspection-history" class="card">
+              <h2>Inspection History <small>(Most recent first)</small></h2>
+              <p>After all departmental approvals have been completed, your business requires three inspections.</p>
+              <ul>
+                <li>
+                  <strong>Codes Department (Building Inspectio)</strong>
+                </li>
+                <li>
+                  <strong>Codes Department (Electrical Inspection)</strong>
+                </li>
+                <li>
+                  <strong>Fire Department (Fire Inspection)</strong>
+                </li>
+              </ul>
+              <p>All inspections must be completed before a Certificate of Use is issued. It is your responsibility to schedule these inspections. If you've failed any inspections, you must schedule all necessary follow-up inspections. To schedule an inspection, call (315) 448-8695.</p>
 
-        </section>
-        <section id="inspection-history" class="card">
-          <h3>Inspection History <small>(Most recent first)</small></h3>
-           <p>After all departmental approvals have been completed, your business requires three inspections.</p>
-           <ul>
-            <li>
-                <strong>Codes Department (Building Inspectio)</strong>
-            </li>
-            <li>
-                <strong>Codes Department (Electrical Inspection)</strong>
-            </li>
-            <li>
-                <strong>Fire Department (Fire Inspection)</strong>
-            </li>
-          </ul>All inspections must be completed before a Certificate of Use is issued. It is your responsibility to schedule these inspections. If you've failed any inspections, you must schedule all necessary follow-up inspections. To schedule an inspection, call (315) 448-8695.</p>
-
-            {% for year, inspections in biz_license_data.inspection_data.items %}
+              {% for year, inspections in biz_license_data.inspection_data.items %}
               <p><strong>{{year}}</strong></p>
               {% for inspection in inspections %}
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th {% if inspection.result_status_type_id == 1 or inspection.result_status_type_id == 2 %} class="inspection-{{inspection.result_status_type_id}}"
-                      {% else %}
-                      class="inspection"
-                      {% endif %}
-                      colspan="3">
-                      <i class="fa fa-{{inspection.result_status_type_id|display_inspection_status_icon}}"> <strong class="payment-status">Status: {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th {% if inspection.result_status_type_id == 1 or inspection.result_status_type_id == 2 %} class="inspection-{{inspection.result_status_type_id}}"
+                    {% else %}
+                    class="inspection"
+                    {% endif %}
+                    colspan="3">
+                    <i class="fa fa-{{inspection.result_status_type_id|display_inspection_status_icon}}"> <strong class="payment-status">Status: {{inspection.result_status_type_id|display_status_type_name}}</strong></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -206,101 +203,98 @@
                       <th>Date</th>
                       <td>{{inspection.inspect_date|format_business_license_date}}</td>
                     </tr>
-                  {% if inspection.user_note%}
+                    {% if inspection.user_note%}
                     <tr>
                       <th>Notes</th>
                       <td>{{inspection.user_note}}</td>
                     </tr>
-                  {% endif %}
-                  {% if inspection.result_status_type_id == 2 %}
+                    {% endif %}
+                    {% if inspection.result_status_type_id == 2 %}
                     <tr>
                       <td>Please contact the Business License Coordinator for more information at 315-448-8474 or BusinessLicense@syrgov.net.</td>
                     </tr>
-                  {% endif %}
-                </tbody>
-              </table>
-            {% endfor %}
-          {% endfor %}
-        </section>
-        <section id="payments" class="card">
-          <h3>Payments</h3>
-          {% for d in biz_license_data.payment_data %}
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th class="inspection-1" colspan="3"><i class="fa fa-circle-o"> <strong class="payment-status"> Paid</strong></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Fee</th>
-                <td>Certificate of Use Application Fee</td>
-              </tr>
-              <tr>
-                <th>Amount</th>
-                <td>${{d.amount| floatformat:2}}</td>
-              </tr>
-              <tr>
-                <th>Payer</th>
-                <td>{{d.payment_details|retrieve_payment_details}}</td>
-              </tr>
-              <tr>
-                <th>Date</th>
-                <td>{{d.payment_date|format_business_license_date}}</td>
-              </tr>
-            </tbody>
-          </table>
-          {% endfor %}
-        </section>
+                    {% endif %}
+                  </tbody>
+                </table>
+                {% endfor %}
+                {% endfor %}
+              </section>
+              <section id="payments" class="card">
+                <h2>Payments</h2>
+                {% for d in biz_license_data.payment_data %}
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="inspection-1" colspan="3"><i class="fa fa-circle-o"> <strong class="payment-status"> Paid</strong></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>Fee</th>
+                      <td>Certificate of Use Application Fee</td>
+                    </tr>
+                    <tr>
+                      <th>Amount</th>
+                      <td>${{d.amount| floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                      <th>Payer</th>
+                      <td>{{d.payment_details|retrieve_payment_details}}</td>
+                    </tr>
+                    <tr>
+                      <th>Date</th>
+                      <td>{{d.payment_date|format_business_license_date}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                {% endfor %}
+              </section>
 
-      </div>
+            </div>
 
-      <div class="col-md-5">
-        <div id="section-nav" data-spy="affix" data-offset-top="200" data-offset-bottom="200">
-          <h3>Sections</h3>
-          <ul class="nav nav-pills nav-stacked" role="tablist">
-            <li>
-              <a href="#current-status">Current Status</a>
-            </li>
-            <li>
-              <a href="#status-timeline">Status Timeline</a>
-            </li>
-            <li>
-              <a href="#departmental-review">Departmental Review</a>
-            </li>
-            <li>
-              <a href="#inspection-history">Inspection History</a>
-            </li>
-            <li>
-              <a href="#payments">Payments</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+            <div class="col-md-5">
+              <div id="section-nav" data-spy="affix" data-offset-top="200" data-offset-bottom="200">
+                <h2>Sections</h2>
+                <ul class="nav nav-pills nav-stacked" role="tablist">
+                  <li>
+                    <a href="#current-status">Current Status</a>
+                  </li>
+                  <li>
+                    <a href="#status-timeline">Status Timeline</a>
+                  </li>
+                  <li>
+                    <a href="#departmental-review">Departmental Review</a>
+                  </li>
+                  <li>
+                    <a href="#inspection-history">Inspection History</a>
+                  </li>
+                  <li>
+                    <a href="#payments">Payments</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
 
-      {% else %}
-      <div class="container">
-        <div class="row">
-        <div class="col-sm-7 blog-main tracker-details">
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-info">
+            {% else %}
+            <div class="panel panel-default">
+              <div class="panel-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-info">
                   <a class="close" data-dismiss="alert">×</a>
                   <p>{{ message }}</p>
-              </div>
-            {% endfor %}
-          {% endif %}
-        <div class="panel panel-default">
-        <div class="panel-body">
-          <h2>Check the Status of Your Business License</h2>
-            <form class="form-inline" action="" method="post">
-              {% csrf_token %}
-              {% for field in form %}
-                {{ form.title }}
+                </div>
+                {% endfor %}
+                {% endif %}
 
-                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                <form class="form-inline" action="" method="post">
+                  {% csrf_token %}
+                  {% for field in form %}
+                  {{ form.title }}
 
-                  {% if field.errors %}
+                  <div class="form-group {% if field.errors %}has-error{% endif %}">
+
+                    {% if field.errors %}
                     <div class="container">
                       <div class="row">
                         <div class="col-sm-6 offest2">
@@ -310,50 +304,47 @@
                         </div>
                       </div>
                     </div>
-                  {% endif %}
-                  <label>{{ field.label }}:</label>
-                  <br>
-                  <div class="input-group input-group-lg">
-
-                    {% render_field field class+="form-control" %}
-
-
-                    {% if field.help_text %}
-                     <span class="input-group-btn">
-                      <button type="submit" class="btn btn-default">Search</button>
-                    </span>
-                  </div>
-                  <span id="helpBlock" class="help-block">{{field.help_text}}</span>
                     {% endif %}
+                    <label>{{ field.label }}:</label>
+                    <br>
+                    <div class="input-group input-group-lg">
 
-                </div>
-              {% endfor %}
-            </form>
+                      {% render_field field class+="form-control" %}
+
+
+                      {% if field.help_text %}
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default">Search</button>
+                      </span>
+                    </div>
+                    <span id="helpBlock" class="help-block">{{field.help_text}}</span>
+                    {% endif %}
+                  </div>
+                  {% endfor %}
+                </form>
+              </div>
+            </div>
+            <small>All businesses that require a business license must post them in a public place. For information about a business' license history, please submit a <a href="http://www.syracuse.ny.us/uploadedFiles/Departments/Law/Content/Freedom%20of%20Information%20Application.pdf">Freedom of Information Act request</a> (PDF).</small>
           </div>
-        </div>
-        </div>
-        <div class="col-sm-5">
-            <h4>You can lookup:</h4>
+          <div class="col-sm-5">
+            <h3>You can look up:</h3>
             <ul>
               <li>
                 Certificate of Use Business Licenses
               </li>
             </ul>
-            <h4>You cannot lookup:</h4>
+            <h3>You cannot yet look up:</h3>
             <ul>
               <li>
                 Amusement Licenses
               </li>
-               <li>
+              <li>
                 Entertainment Licenses
               </li>
             </ul>
+          </div>
         </div>
-        </div>
-        </div>
-        {% endif %}
+      </div>
+      {% endif %}
     </div>
-    </div>
-  </div><!-- /.row -->
-</div><!-- /.container -->
-{% endblock %}
+    {% endblock %}

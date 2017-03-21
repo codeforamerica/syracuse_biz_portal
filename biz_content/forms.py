@@ -37,7 +37,7 @@ class PermitStatusForm(forms.Form):
 
 class BizLicenseStatusForm(forms.Form):
     cu_id = forms.CharField(required=True,
-                            label="Permit Enter a Certificate of Use ID",
+                            label="Enter a Certificate of Use ID",
                             help_text="Example CU ID: CU2000-1234",
                             validators=[starts_with_cu,
                                         is_letter_number_dashes])

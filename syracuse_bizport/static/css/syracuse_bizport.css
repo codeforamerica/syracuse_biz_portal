@@ -246,7 +246,7 @@ header .intro-text {
   }
 }
 
-section h2 {
+.portfolio-item h2 {
   margin: 0;
   font-size: 2.5em;
 }
@@ -712,13 +712,15 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
   margin:0;
   color:white;
 }
-
-.tracker-details h3 {
-  border-bottom: 1px solid #555;
+.tracker-details h2 {
+  border-bottom: 1px solid #ddd;
   padding-bottom: 5px;
 }
 .tracker-details table {
   background-color: #fff;
+}
+.tracker-details table thead th {
+  border-bottom: none;
 }
 .tracker-status {
   font-weight: normal;
@@ -816,4 +818,20 @@ ul.errorlist{
 }
 .more-link {
   color: #337ab7;
+}
+.checklist-page ul {
+    list-style: none;
+}
+.checklist-page ul li:before {
+    content: '◻ ';
+    font-size: 24px;
+    margin-left:-24px;
+}
+.checklist-page li {
+  text-indent:0;
+ }
+ @media print {
+   footer {display: none;}
+   .jumbotron {padding: 0;}
+   .checklist-page button {display: none;}
 }
