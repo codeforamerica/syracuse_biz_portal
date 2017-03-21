@@ -239,6 +239,9 @@ class PermitStatusView(TemplateView):
                         request, PERMIT_NOT_FOUND_ERROR_MESSAGE
                     )
                 else:
+                    permit = models.PermitSearch(
+                        permit_id=permit_id).save()
+
                     permit_data = {'application_data':
                                    application_data,
                                    'application_approval_data':
