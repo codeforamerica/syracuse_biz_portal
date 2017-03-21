@@ -162,7 +162,7 @@ class BizLicenseStatusView(TemplateView):
     form_class = forms.BizLicenseStatusForm
 
     def get(self, request, *args, **kwargs):
-        initial = {'cu_id':'CU'}
+        initial = {'cu_id': 'CU'}
         form = self.form_class(initial)
         return render(request, self.template_name, {'form': form})
 
