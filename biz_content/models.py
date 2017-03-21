@@ -10,6 +10,7 @@ from modelcluster.models import ClusterableModel
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
@@ -55,6 +56,13 @@ class PhoneBlock(blocks.StructBlock):
     class Meta:
         icon = 'fa-phone'
         template = "biz_content/content_blocks/phone_block.html"
+
+
+class CarouselBlock(blocks.StreamBlock):
+    image = ImageChooserBlock()
+
+    class Meta:
+        icon = 'cogs'
 
 
 class ContentBlock(blocks.StreamBlock):
@@ -241,6 +249,7 @@ class StandAloneContentPage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    sidebar_images = StreamField(CarouselBlock(), null=True)
     description = models.CharField(max_length=2000, null=True)
     page_content = StreamField(ContentBlock(), null=True, blank=True)
 
@@ -248,6 +257,7 @@ class StandAloneContentPage(Page):
         FieldPanel('description'),
         ImageChooserPanel('icon'),
         ImageChooserPanel('header_img'),
+        StreamFieldPanel('sidebar_images'),
         StreamFieldPanel('page_content')
     ]
 
