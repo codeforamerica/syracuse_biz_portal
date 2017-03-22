@@ -265,3 +265,8 @@ class StandAloneContentPage(Page):
 class BizLicenseSearch(models.Model):
     license_id = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class PermitSearch(models.Model):
+    permit_id = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
