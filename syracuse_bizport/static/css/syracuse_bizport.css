@@ -664,6 +664,7 @@ fieldset[disabled] .btn-success.active {
 
 .resource-block .panel-body {
   padding:20px;
+  overflow-x: scroll;
 }
 
 .databox-iframes{
