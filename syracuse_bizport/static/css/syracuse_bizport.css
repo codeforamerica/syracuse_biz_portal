@@ -430,6 +430,14 @@ footer .footer-below {
   background-color: rgba(60, 44, 91, 1);
 }
 
+@media (max-width:768px) {
+  .footer-address {
+    border-top: 1px solid rgba(60, 44, 91, 1);
+    border-bottom: 1px solid rgba(60, 44, 91, 1);  
+    padding-top:10px;
+    margin-bottom: 10px;
+  }
+}
 /* Bootstrap button overrides */
 
 .btn-outline {
