@@ -430,6 +430,14 @@ footer .footer-below {
   background-color: rgba(60, 44, 91, 1);
 }
 
+@media (max-width:768px) {
+  .footer-address {
+    border-top: 1px solid rgba(60, 44, 91, 1);
+    border-bottom: 1px solid rgba(60, 44, 91, 1);  
+    padding-top:10px;
+    margin-bottom: 10px;
+  }
+}
 /* Bootstrap button overrides */
 
 .btn-outline {
@@ -649,28 +657,31 @@ fieldset[disabled] .btn-success.active {
 .panel-body h2{
   margin-top:0;
 }
-.resource-block .panel-body h3{
-  font-size: 20px;
-  margin:0;
-}
-.resource-block .panel-body h3:hover, .resource-block .panel-body:hover{
-  color: #23527c;
-}
-.resource-block .panel-body h3 .fa-2x{
-  font-size: 1em;
+.resource-block .panel-body .fa{
   color: #777;
-  padding-right: 10px;
+  vertical-align: middle;
 }
-
 .resource-block .panel-body {
   padding:20px;
+  overflow-x: scroll;
 }
-
+.resource-block .col-xs-1 {
+  padding-right: 0;
+  width: auto;
+}
+@media (max-width:992px) {
+  .resource-block .col-xs-1 {
+    max-width: 8%;
+    xwidth: auto;
+  }  
+  .resource-block .col-xs-11 {
+    max-width: 91%;
+  }  
+}
 .databox-iframes{
   width:800px;
   height:600px;
 }
-
 @media(max-width:768px) {
   a .panel-body {padding: 15px;}
 }

@@ -1,9 +1,12 @@
 {% load wagtailcore_tags %}
 
 <a href="{{ value.link_url }}" target="_blank" class="resource-block url-block">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <h3><i class="fa fa-external-link fa-2x" style=" vertical-align: middle;"></i>{{ value.link_text }}</h3>
-    </div>
-  </div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-xs-1"><i class="fa fa-external-link"></i></div>
+				<div class="col-xs-11"><span>{{ value.link_text }}</span></div>
+			</div>
+		</div>
+	</div>
 </a>
