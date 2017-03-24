@@ -34,7 +34,8 @@ EMAIL_USE_TLS = True
 ADMINS = [
     ('Mikela', 'mikela@codeforamerica.org'),
     ('Charlie', 'charlie@codeforamerica.org'),
-    ('Ann', 'amillspaugh@codeforamerica.org'),
+    ('Ann', 'ann@codeforamerica.org'),
+    ('Sam', 'SEdelstein@syrgov.net'),
 ]
 
 # HTTPS EVERYWHERE
