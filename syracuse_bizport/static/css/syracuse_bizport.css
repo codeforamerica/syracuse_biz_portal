@@ -13,8 +13,17 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
 	color: #555;
+  font-weight: bold;
 }
-
+.blog-main h3 {
+  font-size: 26px;
+}
+.blog-main h4 {
+  font-size: 24px;
+}
+.blog-main h5 {
+  font-size: 22px;
+}
 .beta-notification {
 	background-color: #A92C70;
 	font-size: 16px;
@@ -140,7 +149,7 @@ a.hero-promo-link {
 .breadcrumb {
 	padding:10px 0;
 	background-color: inherit;
-	font-size: 12px;
+	font-size: 14px;
 }
 
 .breadcrumb li a {
@@ -154,16 +163,6 @@ a.hero-promo-link {
 ol.breadcrumb {
   margin-bottom: 0;
 }
-
-.blog-main h3, .blog-main h4 {
-	margin-top: 20px;
-	font-weight: bold;
-}
-
-.blog-main h4 {
-	font-size: 20px;
-}
-
 .blog-main li {
 	font-size: 20px;
 }
@@ -691,6 +690,7 @@ fieldset[disabled] .btn-success.active {
 	background: transparent;
 	display: table;
 	box-shadow: none;
+  background: #fff;
 }
 
 .alert-text-block .alert-icon {
@@ -699,15 +699,12 @@ fieldset[disabled] .btn-success.active {
 	vertical-align: middle;
 	padding-right: 20px;
 	padding-left: 20px;
-}
-
-.alert-text-block .alert-icon h4 {
 	color: #fff;
+  text-align: center;
 }
 
-.alert-text-block h4 {
-  font-weight: normal;
-  margin-top: 10px;
+.alert-text-block p{
+    margin-bottom: 0;
 }
 
 input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:focus {
